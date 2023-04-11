@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\LIB\glad\include;C:\LIB\glfw\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\LIB\glad\include;C:\LIB\glfw\include;$(IncludePath);C:\LIB\glm;</IncludePath>
     <LibraryPath>C:\LIB\glfw\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
