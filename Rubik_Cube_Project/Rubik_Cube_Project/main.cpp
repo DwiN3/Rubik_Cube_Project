@@ -1,105 +1,4 @@
-//#include <glad/glad.h> //musi byc na poczatku
-//#include <GLFW/glfw3.h>
-//
-//#include <iostream>
-//
-//void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-//void processInput(GLFWwindow* window);
-//
-//const unsigned int SCR_WIDTH = 800;
-//const unsigned int SCR_HEIGHT = 600;
-//
-//int main()
-//{
-//    // glfw: inicjalizacja i konfiguracja
-//    // ------------------------------
-//    glfwInit();
-//    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-//    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-//    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-//
-//
-//    // glfw - tworzenie okna
-//    // --------------------
-//    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGL pierwzy program", NULL, NULL);
-//    if (window == NULL)
-//    {
-//        std::cout << "Failed to create GLFW window" << std::endl;
-//        glfwTerminate();
-//        return -1;
-//    }
-//    glfwMakeContextCurrent(window);
-//
-//
-//    // OpenGL - ustawienie aktywnego obszaru - rozmiar oraz po³o¿enie (viewport) renderowania wzgledem okna GLFW
-//    // --------------------
-//    // glViewport(0, 0, 800, 600);
-//    // taki zapis nie zapewniw poprawnego dzialania przy przeskalowanou okna
-//
-//    // glfw - zarejestrowanie funkcji framebuffer_size_callback wywo³ywanej zwrotnie (callback function)
-//    //        wywo³ywanej automatycznej za kazdym razem gdy wielkosc okna ulegnie zmianie
-//    //        uaktualniajacej viewport
-//    // --------------------
-//    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-//
-//
-//    // glad: zaladowanie wszystkich funkcji (wskaznikow) OpenGL
-//    // ---------------------------------------
-//    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-//    {
-//        std::cout << "Failed to initialize GLAD" << std::endl;
-//        return -1;
-//    }
-//
-//
-//    // petla renderowania - bez niej program po wyrysowaniu pojedynczego obrazu zakonczyl by dzialanie i zamknal okno
-//    // -----------
-//    while (!glfwWindowShouldClose(window))
-//    {
-//        // przetwazanie wejscia przy renderowaniu kazdej klatki
-//        // kazda iteracja petli renderowania nosi nazwe klatki
-//        // -----
-//        processInput(window);
-//
-//        // komendy renderowania pojedynczej klatki - pojedynczy przebieg petli renderowania
-//        // ------
-//        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-//        glClear(GL_COLOR_BUFFER_BIT);
-//
-//        // glfw: zamiana bufora ekranu oraz przeglsadniecie puli zdazen IO (wcisniete klawisze, ruch myszy)
-//        // -------------------------------------------------------------------------------
-//        glfwSwapBuffers(window);
-//        glfwPollEvents();
-//    }
-//
-//
-//    // glfw: zakonczenie dzialania, czyszczenie i zwalnianie zaalokowanych zasobow GLFW
-//    // ------------------------------------------------------------------
-//    glfwTerminate();
-//    return 0;
-//}
-//
-//
-//// obsluga wejscia: odpytywanie GLFW czy jakikolwiek klawisz zostal wcisniety/puszczony i reakcja na to.
-//// ---------------------------------------------------------------------------------------------------------
-//void processInput(GLFWwindow* window)
-//{
-//    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-//        glfwSetWindowShouldClose(window, true);
-//}
-//
-//
-//// glfw: gdy wielosc okna ulega zmianie ta funkcja jest automatycznie wywo³ywana
-//// width oraz height - to nowe wymiary okna GLFW - automatycznie wypelniane
-//// ---------------------------------------------------------------------------------------------
-//void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-//{
-//    // ustawienie poprawnego viewport po przeskalowaniu okna
-//    glViewport(0, 0, width, height);
-//}
-
-
-#include <glad/glad.h>
+ï»¿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <iostream>
@@ -151,13 +50,13 @@ int main()
     }
     glfwMakeContextCurrent(window);
 
-    // OpenGL - ustawienie aktywnego obszaru - rozmiar oraz po³o¿enie (viewport) renderowania wzgledem okna GLFW
+    // OpenGL - ustawienie aktywnego obszaru - rozmiar oraz poÅ‚oÅ¼enie (viewport) renderowania wzgledem okna GLFW
     // --------------------
     // glViewport(0, 0, 800, 600);
     // taki zapis nie zapewniw poprawnego dzialania przy przeskalowanou okna
 
-    // glfw - zarejestrowanie funkcji framebuffer_size_callback wywo³ywanej zwrotnie (callback function)
-    //        wywo³ywanej automatycznej za kazdym razem gdy wielkosc okna ulegnie zmianie
+    // glfw - zarejestrowanie funkcji framebuffer_size_callback wywoÅ‚ywanej zwrotnie (callback function)
+    //        wywoÅ‚ywanej automatycznej za kazdym razem gdy wielkosc okna ulegnie zmianie
     //        uaktualniajacej viewport
     // --------------------
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -219,22 +118,19 @@ int main()
     // Wprowadzenie danych wierzcholkow i ustawienie atrybitow
     // ------------------------------------------------------------------
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f,     0.18f,0.6f,0.96f,1.0f,  // lewy 0
-         0.5f, -0.5f, 0.0f,     0.0f, 0.8f, 0.3f, 1.0f, // prawy 1
-         0.0f,  0.5f, 0.0f,     1.0f, 0.2f, 0.2f, 1.0f, // górny 2
-         -0.5f / 2, 0.0f, 0.0f,   1.0f, 0.2f, 0.2f, 1.0f, // lewy œrodek 3
-         0.0f, -0.5f, 0.0f,     1.0f, 1.0f, 0.2f, 1.0f, // dolny œrodek 4
-         0.5f / 2, 0.0f,0.0f,     1.0f, 0.2f, 0.2f, 1.0f  //prawy œrodek 5
+        -0.5f, -0.5f, 0.0f, /**/ 0.9f, 0.5f, 0.4f, 1.0f, // lewy 0
+         0.5f, -0.5f, 0.0f, /**/ 0.5f, 0.6f, 0.6f, 1.0f, // prawy 1
+         0.0f,  0.5f, 0.0f, /**/ 0.9f, 0.3f, 0.4f, 1.0f, // gÃ³rny 2
 
+         -0.5f / 2, 0.0f,  0.0f, /**/ 0.9f, 0.3f, 0.4f, 1.0f, // lewy Å›rodek 3
+         0.0f,      -0.5f, 0.0f, /**/ 0.4f, 0.4f, 0.2f, 1.0f, // dolny Å›rodek 4
+         0.5f / 2,  0.0f,  0.0f, /**/ 0.5f, 0.9f, 0.1f, 1.0f  //prawy Å›rodek 5
     };
 
     int indices[] = {
         4,3,0,
-        4,1,5,
-        3,5,2
-
+        4,1,5
     };
-
 
     // Utworzenie vertex buffer objects (VBO) oraz Vertex Array Object (VAO)
     unsigned int VBO, VAO, EBO;
@@ -242,29 +138,26 @@ int main()
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
 
-    //Najpierw podpiêcie Vertex Array Object, póŸniej podpiêcie i ustawienie atrybutów vertex buffer(s).
+    //Najpierw podpiÄ™cie Vertex Array Object, pÃ³Åºniej podpiÄ™cie i ustawienie atrybutÃ³w vertex buffer(s).
     glBindVertexArray(VAO);
 
-    // ustawienie danych
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    // ustawienie atrybutow
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)0);
+
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const void*)12);
-    //glEnableVertexAttribArray(0);
 
-    // Odpiêcie
+    // OdpiÄ™cie
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // Odpiecie VAO
     glBindVertexArray(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 
     // rysowanie wireframe
@@ -284,14 +177,10 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // rysowanie trójk¹ta
+        // rysowanie trÃ³jkÄ…ta
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO); // mamy tylko jedno VAO, wiec w zasadzie nie trzeba za kazdym razem podpinac
-
-        //zamiana ???
-        //glDrawArrays(GL_TRIANGLES, 0, 3);
-        glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
-
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         // glBindVertexArray(0); // nie trzeba za kazdym razem odpinav
 
         // glfw: zamiana bufora ekranu oraz przeglsadniecie puli zdazen IO (wcisniete klawisze, ruch myszy)
@@ -300,7 +189,7 @@ int main()
         glfwPollEvents();
     }
 
-    // Zwolnienie pamiêci
+    // Zwolnienie pamiÄ™ci
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
@@ -321,7 +210,7 @@ void processInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, true);
 }
 
-// glfw: gdy wielosc okna ulega zmianie ta funkcja jest automatycznie wywo³ywana
+// glfw: gdy wielosc okna ulega zmianie ta funkcja jest automatycznie wywoÅ‚ywana
 // width oraz height - to nowe wymiary okna GLFW - automatycznie wypelniane
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
