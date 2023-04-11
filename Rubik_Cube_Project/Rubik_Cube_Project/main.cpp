@@ -1,5 +1,6 @@
 ﻿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#define STB_IMAGE_IMPLEMENTATION
 
 #include <iostream>
 
@@ -9,34 +10,15 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"layout (location = 0) in vec3 aColor;\n"
-"out vec3 ourColor;\n"
-"uniform float Position;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x + Position, -aPos.y, aPos.z, 1.0);\n"
-"   ourColor = aColor;\n"
-"}\0";
-
-const char* fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"in vec3 ourColor;\n"
-"void main()\n"
-"{\n"
-"   FragColor = vec4(ourColor, 1.0f);\n"
-"}\n\0";
-
-int main()
+int main(int argc, char* argv[])
 {
-    //Konfiguracja
+    // Konfiguracja
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGL 6", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -52,82 +34,88 @@ int main()
         return -1;
     }
 
-    // vertex shader
-    int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    int success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+    // Zaladowanie, kompilowanie i linkowanie shaderow
+    char vs[] = "../shader/p6_1.vs";
+    char fs[] = "../shader/p6_1.fs";
+    if (argc == 2) {
+        vs[13] = argv[1][0];
+        fs[13] = argv[1][0];
     }
 
-    // fragment shader
-    int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    // linkowanie
-    int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-    }
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
+    //Shader ourShader(vs, fs);
 
     // Program
     float vertices[] = {
-        // pozycja           // kolor
-         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // dolny prawy
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // dolny lewy
-         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // górny
-
+        // pozycja           // kolor            // kordynaty tekstury
+           0.2f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // górny prawy
+           0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // dolny prawy
+          -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // dolny lewy
+          -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // górny lewy
+    };
+    unsigned int indices[] = {
+        0, 1, 3, // pierwszy trójkat
+        1, 2, 3  // drugi trójkat
     };
 
-    unsigned int VBO, VAO;
+    unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
 
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
     // atrybuty pozycji
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     // atrybuty koloru
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    // glBindVertexArray(0);  // mamy tylko jedno VAO wiec nie musimy go aktywowac / dezaktywowac - caly czas aktywne
+    // atrybuty tekstury
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
-    // poniewaz mamy tylko jeden program shadera mozemy go aktywowac przed petla renderowania
-    glUseProgram(shaderProgram);
 
+    // ladowanie tekstury
+    unsigned int texture;
 
-    // uniform
-    float v = 0.5f;
-    float loc = glGetUniformLocation(shaderProgram, "Position");
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture); // wszystkie kolejne operacje GL_TEXTURE_2D beda dotyczyly tej tekstury
 
-    glUseProgram(shaderProgram);
-    glUniform1f(loc, v);
+    // ustawienie mapowania tekstury
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// ustawienia mapowania na GL_REPEAT (domyslne)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    // ustawienie parametrow filtrowania tekstury
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // zaladowanie tekstury i generacja mip-map
+    int width, height, nrChannels;
+    // wykorzystana biblioteka stbi do ladowania plikow bitmapowych
+    // width - szerokosc
+    // height - wysokosc
+    // nrChannels - ilosc kanalow koloru
+    //unsigned char* data = stbi_load("../texture/1.jpg", &width, &height, &nrChannels, 0);
+    /*
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    */
+    //stbi_image_free(data);
 
 
     // petla renderowania
@@ -137,9 +125,13 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // renderowanie trojkata
-        // glBindVertexArray(VAO); // mamy tylko jedno VAO wiec nie musimy go aktywowac / dezaktywowac - caly czas aktywne
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        // podlaczenie tekstury
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        // renderowanie
+        //ourShader.use();
+        glBindVertexArray(VAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -147,7 +139,7 @@ int main()
 
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-    glDeleteProgram(shaderProgram);
+    glDeleteBuffers(1, &EBO);
 
     glfwTerminate();
     return 0;

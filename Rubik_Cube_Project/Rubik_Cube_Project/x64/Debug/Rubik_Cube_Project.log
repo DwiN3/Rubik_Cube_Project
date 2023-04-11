@@ -1,5 +1,5 @@
 ﻿  main.cpp
-C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\Rubik_Cube_Project\main.cpp(127,15): warning C4244: "inicjowanie": konwersja z "GLint" do "float", możliwa utrata danych
-C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\Rubik_Cube_Project\main.cpp(130,17): warning C4244: "argument": konwersja z "float" do "GLint", możliwa utrata danych
-LINK : warning LNK4098: domyslna biblioteka ,MSVCRT" powoduje konflikt z innymi bibliotekami; uzyj opcji /NODEFAULTLIB:biblioteka
+C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\Rubik_Cube_Project\main.cpp(101,16): warning C4101: "height": lokalna zmienna, do której nie istnieje odwołanie
+C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\Rubik_Cube_Project\main.cpp(101,24): warning C4101: "nrChannels": lokalna zmienna, do której nie istnieje odwołanie
+C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\Rubik_Cube_Project\main.cpp(101,9): warning C4101: "width": lokalna zmienna, do której nie istnieje odwołanie
   Rubik_Cube_Project.vcxproj -> C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\x64\Debug\Rubik_Cube_Project.exe
