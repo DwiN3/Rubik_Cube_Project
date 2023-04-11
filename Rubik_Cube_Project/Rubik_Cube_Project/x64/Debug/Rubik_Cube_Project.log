@@ -1,5 +1,2 @@
 ﻿  main.cpp
-C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\Rubik_Cube_Project\main.cpp(101,16): warning C4101: "height": lokalna zmienna, do której nie istnieje odwołanie
-C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\Rubik_Cube_Project\main.cpp(101,24): warning C4101: "nrChannels": lokalna zmienna, do której nie istnieje odwołanie
-C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\Rubik_Cube_Project\main.cpp(101,9): warning C4101: "width": lokalna zmienna, do której nie istnieje odwołanie
-  Rubik_Cube_Project.vcxproj -> C:\Users\Kuba\Desktop\studia\semestry\semestr_4\grafika2\Rubik_Cube_Project\Rubik_Cube_Project\x64\Debug\Rubik_Cube_Project.exe
+  Rubik_Cube_Project.vcxproj -> C:\Studia_II_rok\Grafika 3D\Project\Rubik_Cube_Project\Rubik_Cube_Project\x64\Debug\Rubik_Cube_Project.exe
