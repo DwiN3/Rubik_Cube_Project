@@ -7,7 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <C:/Studia_II_rok/Grafika 3D/Project/Rubik_Cube_Project/Rubik_Cube_Project/Rubik_Cube_Project/shader.h>
+#include <C:/LIB/assets/shader.h>
 
 //#include <learnopengl/filesystem.h>
 //#include <learnopengl/shader_m.h>
@@ -62,8 +62,8 @@ int main(int argc, char* argv[])
     // ------------------------------------
 
     // Zaladowanie, kompilowanie i linkowanie shaderow
-    char vs[] = "C:/Studia_II_rok/Grafika 3D/Project/Rubik_Cube_Project/Rubik_Cube_Project/6.2.coordinate_systems.vs";
-    char fs[] = "C:/Studia_II_rok/Grafika 3D/Project/Rubik_Cube_Project/Rubik_Cube_Project/6.2.coordinate_systems.fs";
+    char vs[] = "C:/LIB/assets/6.2.coordinate_systems.vs";
+    char fs[] = "C:/LIB/assets/6.2.coordinate_systems.fs";
     if (argc == 2) {
         vs[13] = argv[1][0];
         fs[13] = argv[1][0];
@@ -119,15 +119,16 @@ int main(int argc, char* argv[])
 
     // na testy
     glm::vec3 cubePositions[] = {
-       glm::vec3(-2.0f,  0.0f,  -5.0f),
-       glm::vec3(-1.0f,  0.0f, -5.0f),
-       glm::vec3(0.0f,  0.0f, -5.0f),
-       glm::vec3(-2.0f, -1.0f, -5.0f),
-       glm::vec3(-1.0f, -1.0f, -5.0f),
-       glm::vec3(0.0f,  -1.0f, -5.0f),
-       glm::vec3(-2.0f, -2.0f,   -5.0f),
-       glm::vec3(-1.0f, -2.0f, -5.0f),
-       glm::vec3(0.0f,  -2.0f, -5.0f),
+       //       x        y      z
+       glm::vec3(-2.0f,  0.0f,  -5.0f), // FRONT - LEFT - UP
+       glm::vec3(-1.0f,  0.0f,  -5.0f), // FRONT - CENTER UP
+       glm::vec3(0.0f,   0.0f,  -5.0f),
+       glm::vec3(-2.0f, -1.0f,  -5.0f),
+       glm::vec3(-1.0f, -1.0f,  -5.0f),
+       glm::vec3(0.0f,  -1.0f,  -5.0f),
+       glm::vec3(-2.0f, -2.0f,  -5.0f),
+       glm::vec3(-1.0f, -2.0f,  -5.0f),
+       glm::vec3(0.0f,  -2.0f,  -5.0f)
        
     };
 
@@ -164,7 +165,7 @@ int main(int argc, char* argv[])
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char* data = stbi_load("C:/Studia_II_rok/Grafika 3D/Project/Rubik_Cube_Project/Rubik_Cube_Project/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("C:/LIB/assets/container.jpg", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -186,7 +187,7 @@ int main(int argc, char* argv[])
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load("C:/Studia_II_rok/Grafika 3D/Project/Rubik_Cube_Project/Rubik_Cube_Project/awesomeface.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("C:/LIB/assets/awesomeface.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
@@ -262,7 +263,7 @@ int main(int argc, char* argv[])
         glm::mat4 view = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        view = glm::translate(view, glm::vec3(1.0f, 1.0f, -3.0f)); // odległość od kamery
 
         // pass them to the shaders (3 different ways)
        /* glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -279,8 +280,8 @@ int main(int argc, char* argv[])
             // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            float angle = 0.0f * i; // rotacja poszczególnych elementów
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f)); // rotacja modeli
             ourShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
