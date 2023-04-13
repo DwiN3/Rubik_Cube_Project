@@ -130,6 +130,8 @@ int main()
     // world space positions of our cubes
     glm::vec3 cubePositions[] = {
         //       x        y      z
+
+        // 1 strona
         glm::vec3(-2.0f,  0.0f,  -5.0f), // FRONT - LEFT - UP
         glm::vec3(-1.0f,  0.0f,  -5.0f), // FRONT - CENTER UP
         glm::vec3(0.0f,   0.0f,  -5.0f),
@@ -142,9 +144,31 @@ int main()
         glm::vec3(-1.0f, -2.0f,  -5.0f),
         glm::vec3(0.0f,  -2.0f,  -5.0f),
 
+        // 2 strona
         glm::vec3(-2.0f,  0.0f,  -6.0f),
-        glm::vec3(2.0f,   2.0f,  -6.0f),
-        glm::vec3(3.0f,   2.0f,  -6.0f)
+        glm::vec3(-1.0f,  0.0f,  -6.0f),
+        glm::vec3(0.0f,   0.0f,  -6.0f),
+
+        glm::vec3(-2.0f, -1.0f,  -6.0f),
+        glm::vec3(-1.0f, -1.0f,  -6.0f),
+        glm::vec3(0.0f,  -1.0f,  -6.0f),
+
+        glm::vec3(-2.0f, -2.0f,  -6.0f),
+        glm::vec3(-1.0f, -2.0f,  -6.0f),
+        glm::vec3(0.0f,  -2.0f,  -6.0f),
+
+        // 3 strona
+        glm::vec3(-2.0f,  0.0f,  -7.0f),
+        glm::vec3(-1.0f,  0.0f,  -7.0f),
+        glm::vec3(0.0f,   0.0f,  -7.0f),
+
+        glm::vec3(-2.0f, -1.0f,  -7.0f),
+        glm::vec3(-1.0f, -1.0f,  -7.0f),
+        glm::vec3(0.0f,  -1.0f,  -7.0f),
+
+        glm::vec3(-2.0f, -2.0f,  -7.0f),
+        glm::vec3(-1.0f, -2.0f,  -7.0f),
+        glm::vec3(0.0f,  -2.0f,  -7.0f),
 
     };
     unsigned int VBO, VAO;
@@ -258,9 +282,9 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("view", view);
 
-        // render boxes
+        // render boxes 27 boxów jest
         glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < 10; i++)
+        for (unsigned int i = 0; i < 27; i++)
         {
             // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
