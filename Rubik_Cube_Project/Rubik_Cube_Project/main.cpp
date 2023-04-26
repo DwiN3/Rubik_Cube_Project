@@ -11,10 +11,6 @@
 
 #include <C:/LIB/assets/shader.h>
 
-//#include <learnopengl/filesystem.h>
-//#include <learnopengl/shader_m.h>
-//#include <learnopengl/camera.h>
-
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -38,8 +34,7 @@ float lastFrame = 0.0f;
 
 int main()
 {
-    // glfw: initialize and configure
-    // ------------------------------
+    // glfw
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -49,9 +44,8 @@ int main()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    // glfw window creation
-    // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    // glfw window
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "RubikCube", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -63,11 +57,10 @@ int main()
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
-    // tell GLFW to capture our mouse
+    // glfw: capture mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    // glad: load all OpenGL function pointers
-    // ---------------------------------------
+    // glad: load function
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
@@ -75,15 +68,12 @@ int main()
     }
 
     // configure global opengl state
-    // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    // build and compile our shader zprogram
-    // ------------------------------------
+    // build shader
     Shader ourShader("C:/LIB/assets/7.4.camera.vs", "C:/LIB/assets/7.4.camera.fs");
 
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
+    // set up vertex
     float vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -129,9 +119,9 @@ int main()
     };
     // world space positions of our cubes
     glm::vec3 cubePositions[] = {
-        //       x        y      z
+        //x               y      z
 
-        // 1 strona
+        // 1 side
         glm::vec3(-2.0f,  0.0f,  -5.0f), // FRONT - LEFT - UP
         glm::vec3(-1.0f,  0.0f,  -5.0f), // FRONT - CENTER UP
         glm::vec3(0.0f,   0.0f,  -5.0f),
@@ -144,7 +134,7 @@ int main()
         glm::vec3(-1.0f, -2.0f,  -5.0f),
         glm::vec3(0.0f,  -2.0f,  -5.0f),
 
-        // 2 strona
+        // 2 side
         glm::vec3(-2.0f,  0.0f,  -6.0f),
         glm::vec3(-1.0f,  0.0f,  -6.0f),
         glm::vec3(0.0f,   0.0f,  -6.0f),
@@ -157,7 +147,7 @@ int main()
         glm::vec3(-1.0f, -2.0f,  -6.0f),
         glm::vec3(0.0f,  -2.0f,  -6.0f),
 
-        // 3 strona
+        // 3 side
         glm::vec3(-2.0f,  0.0f,  -7.0f),
         glm::vec3(-1.0f,  0.0f,  -7.0f),
         glm::vec3(0.0f,   0.0f,  -7.0f),
@@ -189,10 +179,8 @@ int main()
 
 
     // load and create a texture 
-    // -------------------------
     unsigned int texture1, texture2;
     // texture 1
-    // ---------
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
     // set the texture wrapping parameters
@@ -204,7 +192,7 @@ int main()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char* data = stbi_load("C:/LIB/assets/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("C:/LIB/assets/colours/red.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -216,7 +204,6 @@ int main()
     }
     stbi_image_free(data);
     // texture 2
-    // ---------
     glGenTextures(1, &texture2);
     glBindTexture(GL_TEXTURE_2D, texture2);
     // set the texture wrapping parameters
@@ -229,7 +216,6 @@ int main()
     data = stbi_load("C:/LIB/assets/awesomeface.png", &width, &height, &nrChannels, 0);
     if (data)
     {
-        // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
@@ -239,29 +225,24 @@ int main()
     }
     stbi_image_free(data);
 
-    // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
-    // -------------------------------------------------------------------------------------------
+    // sampler
     ourShader.use();
     ourShader.setInt("texture1", 0);
     ourShader.setInt("texture2", 1);
 
 
     // render loop
-    // -----------
     while (!glfwWindowShouldClose(window))
     {
         // per-frame time logic
-        // --------------------
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
         // input
-        // -----
         processInput(window);
 
         // render
-        // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -274,7 +255,7 @@ int main()
         // activate shader
         ourShader.use();
 
-        // pass projection matrix to shader (note that in this case it could change every frame)
+        // pass projection matrix to shader
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         ourShader.setMat4("projection", projection);
 
@@ -282,7 +263,7 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("view", view);
 
-        // render boxes 27 boxów jest
+        // render boxes (27 boxes)
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 27; i++)
         {
@@ -297,24 +278,20 @@ int main()
         }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     // optional: de-allocate all resources once they've outlived their purpose:
-    // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
     glfwTerminate();
     return 0;
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
+// process all input
 void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -330,8 +307,7 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
+// glfw: whenever the window size changed 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     // make sure the viewport matches the new window dimensions; note that width and 
@@ -339,9 +315,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-
-// glfw: whenever the mouse moves, this callback is called
-// -------------------------------------------------------
+// glfw: whenever the mouse moves
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
     float xpos = static_cast<float>(xposIn);
@@ -363,8 +337,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-// glfw: whenever the mouse scroll wheel scrolls, this callback is called
-// ----------------------------------------------------------------------
+// mouse scroll
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
