@@ -1,32 +1,17 @@
-# Prerequisites
-*.d
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+Rubik_Cube_Project/.vs/Rubik_Cube_Project/FileContentIndex/31efc022-f33a-49dd-9d96-8b384ec1a9ad.vsidx
+Rubik_Cube_Project/.vs/Rubik_Cube_Project/FileContentIndex/5374a5a8-6de6-43a0-95aa-79845cbef3aa.vsidx
+Rubik_Cube_Project/.vs/Rubik_Cube_Project/FileContentIndex/70db32f1-e777-47bf-84de-cb31b4a12172.vsidx
+Rubik_Cube_Project/.vs/Rubik_Cube_Project/FileContentIndex/c9c2add6-68d5-4758-9692-fdc2c9694fbf.vsidx
+Rubik_Cube_Project/.vs/Rubik_Cube_Project/FileContentIndex/cc5b5e40-e0ac-42a1-a010-865ba0d1cbfc.vsidx
+Rubik_Cube_Project/.vs/Rubik_Cube_Project/FileContentIndex/f0af01ae-13e1-4fdc-9216-52ee36c30932.vsidx
+Rubik_Cube_Project/.vs/Rubik_Cube_Project/v17/.suo
+Rubik_Cube_Project/.vs/Rubik_Cube_Project/v17/Browse.VC.db
+Rubik_Cube_Project/Rubik_Cube_Project/x64/Debug/glad.obj
+Rubik_Cube_Project/Rubik_Cube_Project/x64/Debug/main.obj
+Rubik_Cube_Project/Rubik_Cube_Project/x64/Debug/Rubik_Cu.0f8bd9bb.tlog/CL.read.1.tlog
+Rubik_Cube_Project/Rubik_Cube_Project/x64/Debug/Rubik_Cu.0f8bd9bb.tlog/CL.write.1.tlog
+Rubik_Cube_Project/Rubik_Cube_Project/x64/Debug/Rubik_Cu.0f8bd9bb.tlog/link.read.1.tlog
+Rubik_Cube_Project/Rubik_Cube_Project/x64/Debug/Rubik_Cu.0f8bd9bb.tlog/link.write.1.tlog
+Rubik_Cube_Project/Rubik_Cube_Project/x64/Debug/Rubik_Cube_Project.log
+Rubik_Cube_Project/x64/Debug/Rubik_Cube_Project.exe

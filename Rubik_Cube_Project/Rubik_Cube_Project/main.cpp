@@ -12,7 +12,9 @@
 #include <C:/LIB/assets/shader.h>
 
 #include <iostream>
-//#include <filesystem>
+#include <glm/gtc/type_ptr.hpp>
+
+
 //#include <experimental/filesystem> // Header file for pre-standard implementation
 using namespace std::experimental::filesystem;
 
@@ -20,6 +22,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
+unsigned int loadCubemap();
 
 
 // settings
@@ -75,7 +78,8 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     // build shader
-    Shader ourShader("C:/LIB/assets/7.4.camera.vs", "C:/LIB/assets/7.4.camera.fs");
+    Shader ourShader("assets/camera.vs", "assets/camera.fs");
+    Shader skyboxShader("assets/skybox.vs", "assets/skybox.fs");
 
     // set up vertex
     float vertices[] = {
@@ -88,38 +92,38 @@ int main()
 
         -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
          0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 
         -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
         -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 
         -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 
         -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
         -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
          0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 
          0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
          0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
          0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 
 
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 
          0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
          0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 
         -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
+       
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
          0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
          0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
          0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
         -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 
     };
     // world space positions of our cubes
     glm::vec3 cubePositions[] = {
@@ -165,6 +169,69 @@ int main()
         glm::vec3(0.0f,  -2.0f,  -7.0f),
 
     };
+
+    // skybox
+
+    float skyboxVertices[] = {
+        // positions          
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        -1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f
+    };
+    // skybox VAO
+    unsigned int skyboxVAO, skyboxVBO;
+    glGenVertexArrays(1, &skyboxVAO);
+    glGenBuffers(1, &skyboxVBO);
+    glBindVertexArray(skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+   
+    unsigned int cubemapTexture = loadCubemap();
+    skyboxShader.use();
+    skyboxShader.setInt("skybox", 0);
+
+
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -181,7 +248,7 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1); //0?
 
-
+    
 
     // load and create a texture 
     unsigned int texture1, texture2, texture3, texture4, texture5, texture6;
@@ -197,7 +264,7 @@ int main()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char* data = stbi_load("C:/LIB/assets/colors/red.png", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("colors/red.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -219,7 +286,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
     //data = stbi_load("C:/LIB/assets/container.png", &width, &height, &nrChannels, 0);
-    data = stbi_load("C:/LIB/assets/colors/green.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("colors/green.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -230,7 +297,7 @@ int main()
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
-
+ 
     // texture 3
     glGenTextures(1, &texture3);
     glBindTexture(GL_TEXTURE_2D, texture3);
@@ -242,7 +309,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    data = stbi_load("C:/LIB/assets/colors/blue.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("colors/blue.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -264,7 +331,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    data = stbi_load("C:/LIB/assets/colors/yellow.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("colors/yellow.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -275,7 +342,7 @@ int main()
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
-
+   
     // texture 5
     glGenTextures(1, &texture5);
     glBindTexture(GL_TEXTURE_2D, texture5);
@@ -287,7 +354,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    data = stbi_load("C:/LIB/assets/colors/white.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("colors/white.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -310,7 +377,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    data = stbi_load("C:/LIB/assets/colors/orange.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("colors/orange.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -322,36 +389,26 @@ int main()
     }
     stbi_image_free(data);
 
-
-    // test
-    const char* colors[6] =
-    {
-        "C:/LIB/assets/colors/yellow.png" ,
-        "C:/LIB/assets/colors/red.png",
-        "C:/LIB/assets/colors/orange.png",
-        "C:/LIB/assets/colors/blue.png",
-        "C:/LIB/assets/colors/white.png",
-        "C:/LIB/assets/colors/green.png"
-    };
-
-
+   
+   
+   
+ 
+  
 
     // sampler
     //ourShader.use();
     //ourShader.setInt("texture1", 0);
     //ourShader.setInt("texture2", 1);
 
-
-
     // render loop
     while (!glfwWindowShouldClose(window))
     {
-
+   
         // per-frame time logic
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-
+        
         // input
         processInput(window);
 
@@ -375,14 +432,12 @@ int main()
         // render boxes (27 boxes)
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 27; i++)
-        //for (unsigned int i = 0; i < 1; i++)
         {
             ourShader.use();
             for (unsigned int j = 0; j < 6; j++)
             {
                 // activited special texture for each side   
-
-                if (j == 0) 
+                if (j == 0)
                 {
                     glActiveTexture(GL_TEXTURE1);
                     glBindTexture(GL_TEXTURE_2D, texture1);
@@ -390,8 +445,8 @@ int main()
                 }
                 else if (j == 1)
                 {
-                    glActiveTexture(GL_TEXTURE2);
-                    glBindTexture(GL_TEXTURE_2D, texture2);
+                    glActiveTexture(GL_TEXTURE6);
+                    glBindTexture(GL_TEXTURE_2D, texture6);
                     ourShader.setInt("texture1", 1);
                 }
                 else if (j == 2)
@@ -412,14 +467,12 @@ int main()
                     glBindTexture(GL_TEXTURE_2D, texture5);
                     ourShader.setInt("texture1", 4);
                 }
-                else if (j == 5)
-                {
-                    glActiveTexture(GL_TEXTURE6);
-                    glBindTexture(GL_TEXTURE_2D, texture6);
+                else if(j == 5) {
+                    glActiveTexture(GL_TEXTURE2);
+                    glBindTexture(GL_TEXTURE_2D, texture2);
                     ourShader.setInt("texture1", 5);
                 }
                 
-
                 // calculate the model matrix for each object and pass it to shader before drawing
                 glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
                 model = glm::translate(model, cubePositions[i]);
@@ -435,8 +488,23 @@ int main()
             if (count >= 35)
                 count = 6;
 
-
+            
         }
+
+        // draw skybox as last
+        glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+        skyboxShader.use();
+        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+        skyboxShader.setMat4("view", view);
+        skyboxShader.setMat4("projection", projection);
+        // skybox cube
+        glBindVertexArray(skyboxVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glDepthFunc(GL_LESS); // set depth function back to default
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -445,12 +513,15 @@ int main()
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
+    glDeleteVertexArrays(1, &skyboxVAO);
+    glDeleteBuffers(1, &skyboxVBO);
+
     // glfw: terminate, clearing all previously allocated GLFW resources.
     glfwTerminate();
     return 0;
 }
 
-// process all input
+// camera
 void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -500,4 +571,45 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
+}
+unsigned int loadCubemap()
+{
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+    int width, height, nrChannels;
+    for (unsigned int i = 0; i < 6; i++)
+    {
+        unsigned char* data = stbi_load("skybox/right.jpg", &width, &height, &nrChannels, 0);
+        if (i == 0)
+            data = stbi_load("skybox/right.jpg", &width, &height, &nrChannels, 0);
+        else if ( i == 1)
+            data = stbi_load("skybox/left.jpg", &width, &height, &nrChannels, 0);
+        else if (i == 2)
+            data = stbi_load("skybox/top.jpg", &width, &height, &nrChannels, 0);
+        else if (i == 3)
+            data = stbi_load("skybox/bottom.jpg", &width, &height, &nrChannels, 0);
+        else if (i == 4)
+            data = stbi_load("skybox/front.jpg", &width, &height, &nrChannels, 0);
+        else if (i == 5)
+            data = stbi_load("skybox/back.jpg", &width, &height, &nrChannels, 0);
+       
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Cubemap texture failed to load at path: " << std::endl;
+            stbi_image_free(data);
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return textureID;
 }
