@@ -400,8 +400,6 @@ int main()
     //ourShader.setInt("texture1", 0);
     //ourShader.setInt("texture2", 1);
 
-    
-
     // render loop
     while (!glfwWindowShouldClose(window))
     {
@@ -523,7 +521,7 @@ int main()
     return 0;
 }
 
-// process all input
+// camera
 void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
