@@ -23,6 +23,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 unsigned int loadCubemap();
+void turnCube(int which, glm::vec3);
 
 
 // settings
@@ -38,6 +39,81 @@ bool firstMouse = true;
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
+
+// cube
+float angle[] = {
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f
+};
+glm::vec3 cubetest;
+glm::vec3 cubePositions[] = {
+    //x               y      z
+
+    // 1 side
+    glm::vec3(-2.0f,  0.0f,  -5.0f), // FRONT - LEFT - UP
+    glm::vec3(-1.0f,  0.0f,  -5.0f), // FRONT - CENTER UP
+    glm::vec3(0.0f,   0.0f,  -5.0f),
+
+    glm::vec3(-2.0f, -1.0f,  -5.0f),
+    glm::vec3(-1.0f, -1.0f,  -5.0f),
+    glm::vec3(0.0f,  -1.0f,  -5.0f),
+
+    glm::vec3(-2.0f, -2.0f,  -5.0f),
+    glm::vec3(-1.0f, -2.0f,  -5.0f),
+    glm::vec3(0.0f,  -2.0f,  -5.0f),
+
+    // 2 side
+    glm::vec3(-2.0f,  0.0f,  -6.0f),
+    glm::vec3(-1.0f,  0.0f,  -6.0f),
+    glm::vec3(0.0f,   0.0f,  -6.0f),
+
+    glm::vec3(-2.0f, -1.0f,  -6.0f),
+    glm::vec3(-1.0f, -1.0f,  -6.0f),
+    glm::vec3(0.0f,  -1.0f,  -6.0f),
+
+    glm::vec3(-2.0f, -2.0f,  -6.0f),
+    glm::vec3(-1.0f, -2.0f,  -6.0f),
+    glm::vec3(0.0f,  -2.0f,  -6.0f),
+
+    // 3 side
+    glm::vec3(-2.0f,  0.0f,  -7.0f),
+    glm::vec3(-1.0f,  0.0f,  -7.0f),
+    glm::vec3(0.0f,   0.0f,  -7.0f),
+
+    glm::vec3(-2.0f, -1.0f,  -7.0f),
+    glm::vec3(-1.0f, -1.0f,  -7.0f),
+    glm::vec3(0.0f,  -1.0f,  -7.0f),
+
+    glm::vec3(-2.0f, -2.0f,  -7.0f),
+    glm::vec3(-1.0f, -2.0f,  -7.0f),
+    glm::vec3(0.0f,  -2.0f,  -7.0f),
+
+};
 
 int main()
 {
@@ -126,49 +202,49 @@ int main()
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 
     };
     // world space positions of our cubes
-    glm::vec3 cubePositions[] = {
-        //x               y      z
+    //glm::vec3 cubePositions[] = {
+    //    //x               y      z
 
-        // 1 side
-        glm::vec3(-2.0f,  0.0f,  -5.0f), // FRONT - LEFT - UP
-        glm::vec3(-1.0f,  0.0f,  -5.0f), // FRONT - CENTER UP
-        glm::vec3(0.0f,   0.0f,  -5.0f),
+    //    // 1 side
+    //    glm::vec3(-2.0f,  0.0f,  -5.0f), // FRONT - LEFT - UP
+    //    glm::vec3(-1.0f,  0.0f,  -5.0f), // FRONT - CENTER UP
+    //    glm::vec3(0.0f,   0.0f,  -5.0f),
 
-        glm::vec3(-2.0f, -1.0f,  -5.0f),
-        glm::vec3(-1.0f, -1.0f,  -5.0f),
-        glm::vec3(0.0f,  -1.0f,  -5.0f),
+    //    glm::vec3(-2.0f, -1.0f,  -5.0f),
+    //    glm::vec3(-1.0f, -1.0f,  -5.0f),
+    //    glm::vec3(0.0f,  -1.0f,  -5.0f),
 
-        glm::vec3(-2.0f, -2.0f,  -5.0f),
-        glm::vec3(-1.0f, -2.0f,  -5.0f),
-        glm::vec3(0.0f,  -2.0f,  -5.0f),
+    //    glm::vec3(-2.0f, -2.0f,  -5.0f),
+    //    glm::vec3(-1.0f, -2.0f,  -5.0f),
+    //    glm::vec3(0.0f,  -2.0f,  -5.0f),
 
-        // 2 side
-        glm::vec3(-2.0f,  0.0f,  -6.0f),
-        glm::vec3(-1.0f,  0.0f,  -6.0f),
-        glm::vec3(0.0f,   0.0f,  -6.0f),
+    //    // 2 side
+    //    glm::vec3(-2.0f,  0.0f,  -6.0f),
+    //    glm::vec3(-1.0f,  0.0f,  -6.0f),
+    //    glm::vec3(0.0f,   0.0f,  -6.0f),
 
-        glm::vec3(-2.0f, -1.0f,  -6.0f),
-        glm::vec3(-1.0f, -1.0f,  -6.0f),
-        glm::vec3(0.0f,  -1.0f,  -6.0f),
+    //    glm::vec3(-2.0f, -1.0f,  -6.0f),
+    //    glm::vec3(-1.0f, -1.0f,  -6.0f),
+    //    glm::vec3(0.0f,  -1.0f,  -6.0f),
 
-        glm::vec3(-2.0f, -2.0f,  -6.0f),
-        glm::vec3(-1.0f, -2.0f,  -6.0f),
-        glm::vec3(0.0f,  -2.0f,  -6.0f),
+    //    glm::vec3(-2.0f, -2.0f,  -6.0f),
+    //    glm::vec3(-1.0f, -2.0f,  -6.0f),
+    //    glm::vec3(0.0f,  -2.0f,  -6.0f),
 
-        // 3 side
-        glm::vec3(-2.0f,  0.0f,  -7.0f),
-        glm::vec3(-1.0f,  0.0f,  -7.0f),
-        glm::vec3(0.0f,   0.0f,  -7.0f),
+    //    // 3 side
+    //    glm::vec3(-2.0f,  0.0f,  -7.0f),
+    //    glm::vec3(-1.0f,  0.0f,  -7.0f),
+    //    glm::vec3(0.0f,   0.0f,  -7.0f),
 
-        glm::vec3(-2.0f, -1.0f,  -7.0f),
-        glm::vec3(-1.0f, -1.0f,  -7.0f),
-        glm::vec3(0.0f,  -1.0f,  -7.0f),
+    //    glm::vec3(-2.0f, -1.0f,  -7.0f),
+    //    glm::vec3(-1.0f, -1.0f,  -7.0f),
+    //    glm::vec3(0.0f,  -1.0f,  -7.0f),
 
-        glm::vec3(-2.0f, -2.0f,  -7.0f),
-        glm::vec3(-1.0f, -2.0f,  -7.0f),
-        glm::vec3(0.0f,  -2.0f,  -7.0f),
+    //    glm::vec3(-2.0f, -2.0f,  -7.0f),
+    //    glm::vec3(-1.0f, -2.0f,  -7.0f),
+    //    glm::vec3(0.0f,  -2.0f,  -7.0f),
 
-    };
+    //};
 
     // skybox
 
@@ -216,6 +292,7 @@ int main()
         -1.0f, -1.0f,  1.0f,
          1.0f, -1.0f,  1.0f
     };
+    cubetest = cubePositions[0];
     // skybox VAO
     unsigned int skyboxVAO, skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -478,8 +555,13 @@ int main()
                 // calculate the model matrix for each object and pass it to shader before drawing
                 glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
                 model = glm::translate(model, cubePositions[i]);
-                float angle = 0.0f * i;
-                model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
+                /*float angle = 0.0f * i;
+                if (i == 0)
+                {
+                    angle = 90.0f * 1;
+                }*/
+                //angle[i];
+                model = glm::rotate(model, glm::radians(angle[i]), glm::vec3(1.0f, 0.0f, 0.0f));
                 ourShader.setMat4("model", model);
 
                 // count is the number of who manny triangles sholud to create with selected texture  (6 - one side, 36 - all cube)
@@ -489,6 +571,7 @@ int main()
             // reseting after one cube
             if (count >= 35)
                 count = 6;
+            //angle = 0.0f;
 
             
         }
@@ -537,6 +620,18 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
+        std::cout << "klik";
+        turnCube(1, glm::vec3(1.0f, 1.0f, 3.0f));
+        
+        
+    }
+        
+}
+void turnCube(int which, glm::vec3 coords)
+{
+    angle[which] = 90.0f;
+    cubePositions[which] = coords;
 }
 
 // glfw: whenever the window size changed 
@@ -574,6 +669,10 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
+
+/**
+ @qwewqe
+*/
 unsigned int loadCubemap()
 {
     unsigned int textureID;
@@ -615,3 +714,5 @@ unsigned int loadCubemap()
 
     return textureID;
 }
+
+
