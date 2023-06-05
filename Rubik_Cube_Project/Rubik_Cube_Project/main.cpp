@@ -52,10 +52,7 @@ unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4,
 unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
 
 
-void loadTextures() {
-    // textureClassic1
-    glGenTextures(1, &textureClassic1);
-    glBindTexture(GL_TEXTURE_2D, textureClassic1);
+void dataTextureLoad() {
     // set the texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -63,11 +60,10 @@ void loadTextures() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+}
 
-    unsigned char* dataClassic = stbi_load("colors/classic/red.png", &width, &height, &nrChannels, 0);
-
+void loadClassic(unsigned char* dataClassic, int width, int height) {
     if (dataClassic) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataClassic);
         glGenerateMipmap(GL_TEXTURE_2D);
@@ -76,139 +72,92 @@ void loadTextures() {
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(dataClassic);
+}
+
+void loadDeuteranopia(unsigned char* dataDeuteranopia, int width, int height) {
+    if (dataDeuteranopia) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataDeuteranopia);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(dataDeuteranopia);
+}
+
+
+
+void loadTextures() {
+    int width, height, nrChannels;
+
+    // textureClassic1
+    glGenTextures(1, &textureClassic1);
+    glBindTexture(GL_TEXTURE_2D, textureClassic1);
+
+    dataTextureLoad();   
+
+    unsigned char* dataClassic = stbi_load("colors/classic/red.png", &width, &height, &nrChannels, 0);
+
+    loadClassic(dataClassic, width, height);
+
 
 
     // textureClassic2
     glGenTextures(1, &textureClassic2);
     glBindTexture(GL_TEXTURE_2D, textureClassic2);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    //data = stbi_load("C:/LIB/assets/container.png", &width, &height, &nrChannels, 0);
 
+    dataTextureLoad();
 
     dataClassic = stbi_load("colors/classic/green.png", &width, &height, &nrChannels, 0);
 
-
-    if (dataClassic) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataClassic);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataClassic);
+    loadClassic(dataClassic, width, height);
 
 
     // textureClassic3
     glGenTextures(1, &textureClassic3);
     glBindTexture(GL_TEXTURE_2D, textureClassic3);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-
+    
+    dataTextureLoad();
 
     dataClassic = stbi_load("colors/classic/blue.png", &width, &height, &nrChannels, 0);
 
+    loadClassic(dataClassic, width, height);
 
-    if (dataClassic) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataClassic);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataClassic);
 
 
     // textureClassic4
     glGenTextures(1, &textureClassic4);
     glBindTexture(GL_TEXTURE_2D, textureClassic4);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-
-
+   
+    dataTextureLoad();
 
     dataClassic = stbi_load("colors/classic/yellow.png", &width, &height, &nrChannels, 0);
 
+    loadClassic(dataClassic, width, height);
 
-    if (dataClassic) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataClassic);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataClassic);
 
 
     // textureClassic5
     glGenTextures(1, &textureClassic5);
     glBindTexture(GL_TEXTURE_2D, textureClassic5);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-
-
+    
+    dataTextureLoad();
 
     dataClassic = stbi_load("colors/classic/white.png", &width, &height, &nrChannels, 0);
 
+    loadClassic(dataClassic, width, height);
 
-
-    if (dataClassic) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataClassic);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataClassic);
 
 
     // textureClassic6 
     glGenTextures(1, &textureClassic6);
     glBindTexture(GL_TEXTURE_2D, textureClassic6);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-
-
+    
+    dataTextureLoad();
 
     dataClassic = stbi_load("colors/classic/orange.png", &width, &height, &nrChannels, 0);
 
-    if (dataClassic) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataClassic);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataClassic);
+    loadClassic(dataClassic, width, height);
 
 
 
@@ -217,147 +166,72 @@ void loadTextures() {
     // textureDeuteranopia1
     glGenTextures(1, &textureDeuteranopia1);
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia1);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    //int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+   
+    dataTextureLoad();
 
     unsigned char* dataDeuteranopia = stbi_load("colors/deuteranopia/red.png", &width, &height, &nrChannels, 0);
 
-    if (dataDeuteranopia) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataDeuteranopia);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataDeuteranopia);
+    loadDeuteranopia(dataClassic, width, height);
 
 
 
     // textureClassic2
     glGenTextures(1, &textureDeuteranopia2);
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia2);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
+   
+    dataTextureLoad();
 
     dataDeuteranopia = stbi_load("colors/deuteranopia/green.png", &width, &height, &nrChannels, 0);
 
-    if (dataDeuteranopia) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataDeuteranopia);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataDeuteranopia);
+    loadDeuteranopia(dataClassic, width, height);
 
 
 
     // textureClassic3
     glGenTextures(1, &textureDeuteranopia3);
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia3);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
+    
+    dataTextureLoad();
 
     dataDeuteranopia = stbi_load("colors/deuteranopia/blue.png", &width, &height, &nrChannels, 0);
 
-    if (dataDeuteranopia) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataDeuteranopia);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataDeuteranopia);
+    loadDeuteranopia(dataClassic, width, height);
 
 
 
     // textureClassic4
     glGenTextures(1, &textureDeuteranopia4);
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia4);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
+   
+    dataTextureLoad();
 
     dataDeuteranopia = stbi_load("colors/deuteranopia/yellow.png", &width, &height, &nrChannels, 0);
 
-    if (dataDeuteranopia) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataDeuteranopia);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataDeuteranopia);
+    loadDeuteranopia(dataClassic, width, height);
 
 
 
     // textureClassic5
     glGenTextures(1, &textureDeuteranopia5);
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia5);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
+    
+    dataTextureLoad();
 
     dataDeuteranopia = stbi_load("colors/deuteranopia/white.png", &width, &height, &nrChannels, 0);
 
-    if (dataDeuteranopia) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataDeuteranopia);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataDeuteranopia);
+    loadDeuteranopia(dataClassic, width, height);
 
 
 
     // textureClassic6
     glGenTextures(1, &textureDeuteranopia6);
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia6);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-
+    
+    dataTextureLoad();
 
     dataDeuteranopia = stbi_load("colors/deuteranopia/orange.png", &width, &height, &nrChannels, 0);
 
-    if (dataDeuteranopia) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataDeuteranopia);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(dataDeuteranopia);
+    loadDeuteranopia(dataClassic, width, height);
 }
 
 
@@ -571,11 +445,7 @@ int main()
     glEnableVertexAttribArray(1); //0?
 
 
-    
-
     loadTextures();
-
-    
 
 
     // render loop
@@ -690,7 +560,6 @@ int main()
                     ourShader.setInt("texture1", 5);
 
                 }
-
                 
                 // calculate the model matrix for each object and pass it to shader before drawing
                 glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
@@ -706,8 +575,6 @@ int main()
             // reseting after one cube
             if (count >= 35)
                 count = 6;
-
-            
         }
 
         // draw skybox as last
@@ -757,9 +624,7 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
         color = 2;
     if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
-        color = 1;
-   
-        
+        color = 1;  
 }
 
 // glfw: whenever the window size changed 
