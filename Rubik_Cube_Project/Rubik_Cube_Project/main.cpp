@@ -1007,16 +1007,12 @@ void cube_arranged(){
     chrono::duration<double> duration = end_timer - start_timer;
     cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
 
-    // Sprawdź, czy nowy wynik jest jednym z pięciu najlepszych
     if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
         cout << "\nGratulacje, udalo ci sie pobic rekord!!!\n" << endl;
 
-        // Dodaj nowy wynik do listy
         top_scores[TOP_SCORES_COUNT - 1] = duration.count();
-        // Posortuj wyniki w kolejności rosnącej
         sort(top_scores, top_scores + TOP_SCORES_COUNT);
 
-        // Zapisz wyniki do pliku
         ofstream file("best_score.txt");
         if (file.good()) {
             for (int i = 0; i < TOP_SCORES_COUNT; i++) {
