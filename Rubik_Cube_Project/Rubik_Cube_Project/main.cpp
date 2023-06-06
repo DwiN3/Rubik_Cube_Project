@@ -15,6 +15,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <random>
 #include <stdlib.h>
+#include <chrono>
 
 
 //#include <experimental/filesystem> // Header file for pre-standard implementation
@@ -35,6 +36,7 @@ void turn_cube_right_to_left(int which, int each);
 void mix_the_cube();
 void turn_cube_to_full();
 void print_cube_color();
+bool check_complete_cube();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -447,10 +449,16 @@ int main()
 
     
     mix_the_cube();
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     // render loop
     while (!glfwWindowShouldClose(window))
     {
-   
+        if (check_complete_cube)
+        {
+            std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+
+            std::cout << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds> (end - begin).count() << "ms" << std::endl;
+        } // TODO ELSE wysświetla się czas co chwile a w true jest już na stałe pokazanys
         // per-frame time logic
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
@@ -960,6 +968,19 @@ void mix_the_cube() {
                 break;
         }
     }
+}
+
+bool check_complete_cube() {
+    bool  result = true;
+    for (int i = 0; i < 26; i++)
+    {
+        for(int j = 0; j < 6;j++)
+        {
+            if (sideCube[i][j] != j + 1)
+                result = false;
+        }
+    }
+    return result;
 }
 
 
