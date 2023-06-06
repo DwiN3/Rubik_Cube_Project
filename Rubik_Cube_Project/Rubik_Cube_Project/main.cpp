@@ -21,8 +21,7 @@
 #include <fstream>
 #include <string>
 
-
-
+using namespace std;
 
 //#include <experimental/filesystem> // Header file for pre-standard implementation
 using namespace std::experimental::filesystem;
@@ -45,8 +44,6 @@ void print_cube_color();
 void end_simulation();
 void display_file_contents();
 
-using namespace std;
-
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -58,13 +55,16 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 // timer
-std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
-std::chrono::time_point<std::chrono::high_resolution_clock> end_time;
-std::chrono::duration<double> duration;
+chrono::time_point<chrono::high_resolution_clock> start_time;
+chrono::time_point<chrono::high_resolution_clock> end_time;
+chrono::duration<double> duration;
 
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
+
+// best score
+string best_score;
 
 int sideCube[27][6] = {
     {1,2,3,4,5,6},
@@ -987,19 +987,19 @@ void mix_the_cube(int mode) {
                 break;
         }
     }
-    start_time = std::chrono::high_resolution_clock::now();
-    std::cout << "Start" << std::endl;
+    start_time = chrono::high_resolution_clock::now();
+    cout << "Start" << endl;
 }
 
 
 void end_simulation(){
-    end_time = std::chrono::high_resolution_clock::now();
+    end_time = chrono::high_resolution_clock::now();
     duration = end_time - start_time;
-    std::cout << "Czas trwania: " << duration.count() << " sekundy" << std::endl;
+    cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
     
-  
     display_file_contents();
 }
+
 
 #include <windows.h>
 
@@ -1007,17 +1007,15 @@ void display_file_contents() {
 
     char buffer[MAX_PATH];
     GetCurrentDirectoryA(MAX_PATH, buffer);
-    std::cout << "Domyślna ścieżka projektu: " << buffer << std::endl;
+    cout << "Domyslna sciezka projektu: " << buffer << endl;
 
-    fstream plik;
-    plik.open("best_score.txt", ios::in);
+    ifstream plik("best_score.txt");
     if (plik.good() != true){
-        cout << "Nie mozna otworzyc pliku" << endl;
+        cout << "\nNie mozna otworzyc pliku" << endl;
         plik.close();
     }else{
         string wynik;
         plik >> wynik;
-
         plik.close();
         cout << "Wynik: " << wynik;
     }
