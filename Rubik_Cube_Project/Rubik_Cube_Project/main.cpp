@@ -74,6 +74,9 @@ double top_scores[TOP_SCORES_COUNT] = { 0.0 };
 // choose color
 int color = 1;
 
+// arranging blocking
+bool arranging = false;
+
 // load and create a texture 
 unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
 unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
@@ -1025,21 +1028,22 @@ void print_cube_color() {
 }
 
 void mix_the_cube(int mode) {
-    int number_of_changes = 0;
-    
-    // easy mode
-    if (mode == 1) number_of_changes = 15;
-    
-    // hard mode
-    else if (mode == 2) number_of_changes = (rand() % 36) + 15;
+    if (arranging == false) {
+        int number_of_changes = 0;
 
-    int random;
-    for (int i = 0; i < number_of_changes; i++)
-    {
-        random = rand() % 12;
+        // easy mode
+        if (mode == 1) number_of_changes = 15;
 
-        switch (random)
+        // hard mode
+        else if (mode == 2) number_of_changes = (rand() % 36) + 15;
+
+        int random;
+        for (int i = 0; i < number_of_changes; i++)
         {
+            random = rand() % 12;
+
+            switch (random)
+            {
             case 0:
                 turn_cube_up_to_down(0, 3);
                 break;
@@ -1078,38 +1082,42 @@ void mix_the_cube(int mode) {
                 break;
             default:
                 break;
+            }
         }
+        arranging = true;
+        cout << "\n\nStart" << endl;
+        start_timer = chrono::high_resolution_clock::now();
     }
-    start_timer = chrono::high_resolution_clock::now();
-    cout << "\n\nStart" << endl;
 }
 
 
 void cube_arranged(){
-    chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
-    chrono::duration<double> duration = end_timer - start_timer;
-    cout << "Czas trwania: " << duration.count() << " sekundy" << endl << endl;
+    if (arranging == true) {
+        chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
+        chrono::duration<double> duration = end_timer - start_timer;
+        cout << "Czas trwania: " << duration.count() << " sekundy" << endl << endl;
+        arranging = false;
+        if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
+            cout << "Gratulacje, udalo ci sie pobic rekord!!!\n" << endl;
 
-    if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
-        cout << "Gratulacje, udalo ci sie pobic rekord!!!\n" << endl;
+            top_scores[TOP_SCORES_COUNT - 1] = duration.count();
+            sort(top_scores, top_scores + TOP_SCORES_COUNT);
 
-        top_scores[TOP_SCORES_COUNT - 1] = duration.count();
-        sort(top_scores, top_scores + TOP_SCORES_COUNT);
-
-        ofstream file("best_score.txt");
-        if (file.good()) {
-            for (int i = 0; i < TOP_SCORES_COUNT; i++) {
-                file << fixed << setprecision(2) << top_scores[i] << endl;
+            ofstream file("best_score.txt");
+            if (file.good()) {
+                for (int i = 0; i < TOP_SCORES_COUNT; i++) {
+                    file << fixed << setprecision(2) << top_scores[i] << endl;
+                }
+                file.close();
             }
-            file.close();
+            else {
+                cout << "Nie mozna zapisac do pliku" << endl;
+            }
         }
-        else {
-            cout << "Nie mozna zapisac do pliku" << endl;
-        }
+        show_best_scores();
+        cout << endl << endl;
+        show_options();
     }
-	show_best_scores();
-    cout << endl << endl;
-    show_options();
 }
 
 void set_best_scores() {
@@ -1146,8 +1154,8 @@ void show_options() {
     cout << "  Z - U    X - E'   C - D'" << endl << endl;
 
     cout << "Opcje aplikacji:" << endl;
-    cout << "  O     - pomieszanie kostki easy (15)" << endl;
-    cout << "  P     - pomieszanie kostki hard (15+)" << endl;
+    cout << "  O     - pomieszanie kostki easy (15  iteracji)" << endl;
+    cout << "  P     - pomieszanie kostki hard (15+ iteracji)" << endl;
     cout << "  SPACE - wizualne ulozenie kostki" << endl;
     cout << "  L     - symulacja ulozenie kostki" << endl;
     cout << "  0     - domyslny wyglad kostki" << endl;
