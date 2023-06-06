@@ -143,10 +143,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\..\..\..\LIB\glad\src\glad.c" />
+    <ClCompile Include="cube.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cube.h" />
     <ClInclude Include="shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="best_score.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
