@@ -621,9 +621,9 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
         color = 2;
-    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
         color = 1;  
 }
 
@@ -702,4 +702,365 @@ unsigned int loadCubemap()
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
     return textureID;
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) 
+{
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+        turn_cube_to_full();
+    if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+        turn_cube_up_to_down(0, 3);
+    if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+        turn_cube_up_to_down(1, 3);
+    if (key == GLFW_KEY_3 && action == GLFW_PRESS)
+        turn_cube_up_to_down(2, 3);
+    if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+        turn_cube_down_to_up(0, 3);
+    if (key == GLFW_KEY_W && action == GLFW_PRESS)
+        turn_cube_down_to_up(1, 3);
+    if (key == GLFW_KEY_E && action == GLFW_PRESS)
+        turn_cube_down_to_up(2, 3);
+    if (key == GLFW_KEY_A && action == GLFW_PRESS)
+        turn_cube_left_to_right(0, 9);
+    if (key == GLFW_KEY_S && action == GLFW_PRESS)
+        turn_cube_left_to_right(3, 9);
+    if (key == GLFW_KEY_D && action == GLFW_PRESS)
+        turn_cube_left_to_right(6, 9);
+    if (key == GLFW_KEY_Z && action == GLFW_PRESS)
+        turn_cube_right_to_left(0, 9);
+    if (key == GLFW_KEY_X && action == GLFW_PRESS)
+        turn_cube_right_to_left(3, 9);
+    if (key == GLFW_KEY_C && action == GLFW_PRESS)
+        turn_cube_right_to_left(6, 9);
+    // checking here for stop timing if all is complete
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+        mix_the_cube(1);
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+        mix_the_cube(2);
+
+    // Prezentacja ułożenia kostki
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS){
+        cube_arranged();
+        turn_cube_to_full();
+    }
+        
+}
+void turn_cube_to_full() 
+{
+    for (int i = 0; i < 27; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            sideCube[i][j] = j + 1;
+        }
+    }
+}
+
+
+void turn_cube_up_to_down(int which, int each)
+{
+     int a, b, c;
+     a = sideCube[which][5];
+     b = sideCube[which + 9][5];
+     c = sideCube[which + 2 * 9][5];
+     sideCube[which][5] = sideCube[which + 2 * 9][0];
+     sideCube[which + 9][5] = sideCube[which + 2 * 9 + each][0];
+     sideCube[which + 2 * 9][5] = sideCube[which + 2 * 9 + 2 * each][0];
+ 
+     sideCube[which + 2 * 9][0] = sideCube[which + 2 * each + 2 * 9][4];
+     sideCube[which + 2 * 9 + each][0] = sideCube[which + 2 * each + 9][4];
+     sideCube[which + 2 * 9 + 2 * each][0] = sideCube[which + 2 * each][4];
+ 
+     sideCube[which + 2 * each][4] = sideCube[which][1];
+     sideCube[which + 2 * each + 9][4] = sideCube[which + each][1];
+     sideCube[which + 2 * each + 2 * 9][4] = sideCube[which + 2 * each][1];
+ 
+     sideCube[which][1] = c;
+     sideCube[which + each][1] = b;
+     sideCube[which + 2 * each][1] = a;
+ 
+     for (int i = 2; i < 4; i++)
+     {
+         a = sideCube[which][i];
+         b = sideCube[which + 9][i];
+         c = sideCube[which + 2 * 9][i];
+
+         sideCube[which][i] = sideCube[which + 2 * 9][i];
+         sideCube[which + 9][i] = sideCube[which + 2 * 9 + each][i];
+         sideCube[which + 2 * 9][i] = sideCube[which + 2 * 9 + 2 * each][i];
+
+         sideCube[which + 2 * 9][i] = sideCube[which + 2 * each + 2 * 9][i];
+         sideCube[which + 2 * 9 + each][i] = sideCube[which + 2 * each + 9][i];
+         sideCube[which + 2 * 9 + 2 * each][i] = sideCube[which + 2 * each][i];
+
+         
+         sideCube[which + 2 * each + 2 * 9][i] = sideCube[which + 2 * each][i];
+         sideCube[which + 2 * each + 9][i] = sideCube[which + each][i];
+         sideCube[which + 2 * each][i] = sideCube[which][i];
+
+         sideCube[which][i] = c;
+         sideCube[which + each][i] = b;
+         sideCube[which + 2 * each][i] = a;
+     }
+}
+
+
+void turn_cube_down_to_up(int which, int each)
+{
+    int a, b, c;
+    a = sideCube[which][5];
+    b = sideCube[which + 9][5];
+    c = sideCube[which + 2 * 9][5];
+
+    sideCube[which][5] = sideCube[which + 2 * each][1];
+    sideCube[which + 9][5] = sideCube[which + each][1];
+    sideCube[which + 2 * 9][5] = sideCube[which][1];
+
+    sideCube[which][1] = sideCube[which + 2 * each][4];
+    sideCube[which + each][1] = sideCube[which + 2 * each + 9][4];
+    sideCube[which + 2 * each][1] = sideCube[which + 2 * each + 2 * 9][4];
+
+    sideCube[which + 2 * each][4] = sideCube[which + 2 * 9 + 2 * each][0];
+    sideCube[which + 2 * each + 9][4] = sideCube[which + 2 * 9 + each][0];
+    sideCube[which + 2 * each + 2 * 9][4] = sideCube[which + 2 * 9][0];
+
+    sideCube[which + 2 * 9][0] = a;
+    sideCube[which + 2 * 9 + each][0] = b;
+    sideCube[which + 2 * 9 + 2 * each][0] = c;
+
+    for (int i = 2; i < 4; i++)
+    {
+        a = sideCube[which][i];
+        b = sideCube[which + 9][i];
+        c = sideCube[which + 2 * 9][i];
+
+        sideCube[which][i] = sideCube[which + 2 * each][i];
+        sideCube[which + 9][i] = sideCube[which + each][i];
+        sideCube[which + 2 * 9][i] = sideCube[which][i];
+
+        sideCube[which + 2 * each][i] = sideCube[which + 2 * each + 2 *9][i];
+        sideCube[which + each][i] = sideCube[which + 2 * each + 9][i];
+        sideCube[which][i] = sideCube[which + 2 * each][i];
+
+        sideCube[which + 2 * each + 2 * 9][i] = sideCube[which + 2 * 9][i];
+        sideCube[which + 2 * each + 9][i] = sideCube[which + each + 2 * 9][i];
+        sideCube[which + 2 * each][i] = sideCube[which + 2 * each + 2 * 9][i];
+
+        sideCube[which + 2 * 9][i] = a;
+        sideCube[which + each + 2 * 9][i] = b;
+        sideCube[which + 2 * each + 2 * 9][i] = c;
+    }
+}
+void turn_cube_left_to_right(int which, int each)
+{
+    int a, b, c;
+
+    a = sideCube[which][2];
+    b = sideCube[which + each][2];
+    c = sideCube[which + 2* each][2];
+
+    sideCube[which][2] = sideCube[which + 2 * each][0];
+    sideCube[which + each][2] = sideCube[which + 1 + 2 * each][0];
+    sideCube[which + 2 * each][2] = sideCube[which + 2 + 2 * each][0];
+
+    sideCube[which + 2 * each][0] = sideCube[which + 2 + 2 * each][3];
+    sideCube[which + 1 + 2 * each][0] = sideCube[which + 2 + 1 * each][3];
+    sideCube[which + 2 + 2 * each][0] = sideCube[which + 2][3];
+
+    sideCube[which + 2 + 2 * each][3] = sideCube[which + 2][1];
+    sideCube[which + 2 + 1 * each][3] = sideCube[which + 1][1];
+    sideCube[which + 2][3] = sideCube[which][1];
+
+    sideCube[which + 2][1] = a;
+    sideCube[which + 1][1] = b;
+    sideCube[which][1] = c;
+    
+    for (int i = 4; i < 6; i++)
+    {
+        a = sideCube[which][i];
+        b = sideCube[which + each][i];
+        c = sideCube[which + 2 * each][i];
+
+        sideCube[which][i] = sideCube[which + 2 * each][i];
+        sideCube[which + each][i] = sideCube[which + 1 + 2 * each][i];
+        sideCube[which + 2 * each][i] = sideCube[which + 2 + 2 * each][i];
+
+        sideCube[which + 2 * each][i] = sideCube[which + 2 + 2 * each][i];
+        sideCube[which + 1 + 2 * each][i] = sideCube[which + 2 + 1 * each][i];
+        sideCube[which + 2 + 2 * each][i] = sideCube[which + 2][i];
+
+        sideCube[which + 2 + 2 * each][i] = sideCube[which + 2][i];
+        sideCube[which + 2 + 1 * each][i] = sideCube[which + 1][i];
+        sideCube[which + 2][i] = sideCube[which][i];
+
+        sideCube[which + 2][i] = a;
+        sideCube[which + 1][i] = b;
+        sideCube[which][i] = c;
+    }
+}
+
+void turn_cube_right_to_left(int which, int each) {
+    int a, b, c;
+
+    a = sideCube[which][2];
+    b = sideCube[which + each][2];
+    c = sideCube[which + 2 * each][2];
+
+    sideCube[which + 2 * each][2] = sideCube[which][1];
+    sideCube[which + each][2] = sideCube[which + 1][1];
+    sideCube[which][2] = sideCube[which + 2][1];
+  
+    sideCube[which][1] = sideCube[which + 2][3];
+    sideCube[which + 1][1] = sideCube[which + 2 + each][3];
+    sideCube[which + 2][1] = sideCube[which + 2 + 2 * each][3];
+
+    sideCube[which + 2][3] = sideCube[which + 2 + 2 * each][0];
+    sideCube[which + 2 + each][3] = sideCube[which + 1 + 2 * each][0];
+    sideCube[which + 2 + 2 * each][3] = sideCube[which + 2 * each][0];
+
+    sideCube[which + 2 + 2 * each][0] = c;
+    sideCube[which + 1 + 2 * each][0] = b;
+    sideCube[which + 2 * each][0] = a;
+
+    for (int i = 4; i < 6; i++)
+    {
+        a = sideCube[which][i];
+        b = sideCube[which + each][i];
+        c = sideCube[which + 2 * each][i];
+
+        sideCube[which + 2 * each][i] = sideCube[which][i];
+        sideCube[which + each][i] = sideCube[which + 1][i];
+        sideCube[which][i] = sideCube[which + 2][i];
+        
+        sideCube[which][i] = sideCube[which + 2][i];
+        sideCube[which + 1][i] = sideCube[which + 2 + each][i];
+        sideCube[which + 2][i] = sideCube[which + 2 + 2 * each][i];
+
+        sideCube[which + 2][i] = sideCube[which + 2 + 2 * each][i];
+        sideCube[which + 2 + each][i] = sideCube[which + 1 + 2 * each][i];
+        sideCube[which + 2 + 2 * each][i] = sideCube[which + 2 * each][i];
+
+        sideCube[which + 2 + 2 * each][i] = c;
+        sideCube[which + 1 + 2 * each][i] = b;
+        sideCube[which + 2 * each][i] = a;
+    }
+}
+ 
+void print_cube_color() {
+    for (int i = 0; i < 27; i++)
+    {
+        std::cout << i << ": " << sideCube[i][0] << sideCube[i][1] << sideCube[i][2] << sideCube[i][3] << sideCube[i][4] << sideCube[i][5] << std::endl;
+    }
+}
+
+void mix_the_cube(int mode) {
+    int number_of_changes = 0;
+    
+    // easy mode
+    if (mode == 1) number_of_changes = 15;
+    
+    // hard mode
+    else if (mode == 2) number_of_changes = (rand() % 36) + 15;
+
+    int random;
+    for (int i = 0; i < number_of_changes; i++)
+    {
+        random = rand() % 12;
+
+        switch (random)
+        {
+            case 0:
+                turn_cube_up_to_down(0, 3);
+                break;
+            case 1:
+                turn_cube_up_to_down(1, 3);
+                break;
+            case 2:
+                turn_cube_up_to_down(2, 3);
+                break;
+            case 3:
+                turn_cube_down_to_up(0, 3);
+                break;
+            case 4:
+                turn_cube_down_to_up(1, 3);
+                break;
+            case 5:
+                turn_cube_down_to_up(2, 3);
+                break;
+            case 6:
+                turn_cube_left_to_right(0, 9);
+                break;
+            case 7:
+                turn_cube_left_to_right(3, 9);
+                break;
+            case 8:
+                turn_cube_left_to_right(6, 9);
+                break;
+            case 9:
+                turn_cube_right_to_left(0, 9);
+                break;
+            case 10:
+                turn_cube_right_to_left(3, 9);
+                break;
+            case 11:
+                turn_cube_right_to_left(6, 9);
+                break;
+            default:
+                break;
+        }
+    }
+    start_timer = chrono::high_resolution_clock::now();
+    cout << "\n\nStart" << endl;
+}
+
+
+void cube_arranged(){
+    chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
+    chrono::duration<double> duration = end_timer - start_timer;
+    cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
+
+    if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
+        cout << "\nGratulacje, udalo ci sie pobic rekord!!!\n" << endl;
+
+        top_scores[TOP_SCORES_COUNT - 1] = duration.count();
+        sort(top_scores, top_scores + TOP_SCORES_COUNT);
+
+        ofstream file("best_score.txt");
+        if (file.good()) {
+            for (int i = 0; i < TOP_SCORES_COUNT; i++) {
+                file << fixed << setprecision(2) << top_scores[i] << endl;
+            }
+            file.close();
+        }
+        else {
+            cout << "Nie mozna zapisac do pliku" << endl;
+        }
+        show_best_scores();
+    }
+}
+
+void set_best_scores() {
+    ifstream file("best_score.txt");
+    if (!file.good()) {
+        cout << "\nNie mozna otworzyc pliku" << endl;
+        file.close();
+    }
+    else {
+        for (int i = 0; i < TOP_SCORES_COUNT; i++) {
+            if (!(file >> top_scores[i])) break;
+        }
+        file.close();
+        show_best_scores();
+    }
+}
+
+void show_best_scores(){
+    std::cout << "Najlepsze wyniki:" << std::endl;
+    for (int i = 0; i < TOP_SCORES_COUNT; i++) {
+        int total_seconds = static_cast<int>(top_scores[i]);
+        int minutes = total_seconds / 60;
+        int seconds = total_seconds % 60;
+        int milliseconds = static_cast<int>((top_scores[i] - total_seconds) * 1000);
+        std::cout << i+1 << ". " << minutes << ":" << std::setw(2) << std::setfill('0') << seconds << "." << std::setw(2) << std::setfill('0') << milliseconds / 10 << std::endl;
+    }
 }
