@@ -42,7 +42,7 @@ void turn_cube_right_to_left(int which, int each);
 void mix_the_cube(int mode);
 void turn_cube_to_full();
 void print_cube_color();
-void end_simulation();
+void cube_arranged();
 void set_best_score();
 
 // settings
@@ -56,8 +56,8 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 // timer
-chrono::time_point<chrono::high_resolution_clock> start_time;
-chrono::time_point<chrono::high_resolution_clock> end_time;
+chrono::time_point<chrono::high_resolution_clock> start_timer;
+chrono::time_point<chrono::high_resolution_clock> end_timer;
 chrono::duration<double> duration;
 
 // timing
@@ -723,9 +723,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
         mix_the_cube(2);
 
-    // TEST
-    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
-        end_simulation();
+    // Prezentacja ułożenia kostki
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS){
+        cube_arranged();
+        turn_cube_to_full();
+    }
+        
 }
 void turn_cube_to_full() 
 {
@@ -991,27 +994,37 @@ void mix_the_cube(int mode) {
                 break;
         }
     }
-    start_time = chrono::high_resolution_clock::now();
+    start_timer = chrono::high_resolution_clock::now();
     cout << "\n\nStart" << endl;
 }
 
 
-void end_simulation(){
-    end_time = chrono::high_resolution_clock::now();
-    duration = end_time - start_time;
+void cube_arranged(){
+    end_timer = chrono::high_resolution_clock::now();
+    duration = end_timer - start_timer;
     cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
 
+    if (duration.count() < best_score) {
+        cout << "\nGratulacje udalo ci sie pobic rekord!!!";
+        ofstream plik("best_score.txt");
+        if (plik.good()) {
+            plik << fixed << setprecision(2) << duration.count();
+            plik.close();
+        } else {
+           cout << "\nNie można zapisać do pliku" << endl;
+        }
+    }
 }
 
 
 void set_best_score() {
     ifstream plik("best_score.txt");
     if (!plik.good()) {
-        std::cout << "\nNie można otworzyć pliku" << std::endl;
+        cout << "\nNie można otworzyć pliku" << endl;
         plik.close();
     } else {
         plik >> best_score;
         plik.close();
-        std::cout << "Najlepszy wynik: " << std::fixed << setprecision(2) << best_score;
+        cout << "Najlepszy wynik: " << fixed << setprecision(2) << best_score;
     }
 }
