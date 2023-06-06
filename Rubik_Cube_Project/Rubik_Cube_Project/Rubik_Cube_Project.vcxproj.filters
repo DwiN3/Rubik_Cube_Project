@@ -21,9 +21,15 @@
     <ClCompile Include="..\..\..\..\..\..\..\..\..\..\LIB\glad\src\glad.c">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="cube.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shader.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="cube.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>

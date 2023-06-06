@@ -13,6 +13,8 @@
 
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
+#include <random>
+#include <stdlib.h>
 
 
 //#include <experimental/filesystem> // Header file for pre-standard implementation
@@ -30,6 +32,7 @@ void turn_cube_down_to_up(int which, int each);
 void turn_cube_left_to_right(int which, int each);
 void turn_cube_right_to_left(int which, int each);
 
+void mix_the_cube();
 void turn_cube_to_full();
 void print_cube_color();
 
@@ -443,7 +446,7 @@ int main()
     //ourShader.setInt("texture2", 1);
 
     
-
+    mix_the_cube();
     // render loop
     while (!glfwWindowShouldClose(window))
     {
@@ -907,3 +910,57 @@ void print_cube_color() {
         std::cout << i << ": " << sideCube[i][0] << sideCube[i][1] << sideCube[i][2] << sideCube[i][3] << sideCube[i][4] << sideCube[i][5] << std::endl;
     }
 }
+
+void mix_the_cube() {
+
+    int random;
+    for (int i = 0; i < 15; i++)
+    {
+        random = rand() % 12;
+
+        switch (random)
+        {
+            case 0:
+                turn_cube_up_to_down(0, 3);
+                break;
+            case 1:
+                turn_cube_up_to_down(1, 3);
+                break;
+            case 2:
+                turn_cube_up_to_down(2, 3);
+                break;
+            case 3:
+                turn_cube_down_to_up(0, 3);
+                break;
+            case 4:
+                turn_cube_down_to_up(1, 3);
+                break;
+            case 5:
+                turn_cube_down_to_up(2, 3);
+                break;
+            case 6:
+                turn_cube_left_to_right(0, 9);
+                break;
+            case 7:
+                turn_cube_left_to_right(3, 9);
+                break;
+            case 8:
+                turn_cube_left_to_right(6, 9);
+                break;
+            case 9:
+                turn_cube_right_to_left(0, 9);
+                break;
+            case 10:
+                turn_cube_right_to_left(3, 9);
+                break;
+            case 11:
+                turn_cube_right_to_left(6, 9);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+
+
