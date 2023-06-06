@@ -76,6 +76,7 @@ int color = 1;
 // load and create a texture 
 unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
 unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
+unsigned int textureTritanopia1, textureTritanopia2, textureTritanopia3, textureTritanopia4, textureTritanopia5, textureTritanopia6;
 
 void dataTextureLoad() {
     // set the texture wrapping parameters
@@ -138,7 +139,7 @@ void loadTextures() {
     glGenTextures(1, &textureClassic5);
     glBindTexture(GL_TEXTURE_2D, textureClassic5);
     dataTextureLoad();
-    dataClassic = stbi_load("colors/classic/white.png", &width, &height, &nrChannels, 0);
+    dataClassic = stbi_load("colors/classic/orange.png", &width, &height, &nrChannels, 0);
     loadData(dataClassic, width, height);
 
 
@@ -146,7 +147,7 @@ void loadTextures() {
     glGenTextures(1, &textureClassic6);
     glBindTexture(GL_TEXTURE_2D, textureClassic6);
     dataTextureLoad();
-    dataClassic = stbi_load("colors/classic/orange.png", &width, &height, &nrChannels, 0);
+    dataClassic = stbi_load("colors/classic/white.png", &width, &height, &nrChannels, 0);
     loadData(dataClassic, width, height);
 
 
@@ -156,7 +157,7 @@ void loadTextures() {
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia1);
     dataTextureLoad();
     unsigned char* dataDeuteranopia = stbi_load("colors/deuteranopia/red.png", &width, &height, &nrChannels, 0);
-    loadData(dataClassic, width, height);
+    loadData(dataDeuteranopia, width, height);
 
 
     // textureDeuteranopia2
@@ -164,7 +165,7 @@ void loadTextures() {
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia2);
     dataTextureLoad();
     dataDeuteranopia = stbi_load("colors/deuteranopia/green.png", &width, &height, &nrChannels, 0);
-    loadData(dataClassic, width, height);
+    loadData(dataDeuteranopia, width, height);
 
 
     // textureDeuteranopia3
@@ -172,7 +173,7 @@ void loadTextures() {
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia3);
     dataTextureLoad();
     dataDeuteranopia = stbi_load("colors/deuteranopia/blue.png", &width, &height, &nrChannels, 0);
-    loadData(dataClassic, width, height);
+    loadData(dataDeuteranopia, width, height);
 
 
     // textureDeuteranopia4
@@ -180,23 +181,73 @@ void loadTextures() {
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia4);
     dataTextureLoad();
     dataDeuteranopia = stbi_load("colors/deuteranopia/yellow.png", &width, &height, &nrChannels, 0);
-    loadData(dataClassic, width, height);
+    loadData(dataDeuteranopia, width, height);
 
 
     // textureDeuteranopia5
     glGenTextures(1, &textureDeuteranopia5);
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia5);
     dataTextureLoad();
-    dataDeuteranopia = stbi_load("colors/deuteranopia/white.png", &width, &height, &nrChannels, 0);
-    loadData(dataClassic, width, height);
+    dataDeuteranopia = stbi_load("colors/deuteranopia/orange.png", &width, &height, &nrChannels, 0);
+    loadData(dataDeuteranopia, width, height);
 
 
     // textureDeuteranopia6
     glGenTextures(1, &textureDeuteranopia6);
     glBindTexture(GL_TEXTURE_2D, textureDeuteranopia6);
     dataTextureLoad();
-    dataDeuteranopia = stbi_load("colors/deuteranopia/orange.png", &width, &height, &nrChannels, 0);
-    loadData(dataClassic, width, height);
+    dataDeuteranopia = stbi_load("colors/deuteranopia/white.png", &width, &height, &nrChannels, 0);
+    loadData(dataDeuteranopia, width, height);
+
+
+
+    // textureTritanopia1
+    glGenTextures(1, &textureTritanopia1);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia1);
+    dataTextureLoad();
+    unsigned char* dataTritanopia = stbi_load("colors/tritanopia/red.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia2
+    glGenTextures(1, &textureTritanopia2);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia2);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/green.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia3
+    glGenTextures(1, &textureTritanopia3);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia3);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/blue.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia4
+    glGenTextures(1, &textureTritanopia4);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia4);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/yellow.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia5
+    glGenTextures(1, &textureTritanopia5);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia5);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/orange.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia6
+    glGenTextures(1, &textureTritanopia6);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia6);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/white.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+   
 }
 
 
@@ -486,59 +537,79 @@ int main()
             ourShader.use();
             for (unsigned int j = 0; j < 6; j++)
             {
+                // 0 - white
+                // 1 - red
+                // 2 - green
+                // 3 - blue
+                // 4 - yellow
+                // 5 - orange
                 // activited special texture for each side   
-                if (j == 0) {
+                if (sideCube[i][j] == 1) { 
                     glActiveTexture(GL_TEXTURE1);
                     if (color == 1)
                         glBindTexture(GL_TEXTURE_2D, textureClassic1);
                     else if (color == 2)
                         glBindTexture(GL_TEXTURE_2D, textureDeuteranopia1);
-                    ourShader.setInt("texture1", 0);
-
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia1);
+                    ourShader.setInt("texture1", 5);
+                    
                 }
-                else if (j == 1) {
-                    glActiveTexture(GL_TEXTURE6);
-                    if (color == 1)
-                        glBindTexture(GL_TEXTURE_2D, textureClassic6);
-                    else if (color == 2)
-                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia6);
-                    ourShader.setInt("texture1", 1);
-
-                }
-                else if (j == 2) {
-                    glActiveTexture(GL_TEXTURE3);
-                    if (color == 1)
-                        glBindTexture(GL_TEXTURE_2D, textureClassic3);
-                    else if (color == 2)
-                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia3);
-                    ourShader.setInt("texture1", 2);
-
-                }
-                else if (j == 3) {
-                    glActiveTexture(GL_TEXTURE4);
-                    if (color == 1) 
-                        glBindTexture(GL_TEXTURE_2D, textureClassic4);
-                    else if (color == 2) 
-                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia4);
-                    ourShader.setInt("texture1", 3);
-
-                }
-                else if (j == 4) {
-                    glActiveTexture(GL_TEXTURE5);
-                    if (color == 1) 
-                        glBindTexture(GL_TEXTURE_2D, textureClassic5);
-                    else if (color == 2)
-                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia5);
-                    ourShader.setInt("texture1", 4);
-
-                }
-                else if (j == 5) {
+                else if (sideCube[i][j] == 2) { 
                     glActiveTexture(GL_TEXTURE2);
                     if (color == 1)
                         glBindTexture(GL_TEXTURE_2D, textureClassic2);
                     else if (color == 2)
                         glBindTexture(GL_TEXTURE_2D, textureDeuteranopia2);
-                    ourShader.setInt("texture1", 5);
+                    else if (color == 3) {
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia2);
+                    }
+                    ourShader.setInt("texture1", 1);
+
+                }
+                else if (sideCube[i][j] == 3) { 
+                    glActiveTexture(GL_TEXTURE3);
+                    if (color == 1)
+                        glBindTexture(GL_TEXTURE_2D, textureClassic3);
+                    else if (color == 2)
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia3);
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia3);
+                    ourShader.setInt("texture1", 2);
+
+                }
+                else if (sideCube[i][j] == 4) { 
+                    glActiveTexture(GL_TEXTURE4);
+                    if (color == 1) 
+                        glBindTexture(GL_TEXTURE_2D, textureClassic4);
+                    else if (color == 2) 
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia4);
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia4);
+                    ourShader.setInt("texture1", 3);
+
+                }
+                
+                else if (sideCube[i][j] == 5) { 
+                    glActiveTexture(GL_TEXTURE5);
+                    if (color == 1)
+                        glBindTexture(GL_TEXTURE_2D, textureClassic5);
+                    else if (color == 2)
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia5);
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia5);
+                    ourShader.setInt("texture1", 4);
+
+                }
+                else if (sideCube[i][j] == 6) {
+                    glActiveTexture(GL_TEXTURE6);
+                    if (color == 1)
+                        glBindTexture(GL_TEXTURE_2D, textureClassic6);
+                    else if (color == 2)
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia6);
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia6);
+                    ourShader.setInt("texture1", 0);
 
                 }
                 
@@ -606,10 +677,6 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
-        color = 2;
-    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
-        color = 1;
 }
 
 
@@ -730,11 +797,20 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
         mix_the_cube(2);
 
+
     // Prezentacja ułożenia kostki
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS){
         cube_arranged();
         turn_cube_to_full();
     }
+
+    // Zmiana koloru kostki
+    if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
+        color = 3;
+    if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
+        color = 2;
+    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
+        color = 1;
         
 }
 void turn_cube_to_full() 
