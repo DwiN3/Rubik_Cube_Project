@@ -46,6 +46,8 @@ void print_cube_color();
 void cube_arranged();
 void set_best_scores();
 void show_best_scores();
+void show_options();
+void clear_screen();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -148,6 +150,8 @@ glm::vec3 cubePositions[] = {
 
 int main()
 {
+    // show options
+    show_options();
     // set best time score
     set_best_scores();
 
@@ -1005,10 +1009,10 @@ void mix_the_cube(int mode) {
 void cube_arranged(){
     chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
     chrono::duration<double> duration = end_timer - start_timer;
-    cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
+    cout << "Czas trwania: " << duration.count() << " sekundy" << endl << endl;
 
     if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
-        cout << "\nGratulacje, udalo ci sie pobic rekord!!!\n" << endl;
+        cout << "Gratulacje, udalo ci sie pobic rekord!!!\n" << endl;
 
         top_scores[TOP_SCORES_COUNT - 1] = duration.count();
         sort(top_scores, top_scores + TOP_SCORES_COUNT);
@@ -1023,8 +1027,10 @@ void cube_arranged(){
         else {
             cout << "Nie mozna zapisac do pliku" << endl;
         }
-        show_best_scores();
     }
+    show_best_scores();
+    cout << endl << endl;
+    show_options();
 }
 
 void set_best_scores() {
@@ -1049,6 +1055,29 @@ void show_best_scores(){
         int minutes = total_seconds / 60;
         int seconds = total_seconds % 60;
         int milliseconds = static_cast<int>((top_scores[i] - total_seconds) * 1000);
-        std::cout << i+1 << ". " << minutes << ":" << std::setw(2) << std::setfill('0') << seconds << "." << std::setw(2) << std::setfill('0') << milliseconds / 10 << std::endl;
+        std::cout << "  " << i + 1 << ". " << minutes << ":" << std::setw(2) << std::setfill('0') << seconds << "." << std::setw(2) << std::setfill('0') << milliseconds / 10 << std::endl;
     }
+}
+
+void show_options() {
+    cout << "Ruchy na kosce:" << endl;
+    cout << "  1 - F    2 - S    3 - B'" << endl;
+    cout << "  Q - F'   W - S'   E - B" << endl;
+    cout << "  A - U'   S - E    D - D" << endl;
+    cout << "  Z - U    X - E'   C - D'" << endl << endl;
+
+    cout << "Opcje aplikacji:" << endl;
+    cout << "  O     - pomieszanie kostki easy (15)" << endl;
+    cout << "  P     - pomieszanie kostki hard (15+)" << endl;
+    cout << "  SPACE - wizualne ulozenie kostki" << endl;
+    cout << "  L     - symulacja ulozenie kostki" << endl;
+    cout << "  0     - domyslny wyglad kostki" << endl;
+    cout << "  9     - tryb dla daltonistow (duteranopia)" << endl;
+    cout << "  8     - tryb dla daltonistow (tritanopia)" << endl << endl;
+}
+
+void clear_screen()
+{
+    getchar();
+    system("cls");
 }
