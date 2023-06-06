@@ -13,17 +13,13 @@
 
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
-#include <random>
-#include <stdlib.h>
-#include <chrono>
-#include <thread>
-#include <filesystem>
-#include <fstream>
-#include <string>
-#include <iomanip>
-#include <algorithm>
 
-using namespace std;
+//#include "freetype/include/ft2build.h"
+//#include FT_FREETYPE_H
+
+// #include <C:/LIB/assets/text_renderer.cpp>
+// #include <C:/LIB/assets/text_renderer.h>
+
 
 //#include <experimental/filesystem> // Header file for pre-standard implementation
 using namespace std::experimental::filesystem;
@@ -33,124 +29,214 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 unsigned int loadCubemap();
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-void turn_cube_up_to_down(int which, int each);
-void turn_cube_down_to_up(int which, int each);
 
-void turn_cube_left_to_right(int which, int each);
-void turn_cube_right_to_left(int which, int each);
-
-void mix_the_cube(int mode);
-void turn_cube_to_full();
-void print_cube_color();
-void cube_arranged();
-void set_best_scores();
-void show_best_scores();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 1.0f, 8.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
-
-// timer
-chrono::time_point<chrono::high_resolution_clock> start_timer;
-chrono::time_point<chrono::high_resolution_clock> end_timer;
-chrono::duration<double> duration;
 
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
-// best score
-const int TOP_SCORES_COUNT = 5;
-double top_scores[TOP_SCORES_COUNT] = { 0.0 };
+int color = 1;
 
-int sideCube[27][6] = {
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6},
-    {1,2,3,4,5,6}
-};
+// load and create a texture 
+unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
+unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
 
 
+void dataTextureLoad() {
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+}
 
-glm::vec3 cubePositions[] = {
-    //x               y      z
+void loadClassic(unsigned char* dataClassic, int width, int height) {
+    if (dataClassic) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataClassic);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(dataClassic);
+}
 
-    // 1 side
-    glm::vec3(-2.0f,  0.0f,  -5.0f), // FRONT - LEFT - UP
-    glm::vec3(-1.0f,  0.0f,  -5.0f), // FRONT - CENTER UP
-    glm::vec3(0.0f,   0.0f,  -5.0f),
+void loadDeuteranopia(unsigned char* dataDeuteranopia, int width, int height) {
+    if (dataDeuteranopia) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, dataDeuteranopia);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(dataDeuteranopia);
+}
 
-    glm::vec3(-2.0f, -1.0f,  -5.0f),
-    glm::vec3(-1.0f, -1.0f,  -5.0f),
-    glm::vec3(0.0f,  -1.0f,  -5.0f),
 
-    glm::vec3(-2.0f, -2.0f,  -5.0f),
-    glm::vec3(-1.0f, -2.0f,  -5.0f),
-    glm::vec3(0.0f,  -2.0f,  -5.0f),
 
-    // 2 side
-    glm::vec3(-2.0f,  0.0f,  -6.0f),
-    glm::vec3(-1.0f,  0.0f,  -6.0f),
-    glm::vec3(0.0f,   0.0f,  -6.0f),
+void loadTextures() {
+    int width, height, nrChannels;
 
-    glm::vec3(-2.0f, -1.0f,  -6.0f),
-    glm::vec3(-1.0f, -1.0f,  -6.0f),
-    glm::vec3(0.0f,  -1.0f,  -6.0f),
+    // textureClassic1
+    glGenTextures(1, &textureClassic1);
+    glBindTexture(GL_TEXTURE_2D, textureClassic1);
 
-    glm::vec3(-2.0f, -2.0f,  -6.0f),
-    glm::vec3(-1.0f, -2.0f,  -6.0f),
-    glm::vec3(0.0f,  -2.0f,  -6.0f),
+    dataTextureLoad();   
 
-    // 3 side
-    glm::vec3(-2.0f,  0.0f,  -7.0f),
-    glm::vec3(-1.0f,  0.0f,  -7.0f),
-    glm::vec3(0.0f,   0.0f,  -7.0f),
+    unsigned char* dataClassic = stbi_load("colors/classic/red.png", &width, &height, &nrChannels, 0);
 
-    glm::vec3(-2.0f, -1.0f,  -7.0f),
-    glm::vec3(-1.0f, -1.0f,  -7.0f),
-    glm::vec3(0.0f,  -1.0f,  -7.0f),
+    loadClassic(dataClassic, width, height);
 
-    glm::vec3(-2.0f, -2.0f,  -7.0f),
-    glm::vec3(-1.0f, -2.0f,  -7.0f),
-    glm::vec3(0.0f,  -2.0f,  -7.0f),
 
-};
+
+    // textureClassic2
+    glGenTextures(1, &textureClassic2);
+    glBindTexture(GL_TEXTURE_2D, textureClassic2);
+
+    dataTextureLoad();
+
+    dataClassic = stbi_load("colors/classic/green.png", &width, &height, &nrChannels, 0);
+
+    loadClassic(dataClassic, width, height);
+
+
+    // textureClassic3
+    glGenTextures(1, &textureClassic3);
+    glBindTexture(GL_TEXTURE_2D, textureClassic3);
+    
+    dataTextureLoad();
+
+    dataClassic = stbi_load("colors/classic/blue.png", &width, &height, &nrChannels, 0);
+
+    loadClassic(dataClassic, width, height);
+
+
+
+    // textureClassic4
+    glGenTextures(1, &textureClassic4);
+    glBindTexture(GL_TEXTURE_2D, textureClassic4);
+   
+    dataTextureLoad();
+
+    dataClassic = stbi_load("colors/classic/yellow.png", &width, &height, &nrChannels, 0);
+
+    loadClassic(dataClassic, width, height);
+
+
+
+    // textureClassic5
+    glGenTextures(1, &textureClassic5);
+    glBindTexture(GL_TEXTURE_2D, textureClassic5);
+    
+    dataTextureLoad();
+
+    dataClassic = stbi_load("colors/classic/white.png", &width, &height, &nrChannels, 0);
+
+    loadClassic(dataClassic, width, height);
+
+
+
+    // textureClassic6 
+    glGenTextures(1, &textureClassic6);
+    glBindTexture(GL_TEXTURE_2D, textureClassic6);
+    
+    dataTextureLoad();
+
+    dataClassic = stbi_load("colors/classic/orange.png", &width, &height, &nrChannels, 0);
+
+    loadClassic(dataClassic, width, height);
+
+
+
+
+
+    // textureDeuteranopia1
+    glGenTextures(1, &textureDeuteranopia1);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia1);
+   
+    dataTextureLoad();
+
+    unsigned char* dataDeuteranopia = stbi_load("colors/deuteranopia/red.png", &width, &height, &nrChannels, 0);
+
+    loadDeuteranopia(dataClassic, width, height);
+
+
+
+    // textureClassic2
+    glGenTextures(1, &textureDeuteranopia2);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia2);
+   
+    dataTextureLoad();
+
+    dataDeuteranopia = stbi_load("colors/deuteranopia/green.png", &width, &height, &nrChannels, 0);
+
+    loadDeuteranopia(dataClassic, width, height);
+
+
+
+    // textureClassic3
+    glGenTextures(1, &textureDeuteranopia3);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia3);
+    
+    dataTextureLoad();
+
+    dataDeuteranopia = stbi_load("colors/deuteranopia/blue.png", &width, &height, &nrChannels, 0);
+
+    loadDeuteranopia(dataClassic, width, height);
+
+
+
+    // textureClassic4
+    glGenTextures(1, &textureDeuteranopia4);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia4);
+   
+    dataTextureLoad();
+
+    dataDeuteranopia = stbi_load("colors/deuteranopia/yellow.png", &width, &height, &nrChannels, 0);
+
+    loadDeuteranopia(dataClassic, width, height);
+
+
+
+    // textureClassic5
+    glGenTextures(1, &textureDeuteranopia5);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia5);
+    
+    dataTextureLoad();
+
+    dataDeuteranopia = stbi_load("colors/deuteranopia/white.png", &width, &height, &nrChannels, 0);
+
+    loadDeuteranopia(dataClassic, width, height);
+
+
+
+    // textureClassic6
+    glGenTextures(1, &textureDeuteranopia6);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia6);
+    
+    dataTextureLoad();
+
+    dataDeuteranopia = stbi_load("colors/deuteranopia/orange.png", &width, &height, &nrChannels, 0);
+
+    loadDeuteranopia(dataClassic, width, height);
+}
+
 
 int main()
 {
-    // set best time score
-    set_best_scores();
-
     // glfw
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -174,10 +260,10 @@ int main()
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
-    // glfw capture mouse
+    // glfw: capture mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    // glad load function
+    // glad: load function
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
@@ -235,7 +321,50 @@ int main()
         -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 
     };
-    
+    // world space positions of our cubes
+    glm::vec3 cubePositions[] = {
+        //x               y      z
+
+        // 1 side
+        glm::vec3(-1.0f,  0.0f,  -1.0f), // FRONT - LEFT - UP
+        glm::vec3(0.0f,  0.0f,  -1.0f), // FRONT - CENTER UP
+        glm::vec3(1.0f,   0.0f,  -1.0f),
+
+        glm::vec3(-1.0f, -1.0f,  -1.0f),
+        glm::vec3(0.0f, -1.0f,  -1.0f),
+        glm::vec3(1.0f,  -1.0f,  -1.0f),
+
+        glm::vec3(-1.0f, -2.0f,  -1.0f),
+        glm::vec3(0.0f, -2.0f,  -1.0f),
+        glm::vec3(1.0f,  -2.0f,  -1.0f),
+
+        // 2 side
+        glm::vec3(-1.0f,  0.0f,  -2.0f),
+        glm::vec3(0.0f,  0.0f,  -2.0f),
+        glm::vec3(1.0f,   0.0f,  -2.0f),
+
+        glm::vec3(-1.0f, -1.0f,  -2.0f),
+        glm::vec3(0.0f, -1.0f,  -2.0f),
+        glm::vec3(1.0f,  -1.0f,  -2.0f),
+
+        glm::vec3(-1.0f, -2.0f,  -2.0f),
+        glm::vec3(0.0f, -2.0f,  -2.0f),
+        glm::vec3(1.0f,  -2.0f,  -2.0f),
+
+        // 3 side
+        glm::vec3(-1.0f,  0.0f,  -3.0f),
+        glm::vec3(0.0f,  0.0f,  -3.0f),
+        glm::vec3(1.0f,   0.0f,  -3.0f),
+
+        glm::vec3(-1.0f, -1.0f,  -3.0f),
+        glm::vec3(0.0f, -1.0f,  -3.0f),
+        glm::vec3(1.0f,  -1.0f,  -3.0f),
+
+        glm::vec3(-1.0f, -2.0f,  -3.0f),
+        glm::vec3(0.0f, -2.0f,  -3.0f),
+        glm::vec3(1.0f,  -2.0f,  -3.0f),
+
+    };
 
     // skybox
 
@@ -283,7 +412,6 @@ int main()
         -1.0f, -1.0f,  1.0f,
          1.0f, -1.0f,  1.0f
     };
-    /*cubetest = cubePositions[0];*/
     // skybox VAO
     unsigned int skyboxVAO, skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -316,163 +444,12 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1); //0?
 
-    
 
-    // load and create a texture 
-    unsigned int texture1, texture2, texture3, texture4, texture5, texture6;
-    // texture 1
-    glGenTextures(1, &texture1);
-    glBindTexture(GL_TEXTURE_2D, texture1);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true); // flipped texture?
-    unsigned char* data = stbi_load("colors/red.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
-    // texture 2
-    glGenTextures(1, &texture2);
-    glBindTexture(GL_TEXTURE_2D, texture2);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    //data = stbi_load("C:/LIB/assets/container.png", &width, &height, &nrChannels, 0);
-    data = stbi_load("colors/green.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
- 
-    // texture 3
-    glGenTextures(1, &texture3);
-    glBindTexture(GL_TEXTURE_2D, texture3);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // flipped texture
-    data = stbi_load("colors/blue.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
-    // texture 4
-    glGenTextures(1, &texture4);
-    glBindTexture(GL_TEXTURE_2D, texture4);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // flipped texture
-    data = stbi_load("colors/yellow.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
-   
-    // texture 5
-    glGenTextures(1, &texture5);
-    glBindTexture(GL_TEXTURE_2D, texture5);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // flipped texture
-    data = stbi_load("colors/white.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
+    loadTextures();
 
-    // texture 6
-    glGenTextures(1, &texture6);
-    glBindTexture(GL_TEXTURE_2D, texture6);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // flipped texture
-    data = stbi_load("colors/orange.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
 
-   
-   
-   
- 
-  
-
-    // sampler
-    //ourShader.use();
-    //ourShader.setInt("texture1", 0);
-    //ourShader.setInt("texture2", 1);
-
-   //////
     // render loop
-    while (!glfwWindowShouldClose(window))
-    {
-   
+    while (!glfwWindowShouldClose(window)) {
         // per-frame time logic
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
@@ -506,47 +483,89 @@ int main()
             for (unsigned int j = 0; j < 6; j++)
             {
                 // activited special texture for each side   
-                if (sideCube[i][j] == 1)        // red
+                if (j == 0)
                 {
                     glActiveTexture(GL_TEXTURE1);
-                    glBindTexture(GL_TEXTURE_2D, texture1);
+
+                    if (color == 1) {
+                        glBindTexture(GL_TEXTURE_2D, textureClassic1);
+                    }
+                    else if (color == 2) {
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia1);
+                    }
                     ourShader.setInt("texture1", 0);
+
                 }
-                else if (sideCube[i][j] == 2)   // green
+                else if (j == 1)
                 {
-                    glActiveTexture(GL_TEXTURE2);
-                    glBindTexture(GL_TEXTURE_2D, texture2);
+                    glActiveTexture(GL_TEXTURE6);
+
+                    if (color == 1) {
+                        glBindTexture(GL_TEXTURE_2D, textureClassic6);
+                    }
+                    else if (color == 2) {
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia6);
+                    }
                     ourShader.setInt("texture1", 1);
+
                 }
-                else if (sideCube[i][j] == 3)   //blue
+                else if (j == 2)
                 {
                     glActiveTexture(GL_TEXTURE3);
-                    glBindTexture(GL_TEXTURE_2D, texture3);
+
+                    if (color == 1) {
+                        glBindTexture(GL_TEXTURE_2D, textureClassic3);
+                    }
+                    else if (color == 2) {
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia3);
+                    }
                     ourShader.setInt("texture1", 2);
+
                 }
-                else if (sideCube[i][j] == 4)   // yellow
+                else if (j == 3)
                 {
                     glActiveTexture(GL_TEXTURE4);
-                    glBindTexture(GL_TEXTURE_2D, texture4);
+
+                    if (color == 1) {
+                        glBindTexture(GL_TEXTURE_2D, textureClassic4);
+                    }
+                    else if (color == 2) {
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia4);
+                    }
                     ourShader.setInt("texture1", 3);
+
                 }
-                else if (sideCube[i][j] == 5)   // white
+                else if (j == 4)
                 {
                     glActiveTexture(GL_TEXTURE5);
-                    glBindTexture(GL_TEXTURE_2D, texture5);
+
+                    if (color == 1) {
+                        glBindTexture(GL_TEXTURE_2D, textureClassic5);
+                    }
+                    else if (color == 2) {
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia5);
+                    }
                     ourShader.setInt("texture1", 4);
+
                 }
-                else if(sideCube[i][j] == 6) {  // orange
-                    glActiveTexture(GL_TEXTURE6);
-                    glBindTexture(GL_TEXTURE_2D, texture6);
+                else if(j == 5) {
+                    glActiveTexture(GL_TEXTURE2);
+
+                    if (color == 1) {
+                        glBindTexture(GL_TEXTURE_2D, textureClassic2);
+                    }
+                    else if (color == 2) {
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia2);
+                    }
                     ourShader.setInt("texture1", 5);
+
                 }
                 
                 // calculate the model matrix for each object and pass it to shader before drawing
                 glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
                 model = glm::translate(model, cubePositions[i]);
-                model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-                //model = glm::rotate(model, 0, glm::vec3(1.0f, 0.0f, 0.0f));
+                float angle = 0.0f * i;
+                model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
                 ourShader.setMat4("model", model);
 
                 // count is the number of who manny triangles sholud to create with selected texture  (6 - one side, 36 - all cube)
@@ -556,11 +575,8 @@ int main()
             // reseting after one cube
             if (count >= 35)
                 count = 6;
-            //angle = 0.0f;
-
-            
         }
-        
+
         // draw skybox as last
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
         skyboxShader.use();
@@ -575,7 +591,6 @@ int main()
         glBindVertexArray(0);
         glDepthFunc(GL_LESS); // set depth function back to default
 
-        glfwSetKeyCallback(window, key_callback);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -592,22 +607,25 @@ int main()
     return 0;
 }
 
-// process all input
+// camera
 void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
         camera.ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         camera.ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+        color = 2;
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+        color = 1;  
 }
-
 
 // glfw: whenever the window size changed 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -644,10 +662,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
-
-/**
- @qwewqe
-*/
 unsigned int loadCubemap()
 {
     unsigned int textureID;
@@ -688,367 +702,4 @@ unsigned int loadCubemap()
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
     return textureID;
-}
-
-
-
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) 
-{
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
-        turn_cube_to_full();
-    if (key == GLFW_KEY_1 && action == GLFW_PRESS)
-        turn_cube_up_to_down(0, 3);
-    if (key == GLFW_KEY_2 && action == GLFW_PRESS)
-        turn_cube_up_to_down(1, 3);
-    if (key == GLFW_KEY_3 && action == GLFW_PRESS)
-        turn_cube_up_to_down(2, 3);
-    if (key == GLFW_KEY_Q && action == GLFW_PRESS)
-        turn_cube_down_to_up(0, 3);
-    if (key == GLFW_KEY_W && action == GLFW_PRESS)
-        turn_cube_down_to_up(1, 3);
-    if (key == GLFW_KEY_E && action == GLFW_PRESS)
-        turn_cube_down_to_up(2, 3);
-    if (key == GLFW_KEY_A && action == GLFW_PRESS)
-        turn_cube_left_to_right(0, 9);
-    if (key == GLFW_KEY_S && action == GLFW_PRESS)
-        turn_cube_left_to_right(3, 9);
-    if (key == GLFW_KEY_D && action == GLFW_PRESS)
-        turn_cube_left_to_right(6, 9);
-    if (key == GLFW_KEY_Z && action == GLFW_PRESS)
-        turn_cube_right_to_left(0, 9);
-    if (key == GLFW_KEY_X && action == GLFW_PRESS)
-        turn_cube_right_to_left(3, 9);
-    if (key == GLFW_KEY_C && action == GLFW_PRESS)
-        turn_cube_right_to_left(6, 9);
-    // checking here for stop timing if all is complete
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
-        mix_the_cube(1);
-    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
-        mix_the_cube(2);
-
-    // Prezentacja ułożenia kostki
-    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS){
-        cube_arranged();
-        turn_cube_to_full();
-    }
-        
-}
-void turn_cube_to_full() 
-{
-    for (int i = 0; i < 27; i++)
-    {
-        for (int j = 0; j < 6; j++)
-        {
-            sideCube[i][j] = j + 1;
-        }
-    }
-}
-
-
-void turn_cube_up_to_down(int which, int each)
-{
-     int a, b, c;
-     a = sideCube[which][5];
-     b = sideCube[which + 9][5];
-     c = sideCube[which + 2 * 9][5];
-     sideCube[which][5] = sideCube[which + 2 * 9][0];
-     sideCube[which + 9][5] = sideCube[which + 2 * 9 + each][0];
-     sideCube[which + 2 * 9][5] = sideCube[which + 2 * 9 + 2 * each][0];
- 
-     sideCube[which + 2 * 9][0] = sideCube[which + 2 * each + 2 * 9][4];
-     sideCube[which + 2 * 9 + each][0] = sideCube[which + 2 * each + 9][4];
-     sideCube[which + 2 * 9 + 2 * each][0] = sideCube[which + 2 * each][4];
- 
-     sideCube[which + 2 * each][4] = sideCube[which][1];
-     sideCube[which + 2 * each + 9][4] = sideCube[which + each][1];
-     sideCube[which + 2 * each + 2 * 9][4] = sideCube[which + 2 * each][1];
- 
-     sideCube[which][1] = c;
-     sideCube[which + each][1] = b;
-     sideCube[which + 2 * each][1] = a;
- 
-     for (int i = 2; i < 4; i++)
-     {
-         a = sideCube[which][i];
-         b = sideCube[which + 9][i];
-         c = sideCube[which + 2 * 9][i];
-
-         sideCube[which][i] = sideCube[which + 2 * 9][i];
-         sideCube[which + 9][i] = sideCube[which + 2 * 9 + each][i];
-         sideCube[which + 2 * 9][i] = sideCube[which + 2 * 9 + 2 * each][i];
-
-         sideCube[which + 2 * 9][i] = sideCube[which + 2 * each + 2 * 9][i];
-         sideCube[which + 2 * 9 + each][i] = sideCube[which + 2 * each + 9][i];
-         sideCube[which + 2 * 9 + 2 * each][i] = sideCube[which + 2 * each][i];
-
-         
-         sideCube[which + 2 * each + 2 * 9][i] = sideCube[which + 2 * each][i];
-         sideCube[which + 2 * each + 9][i] = sideCube[which + each][i];
-         sideCube[which + 2 * each][i] = sideCube[which][i];
-
-         sideCube[which][i] = c;
-         sideCube[which + each][i] = b;
-         sideCube[which + 2 * each][i] = a;
-     }
-}
-
-
-void turn_cube_down_to_up(int which, int each)
-{
-    int a, b, c;
-    a = sideCube[which][5];
-    b = sideCube[which + 9][5];
-    c = sideCube[which + 2 * 9][5];
-
-    sideCube[which][5] = sideCube[which + 2 * each][1];
-    sideCube[which + 9][5] = sideCube[which + each][1];
-    sideCube[which + 2 * 9][5] = sideCube[which][1];
-
-    sideCube[which][1] = sideCube[which + 2 * each][4];
-    sideCube[which + each][1] = sideCube[which + 2 * each + 9][4];
-    sideCube[which + 2 * each][1] = sideCube[which + 2 * each + 2 * 9][4];
-
-    sideCube[which + 2 * each][4] = sideCube[which + 2 * 9 + 2 * each][0];
-    sideCube[which + 2 * each + 9][4] = sideCube[which + 2 * 9 + each][0];
-    sideCube[which + 2 * each + 2 * 9][4] = sideCube[which + 2 * 9][0];
-
-    sideCube[which + 2 * 9][0] = a;
-    sideCube[which + 2 * 9 + each][0] = b;
-    sideCube[which + 2 * 9 + 2 * each][0] = c;
-
-    for (int i = 2; i < 4; i++)
-    {
-        a = sideCube[which][i];
-        b = sideCube[which + 9][i];
-        c = sideCube[which + 2 * 9][i];
-
-        sideCube[which][i] = sideCube[which + 2 * each][i];
-        sideCube[which + 9][i] = sideCube[which + each][i];
-        sideCube[which + 2 * 9][i] = sideCube[which][i];
-
-        sideCube[which + 2 * each][i] = sideCube[which + 2 * each + 2 *9][i];
-        sideCube[which + each][i] = sideCube[which + 2 * each + 9][i];
-        sideCube[which][i] = sideCube[which + 2 * each][i];
-
-        sideCube[which + 2 * each + 2 * 9][i] = sideCube[which + 2 * 9][i];
-        sideCube[which + 2 * each + 9][i] = sideCube[which + each + 2 * 9][i];
-        sideCube[which + 2 * each][i] = sideCube[which + 2 * each + 2 * 9][i];
-
-        sideCube[which + 2 * 9][i] = a;
-        sideCube[which + each + 2 * 9][i] = b;
-        sideCube[which + 2 * each + 2 * 9][i] = c;
-    }
-}
-void turn_cube_left_to_right(int which, int each)
-{
-    int a, b, c;
-
-    a = sideCube[which][2];
-    b = sideCube[which + each][2];
-    c = sideCube[which + 2* each][2];
-
-    sideCube[which][2] = sideCube[which + 2 * each][0];
-    sideCube[which + each][2] = sideCube[which + 1 + 2 * each][0];
-    sideCube[which + 2 * each][2] = sideCube[which + 2 + 2 * each][0];
-
-    sideCube[which + 2 * each][0] = sideCube[which + 2 + 2 * each][3];
-    sideCube[which + 1 + 2 * each][0] = sideCube[which + 2 + 1 * each][3];
-    sideCube[which + 2 + 2 * each][0] = sideCube[which + 2][3];
-
-    sideCube[which + 2 + 2 * each][3] = sideCube[which + 2][1];
-    sideCube[which + 2 + 1 * each][3] = sideCube[which + 1][1];
-    sideCube[which + 2][3] = sideCube[which][1];
-
-    sideCube[which + 2][1] = a;
-    sideCube[which + 1][1] = b;
-    sideCube[which][1] = c;
-    
-    for (int i = 4; i < 6; i++)
-    {
-        a = sideCube[which][i];
-        b = sideCube[which + each][i];
-        c = sideCube[which + 2 * each][i];
-
-        sideCube[which][i] = sideCube[which + 2 * each][i];
-        sideCube[which + each][i] = sideCube[which + 1 + 2 * each][i];
-        sideCube[which + 2 * each][i] = sideCube[which + 2 + 2 * each][i];
-
-        sideCube[which + 2 * each][i] = sideCube[which + 2 + 2 * each][i];
-        sideCube[which + 1 + 2 * each][i] = sideCube[which + 2 + 1 * each][i];
-        sideCube[which + 2 + 2 * each][i] = sideCube[which + 2][i];
-
-        sideCube[which + 2 + 2 * each][i] = sideCube[which + 2][i];
-        sideCube[which + 2 + 1 * each][i] = sideCube[which + 1][i];
-        sideCube[which + 2][i] = sideCube[which][i];
-
-        sideCube[which + 2][i] = a;
-        sideCube[which + 1][i] = b;
-        sideCube[which][i] = c;
-    }
-}
-
-void turn_cube_right_to_left(int which, int each) {
-    int a, b, c;
-
-    a = sideCube[which][2];
-    b = sideCube[which + each][2];
-    c = sideCube[which + 2 * each][2];
-
-    sideCube[which + 2 * each][2] = sideCube[which][1];
-    sideCube[which + each][2] = sideCube[which + 1][1];
-    sideCube[which][2] = sideCube[which + 2][1];
-  
-    sideCube[which][1] = sideCube[which + 2][3];
-    sideCube[which + 1][1] = sideCube[which + 2 + each][3];
-    sideCube[which + 2][1] = sideCube[which + 2 + 2 * each][3];
-
-    sideCube[which + 2][3] = sideCube[which + 2 + 2 * each][0];
-    sideCube[which + 2 + each][3] = sideCube[which + 1 + 2 * each][0];
-    sideCube[which + 2 + 2 * each][3] = sideCube[which + 2 * each][0];
-
-    sideCube[which + 2 + 2 * each][0] = c;
-    sideCube[which + 1 + 2 * each][0] = b;
-    sideCube[which + 2 * each][0] = a;
-
-    for (int i = 4; i < 6; i++)
-    {
-        a = sideCube[which][i];
-        b = sideCube[which + each][i];
-        c = sideCube[which + 2 * each][i];
-
-        sideCube[which + 2 * each][i] = sideCube[which][i];
-        sideCube[which + each][i] = sideCube[which + 1][i];
-        sideCube[which][i] = sideCube[which + 2][i];
-        
-        sideCube[which][i] = sideCube[which + 2][i];
-        sideCube[which + 1][i] = sideCube[which + 2 + each][i];
-        sideCube[which + 2][i] = sideCube[which + 2 + 2 * each][i];
-
-        sideCube[which + 2][i] = sideCube[which + 2 + 2 * each][i];
-        sideCube[which + 2 + each][i] = sideCube[which + 1 + 2 * each][i];
-        sideCube[which + 2 + 2 * each][i] = sideCube[which + 2 * each][i];
-
-        sideCube[which + 2 + 2 * each][i] = c;
-        sideCube[which + 1 + 2 * each][i] = b;
-        sideCube[which + 2 * each][i] = a;
-    }
-}
- 
-void print_cube_color() {
-    for (int i = 0; i < 27; i++)
-    {
-        std::cout << i << ": " << sideCube[i][0] << sideCube[i][1] << sideCube[i][2] << sideCube[i][3] << sideCube[i][4] << sideCube[i][5] << std::endl;
-    }
-}
-
-void mix_the_cube(int mode) {
-    int number_of_changes = 0;
-    
-    // easy mode
-    if (mode == 1) number_of_changes = 15;
-    
-    // hard mode
-    else if (mode == 2) number_of_changes = (rand() % 36) + 15;
-
-    int random;
-    for (int i = 0; i < number_of_changes; i++)
-    {
-        random = rand() % 12;
-
-        switch (random)
-        {
-            case 0:
-                turn_cube_up_to_down(0, 3);
-                break;
-            case 1:
-                turn_cube_up_to_down(1, 3);
-                break;
-            case 2:
-                turn_cube_up_to_down(2, 3);
-                break;
-            case 3:
-                turn_cube_down_to_up(0, 3);
-                break;
-            case 4:
-                turn_cube_down_to_up(1, 3);
-                break;
-            case 5:
-                turn_cube_down_to_up(2, 3);
-                break;
-            case 6:
-                turn_cube_left_to_right(0, 9);
-                break;
-            case 7:
-                turn_cube_left_to_right(3, 9);
-                break;
-            case 8:
-                turn_cube_left_to_right(6, 9);
-                break;
-            case 9:
-                turn_cube_right_to_left(0, 9);
-                break;
-            case 10:
-                turn_cube_right_to_left(3, 9);
-                break;
-            case 11:
-                turn_cube_right_to_left(6, 9);
-                break;
-            default:
-                break;
-        }
-    }
-    start_timer = chrono::high_resolution_clock::now();
-    cout << "\n\nStart" << endl;
-}
-
-
-void cube_arranged(){
-    chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
-    chrono::duration<double> duration = end_timer - start_timer;
-    cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
-
-    if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
-        cout << "\nGratulacje, udalo ci sie pobic rekord!!!\n" << endl;
-
-        top_scores[TOP_SCORES_COUNT - 1] = duration.count();
-        sort(top_scores, top_scores + TOP_SCORES_COUNT);
-
-        ofstream file("best_score.txt");
-        if (file.good()) {
-            for (int i = 0; i < TOP_SCORES_COUNT; i++) {
-                file << fixed << setprecision(2) << top_scores[i] << endl;
-            }
-            file.close();
-        }
-        else {
-            cout << "Nie mozna zapisac do pliku" << endl;
-        }
-        show_best_scores();
-    }
-}
-
-void set_best_scores() {
-    ifstream file("best_score.txt");
-    if (!file.good()) {
-        cout << "\nNie mozna otworzyc pliku" << endl;
-        file.close();
-    }
-    else {
-        for (int i = 0; i < TOP_SCORES_COUNT; i++) {
-            if (!(file >> top_scores[i])) break;
-        }
-        file.close();
-        show_best_scores();
-    }
-}
-
-void show_best_scores(){
-    std::cout << "Najlepsze wyniki:" << std::endl;
-    for (int i = 0; i < TOP_SCORES_COUNT; i++) {
-        int total_seconds = static_cast<int>(top_scores[i]);
-        int minutes = total_seconds / 60;
-        int seconds = total_seconds % 60;
-        int milliseconds = static_cast<int>((top_scores[i] - total_seconds) * 1000);
-        std::cout << i+1 << ". " << minutes << ":" << std::setw(2) << std::setfill('0') << seconds << ":" << std::setw(2) << std::setfill('0') << milliseconds / 10 << std::endl;
-    }
 }
