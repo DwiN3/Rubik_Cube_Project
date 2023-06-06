@@ -621,9 +621,9 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
         color = 2;
-    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
         color = 1;  
 }
 
