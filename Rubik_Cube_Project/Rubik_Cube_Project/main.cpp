@@ -1049,6 +1049,6 @@ void show_best_scores(){
         int minutes = total_seconds / 60;
         int seconds = total_seconds % 60;
         int milliseconds = static_cast<int>((top_scores[i] - total_seconds) * 1000);
-        std::cout << i+1 << ". " << minutes << ":" << std::setw(2) << std::setfill('0') << seconds << ":" << std::setw(2) << std::setfill('0') << milliseconds / 10 << std::endl;
+        std::cout << i+1 << ". " << minutes << ":" << std::setw(2) << std::setfill('0') << seconds << "." << std::setw(2) << std::setfill('0') << milliseconds / 10 << std::endl;
     }
 }
