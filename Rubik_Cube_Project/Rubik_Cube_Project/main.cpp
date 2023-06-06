@@ -17,6 +17,10 @@
 #include <stdlib.h>
 #include <chrono>
 #include <thread>
+#include <fstream>
+#include <string>
+
+
 
 
 //#include <experimental/filesystem> // Header file for pre-standard implementation
@@ -38,6 +42,7 @@ void mix_the_cube(int mode);
 void turn_cube_to_full();
 void print_cube_color();
 void end_simulation();
+void display_file_contents();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -48,6 +53,8 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
+
+// timer
 std::chrono::time_point<std::chrono::high_resolution_clock> start;
 std::chrono::time_point<std::chrono::high_resolution_clock> end;
 std::chrono::duration<double> duration;
@@ -978,6 +985,7 @@ void mix_the_cube(int mode) {
         }
     }
     start = std::chrono::high_resolution_clock::now();
+    std::cout << "Start" << std::endl;
 }
 
 
@@ -985,4 +993,31 @@ void end_simulation(){
     end = std::chrono::high_resolution_clock::now();
     duration = end - start;
     std::cout << "Czas trwania: " << duration.count() << " sekundy" << std::endl;
+    
+  
+    display_file_contents();
+}
+
+
+
+void display_file_contents() {
+
+    std::fstream file;
+
+    std::string filePath = "saved_score/best_score.txt";
+    file.open(filePath);
+
+    if (file.is_open()) {
+        std::string line;
+
+        while (std::getline(file, line)) {
+            std::cout << line << std::endl;
+        }
+
+        file.close();
+    }
+    else {
+        std::cout << "Nie mozna otworzyc pliku." << std::endl;
+        file.close();
+    }
 }
