@@ -20,6 +20,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -42,7 +43,7 @@ void mix_the_cube(int mode);
 void turn_cube_to_full();
 void print_cube_color();
 void end_simulation();
-void display_file_contents();
+void set_best_score();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -64,7 +65,7 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 // best score
-string best_score="";
+double best_score= 0.0f;
 
 int sideCube[27][6] = {
     {1,2,3,4,5,6},
@@ -144,6 +145,9 @@ glm::vec3 cubePositions[] = {
 
 int main()
 {
+    // set best time score
+    set_best_score();
+
     // glfw
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -988,7 +992,7 @@ void mix_the_cube(int mode) {
         }
     }
     start_time = chrono::high_resolution_clock::now();
-    cout << "Start" << endl;
+    cout << "\n\nStart" << endl;
 }
 
 
@@ -996,27 +1000,18 @@ void end_simulation(){
     end_time = chrono::high_resolution_clock::now();
     duration = end_time - start_time;
     cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
-    
-    display_file_contents();
+
 }
 
 
-#include <windows.h>
-
-void display_file_contents() {
-
-    char buffer[MAX_PATH];
-    GetCurrentDirectoryA(MAX_PATH, buffer);
-    cout << "Domyslna sciezka projektu: " << buffer << endl;
-
+void set_best_score() {
     ifstream plik("best_score.txt");
-    if (plik.good() != true){
-        cout << "\nNie mozna otworzyc pliku" << endl;
+    if (!plik.good()) {
+        std::cout << "\nNie można otworzyć pliku" << std::endl;
         plik.close();
-    }else{
-        string wynik;
-        plik >> wynik;
+    } else {
+        plik >> best_score;
         plik.close();
-        cout << "Wynik: " << wynik;
+        std::cout << "Najlepszy wynik: " << std::fixed << setprecision(2) << best_score;
     }
 }
