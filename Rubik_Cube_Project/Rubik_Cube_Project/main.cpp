@@ -1043,8 +1043,12 @@ void set_best_scores() {
 }
 
 void show_best_scores(){
-    cout << "Najlepsze wyniki: " << endl;
+    std::cout << "Najlepsze wyniki:" << std::endl;
     for (int i = 0; i < TOP_SCORES_COUNT; i++) {
-        cout << fixed << setprecision(2) << top_scores[i] << endl;
+        int total_seconds = static_cast<int>(top_scores[i]);
+        int minutes = total_seconds / 60;
+        int seconds = total_seconds % 60;
+        int milliseconds = static_cast<int>((top_scores[i] - total_seconds) * 1000);
+        std::cout << i+1 << ". " << minutes << ":" << std::setw(2) << std::setfill('0') << seconds << ":" << std::setw(2) << std::setfill('0') << milliseconds / 10 << std::endl;
     }
 }
