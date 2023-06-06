@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <chrono>
 #include <thread>
+#include <filesystem>
 #include <fstream>
 #include <string>
 
@@ -44,6 +45,8 @@ void print_cube_color();
 void end_simulation();
 void display_file_contents();
 
+using namespace std;
+
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -55,8 +58,8 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 // timer
-std::chrono::time_point<std::chrono::high_resolution_clock> start;
-std::chrono::time_point<std::chrono::high_resolution_clock> end;
+std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
+std::chrono::time_point<std::chrono::high_resolution_clock> end_time;
 std::chrono::duration<double> duration;
 
 // timing
@@ -984,40 +987,38 @@ void mix_the_cube(int mode) {
                 break;
         }
     }
-    start = std::chrono::high_resolution_clock::now();
+    start_time = std::chrono::high_resolution_clock::now();
     std::cout << "Start" << std::endl;
 }
 
 
 void end_simulation(){
-    end = std::chrono::high_resolution_clock::now();
-    duration = end - start;
+    end_time = std::chrono::high_resolution_clock::now();
+    duration = end_time - start_time;
     std::cout << "Czas trwania: " << duration.count() << " sekundy" << std::endl;
     
   
     display_file_contents();
 }
 
-
+#include <windows.h>
 
 void display_file_contents() {
 
-    std::fstream file;
+    char buffer[MAX_PATH];
+    GetCurrentDirectoryA(MAX_PATH, buffer);
+    std::cout << "Domyślna ścieżka projektu: " << buffer << std::endl;
 
-    std::string filePath = "saved_score/best_score.txt";
-    file.open(filePath);
+    fstream plik;
+    plik.open("best_score.txt", ios::in);
+    if (plik.good() != true){
+        cout << "Nie mozna otworzyc pliku" << endl;
+        plik.close();
+    }else{
+        string wynik;
+        plik >> wynik;
 
-    if (file.is_open()) {
-        std::string line;
-
-        while (std::getline(file, line)) {
-            std::cout << line << std::endl;
-        }
-
-        file.close();
-    }
-    else {
-        std::cout << "Nie mozna otworzyc pliku." << std::endl;
-        file.close();
+        plik.close();
+        cout << "Wynik: " << wynik;
     }
 }
