@@ -64,7 +64,7 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 // best score
-string best_score;
+string best_score="";
 
 int sideCube[27][6] = {
     {1,2,3,4,5,6},

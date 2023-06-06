@@ -33,4 +33,7 @@
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="best_score.txt" />
+  </ItemGroup>
 </Project>
