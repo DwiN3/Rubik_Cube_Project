@@ -32,7 +32,7 @@ void turn_cube_down_to_up(int which, int each);
 void turn_cube_left_to_right(int which, int each);
 void turn_cube_right_to_left(int which, int each);
 
-void mix_the_cube();
+void mix_the_cube(int mode);
 void turn_cube_to_full();
 void print_cube_color();
 
@@ -445,8 +445,7 @@ int main()
     //ourShader.setInt("texture1", 0);
     //ourShader.setInt("texture2", 1);
 
-    
-    mix_the_cube();
+   //////
     // render loop
     while (!glfwWindowShouldClose(window))
     {
@@ -584,7 +583,10 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+        mix_the_cube(1);
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+        mix_the_cube(2);
 }
 
 
@@ -911,10 +913,18 @@ void print_cube_color() {
     }
 }
 
-void mix_the_cube() {
+void mix_the_cube(int mode) {
+    int number_of_changes = 0;
+
+    if (mode == 1) {
+        number_of_changes = 15;
+    }
+    else if (mode == 2) {
+        number_of_changes = (rand() % 36) + 15;
+    }
 
     int random;
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < number_of_changes; i++)
     {
         random = rand() % 12;
 
