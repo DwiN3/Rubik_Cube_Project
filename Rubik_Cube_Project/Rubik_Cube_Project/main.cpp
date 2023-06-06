@@ -15,6 +15,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <random>
 #include <stdlib.h>
+#include <chrono>
+#include <thread>
 
 
 //#include <experimental/filesystem> // Header file for pre-standard implementation
@@ -35,6 +37,7 @@ void turn_cube_right_to_left(int which, int each);
 void mix_the_cube(int mode);
 void turn_cube_to_full();
 void print_cube_color();
+void end_simulation();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -45,6 +48,9 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
+std::chrono::time_point<std::chrono::high_resolution_clock> start;
+std::chrono::time_point<std::chrono::high_resolution_clock> end;
+std::chrono::duration<double> duration;
 
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
@@ -587,6 +593,10 @@ void processInput(GLFWwindow* window)
         mix_the_cube(1);
     if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
         mix_the_cube(2);
+
+    // TEST
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
+        end_simulation();
 }
 
 
@@ -969,7 +979,12 @@ void mix_the_cube(int mode) {
                 break;
         }
     }
+    start = std::chrono::high_resolution_clock::now();
 }
 
 
-
+void end_simulation(){
+    end = std::chrono::high_resolution_clock::now();
+    duration = end - start;
+    std::cout << "Czas trwania: " << duration.count() << " sekundy" << std::endl;
+}
