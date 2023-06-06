@@ -21,6 +21,7 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <algorithm>
 
 using namespace std;
 
@@ -43,7 +44,8 @@ void mix_the_cube(int mode);
 void turn_cube_to_full();
 void print_cube_color();
 void cube_arranged();
-void set_best_score();
+void set_best_scores();
+void show_best_scores();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -65,7 +67,8 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 // best score
-double best_score= 0.0f;
+const int TOP_SCORES_COUNT = 5;
+double top_scores[TOP_SCORES_COUNT] = { 0.0 };
 
 int sideCube[27][6] = {
     {1,2,3,4,5,6},
@@ -146,7 +149,7 @@ glm::vec3 cubePositions[] = {
 int main()
 {
     // set best time score
-    set_best_score();
+    set_best_scores();
 
     // glfw
     glfwInit();
@@ -1000,31 +1003,52 @@ void mix_the_cube(int mode) {
 
 
 void cube_arranged(){
-    end_timer = chrono::high_resolution_clock::now();
-    duration = end_timer - start_timer;
+    chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
+    chrono::duration<double> duration = end_timer - start_timer;
     cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
 
-    if (duration.count() < best_score) {
-        cout << "\nGratulacje udalo ci sie pobic rekord!!!";
-        ofstream plik("best_score.txt");
-        if (plik.good()) {
-            plik << fixed << setprecision(2) << duration.count();
-            plik.close();
-        } else {
-           cout << "\nNie można zapisać do pliku" << endl;
+    // Sprawdź, czy nowy wynik jest jednym z pięciu najlepszych
+    if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
+        cout << "\nGratulacje, udalo ci sie pobic rekord!!!\n" << endl;
+
+        // Dodaj nowy wynik do listy
+        top_scores[TOP_SCORES_COUNT - 1] = duration.count();
+        // Posortuj wyniki w kolejności rosnącej
+        sort(top_scores, top_scores + TOP_SCORES_COUNT);
+
+        // Zapisz wyniki do pliku
+        ofstream file("best_score.txt");
+        if (file.good()) {
+            for (int i = 0; i < TOP_SCORES_COUNT; i++) {
+                file << fixed << setprecision(2) << top_scores[i] << endl;
+            }
+            file.close();
         }
+        else {
+            cout << "Nie mozna zapisac do pliku" << endl;
+        }
+        show_best_scores();
     }
 }
 
+void set_best_scores() {
+    ifstream file("best_score.txt");
+    if (!file.good()) {
+        cout << "\nNie mozna otworzyc pliku" << endl;
+        file.close();
+    }
+    else {
+        for (int i = 0; i < TOP_SCORES_COUNT; i++) {
+            if (!(file >> top_scores[i])) break;
+        }
+        file.close();
+        show_best_scores();
+    }
+}
 
-void set_best_score() {
-    ifstream plik("best_score.txt");
-    if (!plik.good()) {
-        cout << "\nNie można otworzyć pliku" << endl;
-        plik.close();
-    } else {
-        plik >> best_score;
-        plik.close();
-        cout << "Najlepszy wynik: " << fixed << setprecision(2) << best_score;
+void show_best_scores(){
+    cout << "Najlepsze wyniki: " << endl;
+    for (int i = 0; i < TOP_SCORES_COUNT; i++) {
+        cout << fixed << setprecision(2) << top_scores[i] << endl;
     }
 }
