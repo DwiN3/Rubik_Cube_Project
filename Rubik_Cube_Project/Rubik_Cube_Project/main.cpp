@@ -915,13 +915,12 @@ void print_cube_color() {
 
 void mix_the_cube(int mode) {
     int number_of_changes = 0;
-
-    if (mode == 1) {
-        number_of_changes = 15;
-    }
-    else if (mode == 2) {
-        number_of_changes = (rand() % 36) + 15;
-    }
+    
+    // easy mode
+    if (mode == 1) number_of_changes = 15;
+    
+    // hard mode
+    else if (mode == 2) number_of_changes = (rand() % 36) + 15;
 
     int random;
     for (int i = 0; i < number_of_changes; i++)
