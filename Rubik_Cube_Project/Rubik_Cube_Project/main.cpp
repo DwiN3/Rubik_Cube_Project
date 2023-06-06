@@ -589,14 +589,6 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
-        mix_the_cube(1);
-    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
-        mix_the_cube(2);
-
-    // TEST
-    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
-        end_simulation();
 }
 
 
@@ -711,9 +703,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         turn_cube_right_to_left(3, 9);
     if (key == GLFW_KEY_C && action == GLFW_PRESS)
         turn_cube_right_to_left(6, 9);
-
-    
     // checking here for stop timing if all is complete
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+        mix_the_cube(1);
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+        mix_the_cube(2);
+
+    // TEST
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
+        end_simulation();
 }
 void turn_cube_to_full() 
 {
