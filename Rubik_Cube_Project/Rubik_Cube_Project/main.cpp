@@ -46,15 +46,13 @@ void print_cube_color();
 void cube_arranged();
 void set_best_scores();
 void show_best_scores();
-void show_options();
-void clear_screen();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 1.0f, 8.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -71,6 +69,187 @@ float lastFrame = 0.0f;
 // best score
 const int TOP_SCORES_COUNT = 5;
 double top_scores[TOP_SCORES_COUNT] = { 0.0 };
+
+// choose color
+int color = 1;
+
+// load and create a texture 
+unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
+unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
+unsigned int textureTritanopia1, textureTritanopia2, textureTritanopia3, textureTritanopia4, textureTritanopia5, textureTritanopia6;
+
+void dataTextureLoad() {
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+}
+
+void loadData(unsigned char* data, int width, int height) {
+    if (data) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+}
+
+void loadTextures() {
+    int width, height, nrChannels;
+
+    // textureClassic1
+    glGenTextures(1, &textureClassic1);
+    glBindTexture(GL_TEXTURE_2D, textureClassic1);
+    dataTextureLoad();
+    unsigned char* dataClassic = stbi_load("colors/classic/red.png", &width, &height, &nrChannels, 0);
+    loadData(dataClassic, width, height);
+
+
+    // textureClassic2
+    glGenTextures(1, &textureClassic2);
+    glBindTexture(GL_TEXTURE_2D, textureClassic2);
+    dataTextureLoad();
+    dataClassic = stbi_load("colors/classic/green.png", &width, &height, &nrChannels, 0);
+    loadData(dataClassic, width, height);
+
+
+    // textureClassic3
+    glGenTextures(1, &textureClassic3);
+    glBindTexture(GL_TEXTURE_2D, textureClassic3);
+    dataTextureLoad();
+    dataClassic = stbi_load("colors/classic/blue.png", &width, &height, &nrChannels, 0);
+    loadData(dataClassic, width, height);
+
+
+    // textureClassic4
+    glGenTextures(1, &textureClassic4);
+    glBindTexture(GL_TEXTURE_2D, textureClassic4);
+    dataTextureLoad();
+    dataClassic = stbi_load("colors/classic/yellow.png", &width, &height, &nrChannels, 0);
+    loadData(dataClassic, width, height);
+
+
+    // textureClassic5
+    glGenTextures(1, &textureClassic5);
+    glBindTexture(GL_TEXTURE_2D, textureClassic5);
+    dataTextureLoad();
+    dataClassic = stbi_load("colors/classic/orange.png", &width, &height, &nrChannels, 0);
+    loadData(dataClassic, width, height);
+
+
+    // textureClassic6 
+    glGenTextures(1, &textureClassic6);
+    glBindTexture(GL_TEXTURE_2D, textureClassic6);
+    dataTextureLoad();
+    dataClassic = stbi_load("colors/classic/white.png", &width, &height, &nrChannels, 0);
+    loadData(dataClassic, width, height);
+
+
+
+    // textureDeuteranopia1
+    glGenTextures(1, &textureDeuteranopia1);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia1);
+    dataTextureLoad();
+    unsigned char* dataDeuteranopia = stbi_load("colors/deuteranopia/red.png", &width, &height, &nrChannels, 0);
+    loadData(dataDeuteranopia, width, height);
+
+
+    // textureDeuteranopia2
+    glGenTextures(1, &textureDeuteranopia2);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia2);
+    dataTextureLoad();
+    dataDeuteranopia = stbi_load("colors/deuteranopia/green.png", &width, &height, &nrChannels, 0);
+    loadData(dataDeuteranopia, width, height);
+
+
+    // textureDeuteranopia3
+    glGenTextures(1, &textureDeuteranopia3);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia3);
+    dataTextureLoad();
+    dataDeuteranopia = stbi_load("colors/deuteranopia/blue.png", &width, &height, &nrChannels, 0);
+    loadData(dataDeuteranopia, width, height);
+
+
+    // textureDeuteranopia4
+    glGenTextures(1, &textureDeuteranopia4);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia4);
+    dataTextureLoad();
+    dataDeuteranopia = stbi_load("colors/deuteranopia/yellow.png", &width, &height, &nrChannels, 0);
+    loadData(dataDeuteranopia, width, height);
+
+
+    // textureDeuteranopia5
+    glGenTextures(1, &textureDeuteranopia5);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia5);
+    dataTextureLoad();
+    dataDeuteranopia = stbi_load("colors/deuteranopia/orange.png", &width, &height, &nrChannels, 0);
+    loadData(dataDeuteranopia, width, height);
+
+
+    // textureDeuteranopia6
+    glGenTextures(1, &textureDeuteranopia6);
+    glBindTexture(GL_TEXTURE_2D, textureDeuteranopia6);
+    dataTextureLoad();
+    dataDeuteranopia = stbi_load("colors/deuteranopia/white.png", &width, &height, &nrChannels, 0);
+    loadData(dataDeuteranopia, width, height);
+
+
+
+    // textureTritanopia1
+    glGenTextures(1, &textureTritanopia1);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia1);
+    dataTextureLoad();
+    unsigned char* dataTritanopia = stbi_load("colors/tritanopia/red.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia2
+    glGenTextures(1, &textureTritanopia2);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia2);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/green.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia3
+    glGenTextures(1, &textureTritanopia3);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia3);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/blue.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia4
+    glGenTextures(1, &textureTritanopia4);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia4);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/yellow.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia5
+    glGenTextures(1, &textureTritanopia5);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia5);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/orange.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+
+
+    // textureTritanopia6
+    glGenTextures(1, &textureTritanopia6);
+    glBindTexture(GL_TEXTURE_2D, textureTritanopia6);
+    dataTextureLoad();
+    dataTritanopia = stbi_load("colors/tritanopia/white.png", &width, &height, &nrChannels, 0);
+    loadData(dataTritanopia, width, height);
+   
+}
+
 
 int sideCube[27][6] = {
     {1,2,3,4,5,6},
@@ -103,55 +282,53 @@ int sideCube[27][6] = {
 };
 
 
-
 glm::vec3 cubePositions[] = {
     //x               y      z
 
-    // 1 side
-    glm::vec3(-2.0f,  0.0f,  -5.0f), // FRONT - LEFT - UP
-    glm::vec3(-1.0f,  0.0f,  -5.0f), // FRONT - CENTER UP
-    glm::vec3(0.0f,   0.0f,  -5.0f),
+     // 1 side
+        glm::vec3(-1.0f,  0.0f,  -1.0f), // FRONT - LEFT - UP
+        glm::vec3(0.0f,  0.0f,  -1.0f), // FRONT - CENTER UP
+        glm::vec3(1.0f,   0.0f,  -1.0f),
 
-    glm::vec3(-2.0f, -1.0f,  -5.0f),
-    glm::vec3(-1.0f, -1.0f,  -5.0f),
-    glm::vec3(0.0f,  -1.0f,  -5.0f),
+        glm::vec3(-1.0f, -1.0f,  -1.0f),
+        glm::vec3(0.0f, -1.0f,  -1.0f),
+        glm::vec3(1.0f,  -1.0f,  -1.0f),
 
-    glm::vec3(-2.0f, -2.0f,  -5.0f),
-    glm::vec3(-1.0f, -2.0f,  -5.0f),
-    glm::vec3(0.0f,  -2.0f,  -5.0f),
+        glm::vec3(-1.0f, -2.0f,  -1.0f),
+        glm::vec3(0.0f, -2.0f,  -1.0f),
+        glm::vec3(1.0f,  -2.0f,  -1.0f),
 
-    // 2 side
-    glm::vec3(-2.0f,  0.0f,  -6.0f),
-    glm::vec3(-1.0f,  0.0f,  -6.0f),
-    glm::vec3(0.0f,   0.0f,  -6.0f),
+        // 2 side
+        glm::vec3(-1.0f,  0.0f,  -2.0f),
+        glm::vec3(0.0f,  0.0f,  -2.0f),
+        glm::vec3(1.0f,   0.0f,  -2.0f),
 
-    glm::vec3(-2.0f, -1.0f,  -6.0f),
-    glm::vec3(-1.0f, -1.0f,  -6.0f),
-    glm::vec3(0.0f,  -1.0f,  -6.0f),
+        glm::vec3(-1.0f, -1.0f,  -2.0f),
+        glm::vec3(0.0f, -1.0f,  -2.0f),
+        glm::vec3(1.0f,  -1.0f,  -2.0f),
 
-    glm::vec3(-2.0f, -2.0f,  -6.0f),
-    glm::vec3(-1.0f, -2.0f,  -6.0f),
-    glm::vec3(0.0f,  -2.0f,  -6.0f),
+        glm::vec3(-1.0f, -2.0f,  -2.0f),
+        glm::vec3(0.0f, -2.0f,  -2.0f),
+        glm::vec3(1.0f,  -2.0f,  -2.0f),
 
-    // 3 side
-    glm::vec3(-2.0f,  0.0f,  -7.0f),
-    glm::vec3(-1.0f,  0.0f,  -7.0f),
-    glm::vec3(0.0f,   0.0f,  -7.0f),
+        // 3 side
+        glm::vec3(-1.0f,  0.0f,  -3.0f),
+        glm::vec3(0.0f,  0.0f,  -3.0f),
+        glm::vec3(1.0f,   0.0f,  -3.0f),
 
-    glm::vec3(-2.0f, -1.0f,  -7.0f),
-    glm::vec3(-1.0f, -1.0f,  -7.0f),
-    glm::vec3(0.0f,  -1.0f,  -7.0f),
+        glm::vec3(-1.0f, -1.0f,  -3.0f),
+        glm::vec3(0.0f, -1.0f,  -3.0f),
+        glm::vec3(1.0f,  -1.0f,  -3.0f),
 
-    glm::vec3(-2.0f, -2.0f,  -7.0f),
-    glm::vec3(-1.0f, -2.0f,  -7.0f),
-    glm::vec3(0.0f,  -2.0f,  -7.0f),
+        glm::vec3(-1.0f, -2.0f,  -3.0f),
+        glm::vec3(0.0f, -2.0f,  -3.0f),
+        glm::vec3(1.0f,  -2.0f,  -3.0f),
 
 };
 
+
 int main()
 {
-    // show options
-    show_options();
     // set best time score
     set_best_scores();
 
@@ -320,159 +497,10 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1); //0?
 
-    
 
-    // load and create a texture 
-    unsigned int texture1, texture2, texture3, texture4, texture5, texture6;
-    // texture 1
-    glGenTextures(1, &texture1);
-    glBindTexture(GL_TEXTURE_2D, texture1);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true); // flipped texture?
-    unsigned char* data = stbi_load("colors/red.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
-    // texture 2
-    glGenTextures(1, &texture2);
-    glBindTexture(GL_TEXTURE_2D, texture2);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    //data = stbi_load("C:/LIB/assets/container.png", &width, &height, &nrChannels, 0);
-    data = stbi_load("colors/green.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
- 
-    // texture 3
-    glGenTextures(1, &texture3);
-    glBindTexture(GL_TEXTURE_2D, texture3);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // flipped texture
-    data = stbi_load("colors/blue.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
-    // texture 4
-    glGenTextures(1, &texture4);
-    glBindTexture(GL_TEXTURE_2D, texture4);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // flipped texture
-    data = stbi_load("colors/yellow.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
-   
-    // texture 5
-    glGenTextures(1, &texture5);
-    glBindTexture(GL_TEXTURE_2D, texture5);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // flipped texture
-    data = stbi_load("colors/white.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
-
-    // texture 6
-    glGenTextures(1, &texture6);
-    glBindTexture(GL_TEXTURE_2D, texture6);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // flipped texture
-    data = stbi_load("colors/orange.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
-
-   
-   
-   
- 
+    loadTextures();
   
 
-    // sampler
-    //ourShader.use();
-    //ourShader.setInt("texture1", 0);
-    //ourShader.setInt("texture2", 1);
-
-   //////
     // render loop
     while (!glfwWindowShouldClose(window))
     {
@@ -509,41 +537,80 @@ int main()
             ourShader.use();
             for (unsigned int j = 0; j < 6; j++)
             {
+                // 0 - white
+                // 1 - red
+                // 2 - green
+                // 3 - blue
+                // 4 - yellow
+                // 5 - orange
                 // activited special texture for each side   
-                if (sideCube[i][j] == 1)        // red
-                {
+                if (sideCube[i][j] == 1) { 
                     glActiveTexture(GL_TEXTURE1);
-                    glBindTexture(GL_TEXTURE_2D, texture1);
-                    ourShader.setInt("texture1", 0);
-                }
-                else if (sideCube[i][j] == 2)   // green
-                {
-                    glActiveTexture(GL_TEXTURE2);
-                    glBindTexture(GL_TEXTURE_2D, texture2);
-                    ourShader.setInt("texture1", 1);
-                }
-                else if (sideCube[i][j] == 3)   //blue
-                {
-                    glActiveTexture(GL_TEXTURE3);
-                    glBindTexture(GL_TEXTURE_2D, texture3);
-                    ourShader.setInt("texture1", 2);
-                }
-                else if (sideCube[i][j] == 4)   // yellow
-                {
-                    glActiveTexture(GL_TEXTURE4);
-                    glBindTexture(GL_TEXTURE_2D, texture4);
-                    ourShader.setInt("texture1", 3);
-                }
-                else if (sideCube[i][j] == 5)   // white
-                {
-                    glActiveTexture(GL_TEXTURE5);
-                    glBindTexture(GL_TEXTURE_2D, texture5);
-                    ourShader.setInt("texture1", 4);
-                }
-                else if(sideCube[i][j] == 6) {  // orange
-                    glActiveTexture(GL_TEXTURE6);
-                    glBindTexture(GL_TEXTURE_2D, texture6);
+                    if (color == 1)
+                        glBindTexture(GL_TEXTURE_2D, textureClassic1);
+                    else if (color == 2)
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia1);
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia1);
                     ourShader.setInt("texture1", 5);
+                    
+                }
+                else if (sideCube[i][j] == 2) { 
+                    glActiveTexture(GL_TEXTURE2);
+                    if (color == 1)
+                        glBindTexture(GL_TEXTURE_2D, textureClassic2);
+                    else if (color == 2)
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia2);
+                    else if (color == 3) {
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia2);
+                    }
+                    ourShader.setInt("texture1", 1);
+
+                }
+                else if (sideCube[i][j] == 3) { 
+                    glActiveTexture(GL_TEXTURE3);
+                    if (color == 1)
+                        glBindTexture(GL_TEXTURE_2D, textureClassic3);
+                    else if (color == 2)
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia3);
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia3);
+                    ourShader.setInt("texture1", 2);
+
+                }
+                else if (sideCube[i][j] == 4) { 
+                    glActiveTexture(GL_TEXTURE4);
+                    if (color == 1) 
+                        glBindTexture(GL_TEXTURE_2D, textureClassic4);
+                    else if (color == 2) 
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia4);
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia4);
+                    ourShader.setInt("texture1", 3);
+
+                }
+                
+                else if (sideCube[i][j] == 5) { 
+                    glActiveTexture(GL_TEXTURE5);
+                    if (color == 1)
+                        glBindTexture(GL_TEXTURE_2D, textureClassic5);
+                    else if (color == 2)
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia5);
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia5);
+                    ourShader.setInt("texture1", 4);
+
+                }
+                else if (sideCube[i][j] == 6) {
+                    glActiveTexture(GL_TEXTURE6);
+                    if (color == 1)
+                        glBindTexture(GL_TEXTURE_2D, textureClassic6);
+                    else if (color == 2)
+                        glBindTexture(GL_TEXTURE_2D, textureDeuteranopia6);
+                    else if (color == 3)
+                        glBindTexture(GL_TEXTURE_2D, textureTritanopia6);
+                    ourShader.setInt("texture1", 0);
+
                 }
                 
                 // calculate the model matrix for each object and pass it to shader before drawing
@@ -730,11 +797,20 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
         mix_the_cube(2);
 
+
     // Prezentacja ułożenia kostki
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS){
         cube_arranged();
         turn_cube_to_full();
     }
+
+    // Zmiana koloru kostki
+    if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
+        color = 3;
+    if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
+        color = 2;
+    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
+        color = 1;
         
 }
 void turn_cube_to_full() 
@@ -1009,10 +1085,10 @@ void mix_the_cube(int mode) {
 void cube_arranged(){
     chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
     chrono::duration<double> duration = end_timer - start_timer;
-    cout << "Czas trwania: " << duration.count() << " sekundy" << endl << endl;
+    cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
 
     if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
-        cout << "Gratulacje, udalo ci sie pobic rekord!!!\n" << endl;
+        cout << "\nGratulacje, udalo ci sie pobic rekord!!!\n" << endl;
 
         top_scores[TOP_SCORES_COUNT - 1] = duration.count();
         sort(top_scores, top_scores + TOP_SCORES_COUNT);
@@ -1027,10 +1103,8 @@ void cube_arranged(){
         else {
             cout << "Nie mozna zapisac do pliku" << endl;
         }
+        show_best_scores();
     }
-    show_best_scores();
-    cout << endl << endl;
-    show_options();
 }
 
 void set_best_scores() {
@@ -1055,29 +1129,6 @@ void show_best_scores(){
         int minutes = total_seconds / 60;
         int seconds = total_seconds % 60;
         int milliseconds = static_cast<int>((top_scores[i] - total_seconds) * 1000);
-        std::cout << "  " << i + 1 << ". " << minutes << ":" << std::setw(2) << std::setfill('0') << seconds << "." << std::setw(2) << std::setfill('0') << milliseconds / 10 << std::endl;
+        std::cout << i+1 << ". " << minutes << ":" << std::setw(2) << std::setfill('0') << seconds << "." << std::setw(2) << std::setfill('0') << milliseconds / 10 << std::endl;
     }
-}
-
-void show_options() {
-    cout << "Ruchy na kosce:" << endl;
-    cout << "  1 - F    2 - S    3 - B'" << endl;
-    cout << "  Q - F'   W - S'   E - B" << endl;
-    cout << "  A - U'   S - E    D - D" << endl;
-    cout << "  Z - U    X - E'   C - D'" << endl << endl;
-
-    cout << "Opcje aplikacji:" << endl;
-    cout << "  O     - pomieszanie kostki easy (15)" << endl;
-    cout << "  P     - pomieszanie kostki hard (15+)" << endl;
-    cout << "  SPACE - wizualne ulozenie kostki" << endl;
-    cout << "  L     - symulacja ulozenie kostki" << endl;
-    cout << "  0     - domyslny wyglad kostki" << endl;
-    cout << "  9     - tryb dla daltonistow (duteranopia)" << endl;
-    cout << "  8     - tryb dla daltonistow (tritanopia)" << endl << endl;
-}
-
-void clear_screen()
-{
-    getchar();
-    system("cls");
 }
