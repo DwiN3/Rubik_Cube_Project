@@ -1142,7 +1142,7 @@ void cube_arranged(bool skip) {
         cout << "Ilosc ruchow: " << count_moves << endl << endl;
 
         arranging = false;
-        if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
+        if (duration.count() < top_scores[TOP_SCORES_COUNT - 1] && skip == false) {
             cout << "Gratulacje, udalo ci sie pobic rekord!!!\n" << endl;
 
             top_scores[TOP_SCORES_COUNT - 1] = duration.count();
