@@ -147,6 +147,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cube.h" />
     <ClInclude Include="shader.h" />
   </ItemGroup>
   <ItemGroup>
