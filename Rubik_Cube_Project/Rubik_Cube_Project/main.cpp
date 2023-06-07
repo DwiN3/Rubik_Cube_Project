@@ -25,7 +25,7 @@
 
 using namespace std;
 
-//#include <experimental/filesystem> // Header file for pre-standard implementation
+
 using namespace std::experimental::filesystem;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -50,59 +50,112 @@ void show_options();
 bool is_cube_solved();
 void show_solve();
 
-// settings
+/// <summary>
+/// Szerokość okna.
+/// </summary>
 const unsigned int SCR_WIDTH = 800;
+/// <summary>
+/// Wysokość okna.
+/// </summary>
 const unsigned int SCR_HEIGHT = 600;
 
-// camera
+/// <summary>
+/// Ustawienia kamery.
+/// </summary>
 Camera camera(glm::vec3(0.0f, 1.0f, 8.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-// timer
-chrono::time_point<chrono::high_resolution_clock> start_timer;
-chrono::time_point<chrono::high_resolution_clock> end_timer;
-chrono::duration<double> duration;
-
-// timing
-float deltaTime = 0.0f;	// time between current frame and last frame
+/// <summary>
+/// Zmienna ustawiająca wartość pomiędzy klatkami.
+/// </summary>
+float deltaTime = 0.0f;
+/// <summary>
+/// Zmienna ustawiająca wartość ostaniej klatki.
+/// </summary>
 float lastFrame = 0.0f;
 
-// best score
+/// <summary>
+/// Zmienna przyjmująca wartość startu timera.
+/// </summary>
+chrono::time_point<chrono::high_resolution_clock> start_timer;
+/// <summary>
+/// Zmienna przyjmująca wartość zatrzymania timera.
+/// </summary>
+chrono::time_point<chrono::high_resolution_clock> end_timer;
+/// <summary>
+/// Zmienna przechowywująca czas ułożenia kostki.
+/// </summary>
+chrono::duration<double> duration;
+
+/// <summary>
+/// Zmienna przechowująca ilość rekordów.
+/// </summary>
 const int TOP_SCORES_COUNT = 5;
+/// <summary>
+/// Ranking czasów ułożenia.
+/// </summary>
 double top_scores[TOP_SCORES_COUNT] = { 0.0 };
 
-// choose color
+/// <summary>
+/// Wybór koloru odpowiedniego dla danego użytkownika.
+/// </summary>
 int color = 1;
 
-// arranging blocking
+/// <summary>
+/// Zmiena przechowująca stan układania kostki.
+/// </summary>
 bool arranging = false;
 
-// count moves
+/// <summary>
+/// Zmienne przechowujące wykonane ruchy.
+/// </summary>
 int count_moves = 0;
+/// <summary>
+/// Zmienne przechowujące wykonane ruchy poprzez mieszanie.
+/// </summary>
 int random_moves = 0;
 
-//  show solve
+/// <summary>
+/// Zmienne przechowującą podpowiedź.
+/// </summary>
 string solve = "";
+/// <summary>
+/// Zmienne przechowującą stan użycia podpowiedzi.
+/// </summary>
 bool isSolved = true;
 
-// load and create a texture 
+/// <summary>
+/// Zmienne przechowujące domyślne tekstury.
+/// </summary>
 unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
+/// <summary>
+/// Zmienne przechowujące tekstury z deuteranopii.
+/// </summary>
 unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
+/// <summary>
+/// Zmienne przechowujące tekstury z tritanopii.
+/// </summary>
 unsigned int textureTritanopia1, textureTritanopia2, textureTritanopia3, textureTritanopia4, textureTritanopia5, textureTritanopia6;
 
+
+/// <summary>
+/// Ustawienie parametrów dla tekstur.
+/// </summary>
 void dataTextureLoad() {
-    // set the texture wrapping parameters
+    // ustawianie parametrów wrap oraz repeat
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
+    // ustawienie filtrowania oraz liniowej tekstury.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    stbi_set_flip_vertically_on_load(true); // odwrócenie tekstury 
 }
 
+/// <summary>
+/// LoadData generuje oraz zwraca teksture.
+/// </summary>
 void loadData(unsigned char* data, int width, int height) {
     if (data) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -114,6 +167,9 @@ void loadData(unsigned char* data, int width, int height) {
     stbi_image_free(data);
 }
 
+/// <summary>
+/// Funkcja ładująca textury które są nakładane na kostkę
+/// </summary>
 void loadTextures() {
     int width, height, nrChannels;
 
@@ -263,7 +319,9 @@ void loadTextures() {
 
 }
 
-
+/// <summary>
+/// Tablice wyświetlają serce kostki rubika która zapamiętuje swój stan.
+/// </summary>
 int sideCube[27][6] = {
     {1,2,3,4,5,6},
     {1,2,3,4,5,6},
@@ -294,7 +352,9 @@ int sideCube[27][6] = {
     {1,2,3,4,5,6}
 };
 
-
+/// <summary>
+/// Pozycje kostek czyli rozmieszczenie kostek aby uformowały się w jedną kostkę "Rubik's Cube.
+/// </summary>
 glm::vec3 cubePositions[] = {
     //x               y      z
 
@@ -339,12 +399,16 @@ glm::vec3 cubePositions[] = {
 
 };
 
-
+/// <summary>
+/// Główna funkcja aplikacji.
+/// Zawiera ona inicjalizacje okna, VAO, VBO, przydzielenie shaderów.
+/// Nakłada textury na poszczególne boki.
+/// </summary>
 int main()
 {
-    // show options
+    // pokazuje opcje
     show_options();
-    // set best time score
+    // ustawia najlepsze czasy
     set_best_scores();
 
     // glfw
@@ -370,24 +434,24 @@ int main()
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
-    // glfw capture mouse
+    // glfw przechwytywanie myszki
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    // glad load function
+    // glad ładowanie funkcji
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
 
-    // configure global opengl state
+    // konfiguracja globalnego stanu opengl
     glEnable(GL_DEPTH_TEST);
 
-    // build shader
+    // ładowanie shaderów
     Shader ourShader("assets/camera.vs", "assets/camera.fs");
     Shader skyboxShader("assets/skybox.vs", "assets/skybox.fs");
 
-    // set up vertex
+    // ustawianie pozycji
     float vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -434,9 +498,7 @@ int main()
 
 
     // skybox
-
-    float skyboxVertices[] = {
-        // positions          
+    float skyboxVertices[] = {         
         -1.0f,  1.0f, -1.0f,
         -1.0f, -1.0f, -1.0f,
          1.0f, -1.0f, -1.0f,
@@ -479,7 +541,6 @@ int main()
         -1.0f, -1.0f,  1.0f,
          1.0f, -1.0f,  1.0f
     };
-    /*cubetest = cubePositions[0];*/
     // skybox VAO
     unsigned int skyboxVAO, skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -503,46 +564,45 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // position attribute
+    // pozycja atrybutów
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    // texture coord attribute
+    // kordy atrybutów tekstur
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1); //0?
+    glEnableVertexAttribArray(1); 
 
 
     loadTextures();
 
 
-    // render loop
+    // główna pętla renderowania
     while (!glfwWindowShouldClose(window))
     {
-        // per-frame time logic
+        // czas na klatkę
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        // input
+        // podpięcie inputów
         processInput(window);
 
-        // render
-        // activate shader
+        // aktywacja shaderów
         ourShader.use();
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        //// pass projection matrix to shader
+        // przekazywanie macierzy do shadera
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         ourShader.setMat4("projection", projection);
 
-        // camera/view transformation
+        // kamera
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("view", view);
 
         int count = 6;
-        // render boxes (27 boxes)
+        // renderowanie 27 boxów
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 27; i++)
         {
@@ -555,7 +615,7 @@ int main()
                 // 3 - blue
                 // 4 - yellow
                 // 5 - orange
-                // activited special texture for each side   
+                // aktywacja tekstur dla poszczególnych boków
                 if (sideCube[i][j] == 1) {
                     glActiveTexture(GL_TEXTURE1);
                     if (color == 1)
@@ -625,29 +685,24 @@ int main()
 
                 }
 
-                // calculate the model matrix for each object and pass it to shader before drawing
-                glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+                // obliczanie modelu macierzy dla każdego obiektu i przekazanie go do shadera przed wyrysowaniem
+                glm::mat4 model = glm::mat4(1.0f); 
                 model = glm::translate(model, cubePositions[i]);
                 model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-                //model = glm::rotate(model, 0, glm::vec3(1.0f, 0.0f, 0.0f));
                 ourShader.setMat4("model", model);
-
-                // count is the number of who manny triangles sholud to create with selected texture  (6 - one side, 36 - all cube)
+                // liczenie ilości wyrysowanych trójkątów i zmiana tekstury co każde 2 trójkąty
                 glDrawArrays(GL_TRIANGLES, 0, count);
                 count += 6;
             }
-            // reseting after one cube
+            // resetowanie liczenia trójkątów po wyrysowaniu całej małej kostki
             if (count >= 35)
                 count = 6;
-            //angle = 0.0f;
-
-
         }
 
-        // draw skybox as last
-        glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+        // rysowanie skyboxa
+        glDepthFunc(GL_LEQUAL); 
         skyboxShader.use();
-        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); 
         skyboxShader.setMat4("view", view);
         skyboxShader.setMat4("projection", projection);
         // skybox cube
@@ -656,31 +711,32 @@ int main()
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
-        glDepthFunc(GL_LESS); // set depth function back to default
+        glDepthFunc(GL_LESS); 
 
+        // podpięcie inputów
         glfwSetKeyCallback(window, key_callback);
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    // optional: de-allocate all resources once they've outlived their purpose:
+    // usunięcie zaalokowanych zasobów
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
     glDeleteVertexArrays(1, &skyboxVAO);
     glDeleteBuffers(1, &skyboxVBO);
 
-    // glfw: terminate, clearing all previously allocated GLFW resources.
+    // glfw: czyszczenie poprzednich zasobów
     glfwTerminate();
     return 0;
 }
 
-// process all input
+/// <summary>
+/// Input process czyli wykonywanie się poszczególnych funkcji na wejściu różnych przycisków.
+/// </summary>
 void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
@@ -692,15 +748,17 @@ void processInput(GLFWwindow* window)
 }
 
 
-// glfw: whenever the window size changed 
+/// <summary>
+/// Buffer ustawiania rozmiaru.
+/// </summary>
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and 
-    // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
 
-// glfw: whenever the mouse moves
+/// <summary>
+/// Poruszanie myszką, dzięki temu zmienia widok.
+/// </summary>
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
     float xpos = static_cast<float>(xposIn);
@@ -714,7 +772,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     }
 
     float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+    float yoffset = lastY - ypos;
 
     lastX = xpos;
     lastY = ypos;
@@ -722,15 +780,17 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-// mouse scroll
+/// <summary>
+/// Poruszanie kamery na scrollu.
+/// </summary>
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
-/**
- @qwewqe
-*/
+/// <summary>
+/// Załadowanie skyboxa czyli wyglądu który jest na całym programie.
+/// </summary>
 unsigned int loadCubemap()
 {
     unsigned int textureID;
@@ -774,7 +834,11 @@ unsigned int loadCubemap()
 }
 
 
-
+/// <summary>
+/// Nasłuchiwanie jeśli przycisk został kliknięty to wykona się ta funkcja oraz zagnieżdzone funkcje w niej (tylko raz).
+/// Key - przycisk
+/// Action - akcja np. GLFW_PRESS
+/// </summary>
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     // Sterowanie kostką
@@ -830,6 +894,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         color = 1;
 }
 
+/// <summary>
+/// Ułożenie kostki do wersji domyślnej.
+/// </summary>
 void turn_cube_to_full()
 {
     for (int i = 0; i < 27; i++)
@@ -841,7 +908,9 @@ void turn_cube_to_full()
     }
 }
 
-
+/// <summary>
+/// Obracanie kostki na przycisk od strony górnej do strony dolnej.
+/// </summary>
 void turn_cube_up_to_down(int which, int each, bool game) {
     if (game) count_moves += 1;
     int a, b, c;
@@ -890,7 +959,9 @@ void turn_cube_up_to_down(int which, int each, bool game) {
     if (is_cube_solved() == true) cube_arranged(false);
 }
 
-
+/// <summary>
+/// Obracanie kostki na przycisk od strony dolnej do strony górnej.
+/// </summary>
 void turn_cube_down_to_up(int which, int each, bool game) {
     if (game) count_moves += 1;
     int a, b, c;
@@ -939,6 +1010,9 @@ void turn_cube_down_to_up(int which, int each, bool game) {
     if (is_cube_solved() == true) cube_arranged(false);
 }
 
+/// <summary>
+/// Obracanie kostki na przycisk od strony lefej do strony prawej.
+/// </summary>
 void turn_cube_left_to_right(int which, int each, bool game) {
     if (game) count_moves += 1;
     int a, b, c;
@@ -988,6 +1062,9 @@ void turn_cube_left_to_right(int which, int each, bool game) {
     if (is_cube_solved() == true) cube_arranged(false);
 }
 
+/// <summary>
+/// Obracanie kostki na przycisk od strony prawej do strony lewej.
+/// </summary>
 void turn_cube_right_to_left(int which, int each, bool game) {
     if (game) count_moves += 1;
     int a, b, c;
@@ -1037,6 +1114,9 @@ void turn_cube_right_to_left(int which, int each, bool game) {
     if (is_cube_solved() == true) cube_arranged(false);
 }
 
+/// <summary>
+/// Wypisanie kostki do konsoli  na podstawie cyfr.
+/// </summary>
 void print_cube_color() {
     for (int i = 0; i < 27; i++)
     {
@@ -1044,6 +1124,10 @@ void print_cube_color() {
     }
 }
 
+/// <summary>
+/// Funkcja miesza ułożenie kostki którą następnie można układać
+/// Są trzy tryby: easy, medium oraz hard czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu.
+/// </summary>
 void mix_the_cube(int mode) {
     if (arranging == false) {
         isSolved = false;
@@ -1066,7 +1150,7 @@ void mix_the_cube(int mode) {
             random_moves = (rand() % 36) + 15;
             number_of_changes = random_moves;
         }
-          
+
         int random;
         for (int i = 0; i < number_of_changes; i++)
         {
@@ -1132,17 +1216,19 @@ void mix_the_cube(int mode) {
     }
 }
 
-
+/// <summary>
+/// Sprawdzanie ułożenia kostki w przypdku ułożenia w lepszym czasie, wynik zapisywany zostaje w rankingu najlepszych czasów.
+/// </summary>
 void cube_arranged(bool skip) {
     if (arranging == true) {
         chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
         chrono::duration<double> duration = end_timer - start_timer;
-        cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
-        if (skip == true) count_moves += random_moves;
+        if (skip == false) cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
+        else count_moves += random_moves;
         cout << "Ilosc ruchow: " << count_moves << endl << endl;
 
         arranging = false;
-        if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
+        if (duration.count() < top_scores[TOP_SCORES_COUNT - 1] && skip == false) {
             cout << "Gratulacje, udalo ci sie pobic rekord!!!\n" << endl;
 
             top_scores[TOP_SCORES_COUNT - 1] = duration.count();
@@ -1169,6 +1255,9 @@ void cube_arranged(bool skip) {
     }
 }
 
+/// <summary>
+/// Wpisanie ustanowionego rekordu ułożenia kostki do rankingu najlepszych czasów.
+/// </summary>
 void set_best_scores() {
     ifstream file("best_score.txt");
     if (!file.good()) {
@@ -1184,6 +1273,9 @@ void set_best_scores() {
     }
 }
 
+/// <summary>
+/// Wyświetlanie najlepszych czasów ułożenia kostki rubika.
+/// </summary>
 void show_best_scores() {
     std::cout << "Najlepsze wyniki:" << std::endl;
     for (int i = 0; i < TOP_SCORES_COUNT; i++) {
@@ -1195,6 +1287,9 @@ void show_best_scores() {
     }
 }
 
+/// <summary>
+/// Wyświetlanie instrukcji obsługi programu w konsoli.
+/// </summary>
 void show_options() {
     cout << "Ruchy na kosce:" << endl;
     cout << "  1 - F    2 - S    3 - B'" << endl;
@@ -1209,10 +1304,13 @@ void show_options() {
     cout << "  L     - wyswietlenie podpowiedzi" << endl;
     cout << "  SPACE - symulacja ulozenie kostki" << endl;
     cout << "  0     - domyslny wyglad kostki" << endl;
-    cout << "  9     - tryb dla daltonistow (duteranopia)" << endl;
+    cout << "  9     - tryb dla daltonistow (deuteranopia)" << endl;
     cout << "  8     - tryb dla daltonistow (tritanopia)" << endl << endl;
 }
 
+/// <summary>
+/// Funkcja sprawdza czy kostka rubika została ułożona.
+/// </summary>
 bool is_cube_solved()
 {
     for (int i = 0; i < 27; i++)
@@ -1220,13 +1318,16 @@ bool is_cube_solved()
         for (int j = 0; j < 6; j++)
         {
             if (sideCube[i][j] != j + 1) return false;
-
         }
     }
     return true;
 }
 
+ ///<summary>
+ ///Funkcja wyświetlająca podpowiedź do ułożenia kostki.
+ ///</summary>
+
 void show_solve() {
     isSolved = true;
-    cout << "Solve: " << solve << "  <-----\n";
+    cout << "Podpowiedź: " << solve << "  <-----\n";
 }
