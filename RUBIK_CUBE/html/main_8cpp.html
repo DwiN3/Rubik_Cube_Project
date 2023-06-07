@@ -70,43 +70,38 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d522931ffa1371640980b621734a4381.html">Users</a></li><li class="navelem"><a class="el" href="dir_de04431a6a17747a5845002f2e122e50.html">Kuba</a></li><li class="navelem"><a class="el" href="dir_0d6079e85d009620646d6e55559e8342.html">Desktop</a></li><li class="navelem"><a class="el" href="dir_92d671318b4378a41a6649ec2707914d.html">studia</a></li><li class="navelem"><a class="el" href="dir_327e8911539aafffcb7f54a3daaa673c.html">semestry</a></li><li class="navelem"><a class="el" href="dir_89a90e4e5d00d2e8bcc29fd98afede31.html">semestr_4</a></li><li class="navelem"><a class="el" href="dir_67343784a22738182fcf0911408e2950.html">grafika2</a></li><li class="navelem"><a class="el" href="dir_511db162e3e9defcdeb0843510c8901d.html">Rubik_Cube_Project</a></li><li class="navelem"><a class="el" href="dir_4f5ad677af755a9104c3dd0ac6c9451a.html">Rubik_Cube_Project</a></li><li class="navelem"><a class="el" href="dir_330fd693dcf300042bca4454b80b5028.html">Rubik_Cube_Project</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_afdc6b892e313c411beb81076f1a5e1d.html">Rubik_Cube_Project</a></li><li class="navelem"><a class="el" href="dir_678a388fe5e9be02e27facd0598add27.html">Rubik_Cube_Project</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">main.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;glad/glad.h&gt;</code><br />
-<code>#include &lt;GLFW/glfw3.h&gt;</code><br />
-<code>#include &lt;C:/LIB/stb/stb_image.h&gt;</code><br />
-<code>#include &lt;glm/glm.hpp&gt;</code><br />
-<code>#include &lt;glm/gtc/matrix_transform.hpp&gt;</code><br />
-<code>#include &lt;glm/gtc/type_ptr.hpp&gt;</code><br />
-<code>#include &lt;C:/LIB/assets/camera.h&gt;</code><br />
-<code>#include &lt;C:/LIB/assets/shader.h&gt;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
-<code>#include &lt;random&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;chrono&gt;</code><br />
-<code>#include &lt;thread&gt;</code><br />
-<code>#include &lt;filesystem&gt;</code><br />
-<code>#include &lt;fstream&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
-<code>#include &lt;iomanip&gt;</code><br />
-<code>#include &lt;algorithm&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="cube_8h_source.html">cube.h</a>&quot;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a18372412ad2fc3ce1e3240b3cf0efe78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a18372412ad2fc3ce1e3240b3cf0efe78">STB_IMAGE_IMPLEMENTATION</a></td></tr>
-<tr class="separator:a18372412ad2fc3ce1e3240b3cf0efe78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a08ec44e860dbdb504ff1bd80e3b1687b"><td class="memItemLeft" align="right" valign="top">Camera&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a08ec44e860dbdb504ff1bd80e3b1687b">camera</a> (glm::vec3(0.0f, 1.0f, 8.0f))</td></tr>
+<tr class="memdesc:a08ec44e860dbdb504ff1bd80e3b1687b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ustawienia pozycji początkowej kamery.  <br /></td></tr>
+<tr class="separator:a08ec44e860dbdb504ff1bd80e3b1687b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9827b9b3add40f7b2fecee849deb8b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa9827b9b3add40f7b2fecee849deb8b1">dataTextureLoad</a> ()</td></tr>
+<tr class="memdesc:aa9827b9b3add40f7b2fecee849deb8b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ustawienie parametrów dla tekstur.  <br /></td></tr>
+<tr class="separator:aa9827b9b3add40f7b2fecee849deb8b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc9b38392aed9677fb46531c8250cc8f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#adc9b38392aed9677fb46531c8250cc8f">loadData</a> (unsigned char *data, int width, int height)</td></tr>
+<tr class="memdesc:adc9b38392aed9677fb46531c8250cc8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LoadData generuje oraz zwraca teksture.  <br /></td></tr>
+<tr class="separator:adc9b38392aed9677fb46531c8250cc8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a052a3c016cd0af4daa901f62769a2cf9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a052a3c016cd0af4daa901f62769a2cf9">loadTextures</a> ()</td></tr>
+<tr class="memdesc:a052a3c016cd0af4daa901f62769a2cf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja ładująca textury które są nakładane na kostkę  <br /></td></tr>
+<tr class="separator:a052a3c016cd0af4daa901f62769a2cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+<tr class="memdesc:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Główna funkcja aplikacji. Zawiera ona inicjalizacje okna, VAO, VBO, przydzielenie shaderów. Nakłada textury na poszczególne boki.  <br /></td></tr>
+<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d03c6f2666863543429a06ef642fe6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a2d03c6f2666863543429a06ef642fe6a">processInput</a> (GLFWwindow *window)</td></tr>
+<tr class="memdesc:a2d03c6f2666863543429a06ef642fe6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input process czyli wykonywanie się poszczególnych funkcji na wejściu różnych przycisków.  <br /></td></tr>
+<tr class="separator:a2d03c6f2666863543429a06ef642fe6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5180f7bf2b71421af837035824a8c8ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a5180f7bf2b71421af837035824a8c8ac">framebuffer_size_callback</a> (GLFWwindow *window, int width, int height)</td></tr>
 <tr class="memdesc:a5180f7bf2b71421af837035824a8c8ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer ustawiania rozmiaru.  <br /></td></tr>
 <tr class="separator:a5180f7bf2b71421af837035824a8c8ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -116,15 +111,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a06ad2502008f16fbcf01dfaa7f7bc9ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a06ad2502008f16fbcf01dfaa7f7bc9ea">scroll_callback</a> (GLFWwindow *window, double xoffset, double yoffset)</td></tr>
 <tr class="memdesc:a06ad2502008f16fbcf01dfaa7f7bc9ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poruszanie kamery na scrollu.  <br /></td></tr>
 <tr class="separator:a06ad2502008f16fbcf01dfaa7f7bc9ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d03c6f2666863543429a06ef642fe6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a2d03c6f2666863543429a06ef642fe6a">processInput</a> (GLFWwindow *window)</td></tr>
-<tr class="memdesc:a2d03c6f2666863543429a06ef642fe6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input process czyli wykonywanie się poszczególnych funkcji na wejściu różnych przycisków.  <br /></td></tr>
-<tr class="separator:a2d03c6f2666863543429a06ef642fe6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ca807f210c943f1b6f383d913cf9368"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a6ca807f210c943f1b6f383d913cf9368">loadCubemap</a> ()</td></tr>
 <tr class="memdesc:a6ca807f210c943f1b6f383d913cf9368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Załadowanie skyboxa czyli wyglądu który jest na całym programie.  <br /></td></tr>
 <tr class="separator:a6ca807f210c943f1b6f383d913cf9368"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a286930f4e8ede059b83ff6eafa2ff718"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a286930f4e8ede059b83ff6eafa2ff718">key_callback</a> (GLFWwindow *window, int key, int scancode, int action, int mods)</td></tr>
 <tr class="memdesc:a286930f4e8ede059b83ff6eafa2ff718"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nasłuchiwanie jeśli przycisk został kliknięty to wykona się ta funkcja oraz zagnieżdzone funkcje w niej (tylko raz). Key - przycisk Action - akcja np. GLFW_PRESS.  <br /></td></tr>
 <tr class="separator:a286930f4e8ede059b83ff6eafa2ff718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b8109a47240fba6e810e79c2022e2c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7b8109a47240fba6e810e79c2022e2c7">turn_cube_to_full</a> ()</td></tr>
+<tr class="memdesc:a7b8109a47240fba6e810e79c2022e2c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ułożenie kostki do wersji domyślnej.  <br /></td></tr>
+<tr class="separator:a7b8109a47240fba6e810e79c2022e2c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ac1ba4d1cbc975ea13f57957ede7c6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a3ac1ba4d1cbc975ea13f57957ede7c6d">turn_cube_up_to_down</a> (int which, int each, bool game)</td></tr>
 <tr class="memdesc:a3ac1ba4d1cbc975ea13f57957ede7c6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obracanie kostki na przycisk od strony górnej do strony dolnej.  <br /></td></tr>
 <tr class="separator:a3ac1ba4d1cbc975ea13f57957ede7c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,15 +132,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a11193bd495bdd0ecd2537f17f0724286"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a11193bd495bdd0ecd2537f17f0724286">turn_cube_right_to_left</a> (int which, int each, bool game)</td></tr>
 <tr class="memdesc:a11193bd495bdd0ecd2537f17f0724286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obracanie kostki na przycisk od strony prawej do strony lewej.  <br /></td></tr>
 <tr class="separator:a11193bd495bdd0ecd2537f17f0724286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa21e7f4677f52c70f21c9242b9b40fb8">mix_the_cube</a> (int mode)</td></tr>
-<tr class="memdesc:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja miesza ułożenie kostki którą następnie można układać Są trzy tryby: easy, medium oraz hard czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu.  <br /></td></tr>
-<tr class="separator:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b8109a47240fba6e810e79c2022e2c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7b8109a47240fba6e810e79c2022e2c7">turn_cube_to_full</a> ()</td></tr>
-<tr class="memdesc:a7b8109a47240fba6e810e79c2022e2c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ułożenie kostki do wersji domyślnej.  <br /></td></tr>
-<tr class="separator:a7b8109a47240fba6e810e79c2022e2c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13f14c1ba4af90462652402369f2acf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a13f14c1ba4af90462652402369f2acf7">print_cube_color</a> ()</td></tr>
 <tr class="memdesc:a13f14c1ba4af90462652402369f2acf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wypisanie kostki do konsoli na podstawie cyfr.  <br /></td></tr>
 <tr class="separator:a13f14c1ba4af90462652402369f2acf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa21e7f4677f52c70f21c9242b9b40fb8">mix_the_cube</a> (int mode)</td></tr>
+<tr class="memdesc:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja miesza ułożenie kostki którą następnie można układać Są trzy tryby: easy, medium oraz hard czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu.  <br /></td></tr>
+<tr class="separator:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50513d99994d543b9aaeb1da5b0ee884"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a50513d99994d543b9aaeb1da5b0ee884">cube_arranged</a> (bool skip)</td></tr>
 <tr class="memdesc:a50513d99994d543b9aaeb1da5b0ee884"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sprawdzanie ułożenia kostki w przypdku ułożenia w lepszym czasie, wynik zapisywany zostaje w rankingu najlepszych czasów.  <br /></td></tr>
 <tr class="separator:a50513d99994d543b9aaeb1da5b0ee884"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,21 +155,6 @@ Functions</h2></td></tr>
 <tr class="separator:a2a36dd6303f6cf4433d4c2603c1003c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fd19d44a819bec8c71967d5d938f73b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a4fd19d44a819bec8c71967d5d938f73b">show_solve</a> ()</td></tr>
 <tr class="separator:a4fd19d44a819bec8c71967d5d938f73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08ec44e860dbdb504ff1bd80e3b1687b"><td class="memItemLeft" align="right" valign="top">Camera&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a08ec44e860dbdb504ff1bd80e3b1687b">camera</a> (glm::vec3(0.0f, 1.0f, 8.0f))</td></tr>
-<tr class="memdesc:a08ec44e860dbdb504ff1bd80e3b1687b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ustawienia pozycji początkowej kamery.  <br /></td></tr>
-<tr class="separator:a08ec44e860dbdb504ff1bd80e3b1687b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9827b9b3add40f7b2fecee849deb8b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa9827b9b3add40f7b2fecee849deb8b1">dataTextureLoad</a> ()</td></tr>
-<tr class="memdesc:aa9827b9b3add40f7b2fecee849deb8b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ustawienie parametrów dla tekstur.  <br /></td></tr>
-<tr class="separator:aa9827b9b3add40f7b2fecee849deb8b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc9b38392aed9677fb46531c8250cc8f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#adc9b38392aed9677fb46531c8250cc8f">loadData</a> (unsigned char *data, int width, int height)</td></tr>
-<tr class="memdesc:adc9b38392aed9677fb46531c8250cc8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LoadData generuje oraz zwraca teksture.  <br /></td></tr>
-<tr class="separator:adc9b38392aed9677fb46531c8250cc8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a052a3c016cd0af4daa901f62769a2cf9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a052a3c016cd0af4daa901f62769a2cf9">loadTextures</a> ()</td></tr>
-<tr class="memdesc:a052a3c016cd0af4daa901f62769a2cf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja ładująca textury które są nakładane na kostkę  <br /></td></tr>
-<tr class="separator:a052a3c016cd0af4daa901f62769a2cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
-<tr class="memdesc:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Główna funkcja aplikacji. Zawiera ona inicjalizacje okna, VAO, VBO, przydzielenie shaderów. Nakłada textury na poszczególne boki.  <br /></td></tr>
-<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -281,21 +258,6 @@ Variables</h2></td></tr>
 <tr class="memdesc:a4581c201c28560ab64b902a7e42f4df2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pozycje kostek czyli rozmieszczenie kostek aby uformowały się w jedną kostkę "Rubik's Cube.  <br /></td></tr>
 <tr class="separator:a4581c201c28560ab64b902a7e42f4df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a18372412ad2fc3ce1e3240b3cf0efe78" name="a18372412ad2fc3ce1e3240b3cf0efe78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18372412ad2fc3ce1e3240b3cf0efe78">&#9670;&#160;</a></span>STB_IMAGE_IMPLEMENTATION</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define STB_IMAGE_IMPLEMENTATION</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a08ec44e860dbdb504ff1bd80e3b1687b" name="a08ec44e860dbdb504ff1bd80e3b1687b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a08ec44e860dbdb504ff1bd80e3b1687b">&#9670;&#160;</a></span>camera()</h2>
@@ -589,13 +551,13 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>xpos</em>, </td>
+          <td class="paramname"><em>xposIn</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>ypos</em>&#160;</td>
+          <td class="paramname"><em>yposIn</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

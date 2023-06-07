@@ -20,9 +20,9 @@ var searchData=
   ['texturetritanopia6_17',['textureTritanopia6',['../main_8cpp.html#a355a457e579ccf638a418c581a3c9bae',1,'main.cpp']]],
   ['top_5fscores_18',['top_scores',['../main_8cpp.html#a27e7ae47acbb0a9d21af8522c41487e1',1,'main.cpp']]],
   ['top_5fscores_5fcount_19',['TOP_SCORES_COUNT',['../main_8cpp.html#a5c87a2fa1adc232ff65b3af51e537c6a',1,'main.cpp']]],
-  ['turn_5fcube_5fdown_5fto_5fup_20',['turn_cube_down_to_up',['../main_8cpp.html#af543e2edc12e8ead355d94005cacea57',1,'main.cpp']]],
-  ['turn_5fcube_5fleft_5fto_5fright_21',['turn_cube_left_to_right',['../main_8cpp.html#acfbdaef2f75d1f8b120716c251bf84a5',1,'main.cpp']]],
-  ['turn_5fcube_5fright_5fto_5fleft_22',['turn_cube_right_to_left',['../main_8cpp.html#a11193bd495bdd0ecd2537f17f0724286',1,'main.cpp']]],
-  ['turn_5fcube_5fto_5ffull_23',['turn_cube_to_full',['../main_8cpp.html#a7b8109a47240fba6e810e79c2022e2c7',1,'main.cpp']]],
-  ['turn_5fcube_5fup_5fto_5fdown_24',['turn_cube_up_to_down',['../main_8cpp.html#a3ac1ba4d1cbc975ea13f57957ede7c6d',1,'main.cpp']]]
+  ['turn_5fcube_5fdown_5fto_5fup_20',['turn_cube_down_to_up',['../cube_8h.html#af543e2edc12e8ead355d94005cacea57',1,'turn_cube_down_to_up(int which, int each, bool game):&#160;main.cpp'],['../main_8cpp.html#af543e2edc12e8ead355d94005cacea57',1,'turn_cube_down_to_up(int which, int each, bool game):&#160;main.cpp']]],
+  ['turn_5fcube_5fleft_5fto_5fright_21',['turn_cube_left_to_right',['../cube_8h.html#acfbdaef2f75d1f8b120716c251bf84a5',1,'turn_cube_left_to_right(int which, int each, bool game):&#160;main.cpp'],['../main_8cpp.html#acfbdaef2f75d1f8b120716c251bf84a5',1,'turn_cube_left_to_right(int which, int each, bool game):&#160;main.cpp']]],
+  ['turn_5fcube_5fright_5fto_5fleft_22',['turn_cube_right_to_left',['../cube_8h.html#a11193bd495bdd0ecd2537f17f0724286',1,'turn_cube_right_to_left(int which, int each, bool game):&#160;main.cpp'],['../main_8cpp.html#a11193bd495bdd0ecd2537f17f0724286',1,'turn_cube_right_to_left(int which, int each, bool game):&#160;main.cpp']]],
+  ['turn_5fcube_5fto_5ffull_23',['turn_cube_to_full',['../cube_8h.html#a7b8109a47240fba6e810e79c2022e2c7',1,'turn_cube_to_full():&#160;main.cpp'],['../main_8cpp.html#a7b8109a47240fba6e810e79c2022e2c7',1,'turn_cube_to_full():&#160;main.cpp']]],
+  ['turn_5fcube_5fup_5fto_5fdown_24',['turn_cube_up_to_down',['../cube_8h.html#a3ac1ba4d1cbc975ea13f57957ede7c6d',1,'turn_cube_up_to_down(int which, int each, bool game):&#160;main.cpp'],['../main_8cpp.html#a3ac1ba4d1cbc975ea13f57957ede7c6d',1,'turn_cube_up_to_down(int which, int each, bool game):&#160;main.cpp']]]
 ];
