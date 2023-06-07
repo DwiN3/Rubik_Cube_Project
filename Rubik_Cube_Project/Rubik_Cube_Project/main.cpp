@@ -48,6 +48,7 @@ void set_best_scores();
 void show_best_scores();
 void show_options();
 bool is_cube_solved();
+void show_solve();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -81,6 +82,9 @@ bool arranging = false;
 // count 
 int count_moves = 0;
 int random_moves = 0;
+
+// solve
+string solve = "";
 
 // load and create a texture 
 unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
@@ -772,6 +776,7 @@ unsigned int loadCubemap()
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+    // Sterowanie kostką
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
         turn_cube_up_to_down(0, 3, true);
     if (key == GLFW_KEY_2 && action == GLFW_PRESS)
@@ -797,6 +802,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (key == GLFW_KEY_C && action == GLFW_PRESS)
         turn_cube_right_to_left(6, 9, true);
 
+    // Pokazywanie podpowiedzi
+    if (key == GLFW_KEY_L && action == GLFW_PRESS)
+        show_solve();
+
     // Mieszanie
     if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
         mix_the_cube(1);
@@ -819,6 +828,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
         color = 1;
 }
+
 void turn_cube_to_full()
 {
     for (int i = 0; i < 27; i++)
@@ -1054,7 +1064,7 @@ void mix_the_cube(int mode) {
             random_moves = (rand() % 36) + 15;
             number_of_changes = random_moves;
         }
-           
+          
         int random;
         for (int i = 0; i < number_of_changes; i++)
         {
@@ -1063,51 +1073,51 @@ void mix_the_cube(int mode) {
             switch (random)
             {
             case 0:
-                cout << "F' ";
+                solve += "Q ";
                 turn_cube_up_to_down(0, 3, false);
                 break;
             case 1:
-                cout << "S' ";
+                solve += "W ";
                 turn_cube_up_to_down(1, 3, false);
                 break;
             case 2:
-                cout << "B ";
+                solve += "E ";
                 turn_cube_up_to_down(2, 3, false);
                 break;
             case 3:
-                cout << "F ";
+                solve += "1 ";
                 turn_cube_down_to_up(0, 3, false);
                 break;
             case 4:
-                cout << "S ";
+                solve += "2 ";
                 turn_cube_down_to_up(1, 3, false);
                 break;
             case 5:
-                cout << "B' ";
+                solve += "3 ";
                 turn_cube_down_to_up(2, 3, false);
                 break;
             case 6:
-                cout << "U ";
+                solve += "Z ";
                 turn_cube_left_to_right(0, 9, false);
                 break;
             case 7:
-                cout << "E' ";
+                solve += "X ";
                 turn_cube_left_to_right(3, 9, false);
                 break;
             case 8:
-                cout << "D' ";
+                solve += "C ";
                 turn_cube_left_to_right(6, 9, false);
                 break;
             case 9:
-                cout << "U' ";
+                solve += "A ";
                 turn_cube_right_to_left(0, 9, false);
                 break;
             case 10:
-                cout << "E ";
+                solve += "S ";
                 turn_cube_right_to_left(3, 9, false);
                 break;
             case 11:
-                cout << "D ";
+                solve += "D ";
                 turn_cube_right_to_left(6, 9, false);
                 break;
             default:
@@ -1152,6 +1162,7 @@ void cube_arranged(bool skip) {
         show_options();
         random_moves = 0;
         count_moves = 0;
+        solve = "";
     }
 }
 
@@ -1192,6 +1203,7 @@ void show_options() {
     cout << "  I     - pomieszanie kostki easy (5  iteracji)" << endl;
     cout << "  O     - pomieszanie kostki medium (15  iteracji)" << endl;
     cout << "  P     - pomieszanie kostki hard (15+ iteracji)" << endl;
+    cout << "  L     - wyswietlenie podpowiedzi" << endl;
     cout << "  SPACE - symulacja ulozenie kostki" << endl;
     cout << "  0     - domyslny wyglad kostki" << endl;
     cout << "  9     - tryb dla daltonistow (duteranopia)" << endl;
@@ -1209,4 +1221,8 @@ bool is_cube_solved()
         }
     }
     return true;
+}
+
+void show_solve() {
+    cout << "Solve: " << solve << "  <-----\n";
 }
