@@ -2,15 +2,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <C:/LIB/stb/stb_image.h>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 #include <C:/LIB/assets/camera.h>
-
 #include <C:/LIB/assets/shader.h>
-
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 #include <random>
@@ -24,8 +20,6 @@
 #include <algorithm>
 
 using namespace std;
-
-
 using namespace std::experimental::filesystem;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -36,10 +30,8 @@ unsigned int loadCubemap();
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void turn_cube_up_to_down(int which, int each, bool game);
 void turn_cube_down_to_up(int which, int each, bool game);
-
 void turn_cube_left_to_right(int which, int each, bool game);
 void turn_cube_right_to_left(int which, int each, bool game);
-
 void mix_the_cube(int mode);
 void turn_cube_to_full();
 void print_cube_color();
@@ -1341,5 +1333,5 @@ bool is_cube_solved()
 
 void show_solve() {
     isSolved = true;
-    cout << "Podpowiedź: " << solve << "  <-----\n";
+    cout << "Podpowiedz: " << solve << "  <-----\n";
 }
