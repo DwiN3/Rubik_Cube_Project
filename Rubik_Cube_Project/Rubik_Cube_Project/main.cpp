@@ -1137,12 +1137,12 @@ void cube_arranged(bool skip) {
     if (arranging == true) {
         chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
         chrono::duration<double> duration = end_timer - start_timer;
-        cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
-        if (skip == true) count_moves += random_moves;
+        if(skip == false) cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
+        else count_moves += random_moves;
         cout << "Ilosc ruchow: " << count_moves << endl << endl;
 
         arranging = false;
-        if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
+        if (duration.count() < top_scores[TOP_SCORES_COUNT - 1] && skip == false) {
             cout << "Gratulacje, udalo ci sie pobic rekord!!!\n" << endl;
 
             top_scores[TOP_SCORES_COUNT - 1] = duration.count();
