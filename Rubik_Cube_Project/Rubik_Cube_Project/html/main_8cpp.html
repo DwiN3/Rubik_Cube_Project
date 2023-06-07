@@ -137,10 +137,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:a11193bd495bdd0ecd2537f17f0724286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obracanie kostki na przycisk od strony prawej do strony lewej.  <br /></td></tr>
 <tr class="separator:a11193bd495bdd0ecd2537f17f0724286"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa21e7f4677f52c70f21c9242b9b40fb8">mix_the_cube</a> (int mode)</td></tr>
-<tr class="memdesc:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja miesza ułożenie kostki którą następnie można układać Są dwa tryby: easy mode oraz medium mode czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu.  <br /></td></tr>
+<tr class="memdesc:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja miesza ułożenie kostki którą następnie można układać Są trzy tryby: easy, medium oraz hard czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu.  <br /></td></tr>
 <tr class="separator:aa21e7f4677f52c70f21c9242b9b40fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b8109a47240fba6e810e79c2022e2c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7b8109a47240fba6e810e79c2022e2c7">turn_cube_to_full</a> ()</td></tr>
-<tr class="memdesc:a7b8109a47240fba6e810e79c2022e2c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ułożenie kostki po wciśnięciu przycisku.  <br /></td></tr>
+<tr class="memdesc:a7b8109a47240fba6e810e79c2022e2c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ułożenie kostki do wersji domyślnej.  <br /></td></tr>
 <tr class="separator:a7b8109a47240fba6e810e79c2022e2c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13f14c1ba4af90462652402369f2acf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a13f14c1ba4af90462652402369f2acf7">print_cube_color</a> ()</td></tr>
 <tr class="memdesc:a13f14c1ba4af90462652402369f2acf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wypisanie kostki do konsoli na podstawie cyfr.  <br /></td></tr>
@@ -160,6 +160,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2a36dd6303f6cf4433d4c2603c1003c0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a2a36dd6303f6cf4433d4c2603c1003c0">is_cube_solved</a> ()</td></tr>
 <tr class="memdesc:a2a36dd6303f6cf4433d4c2603c1003c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja sprawdza czy kostka rubika została ułożona.  <br /></td></tr>
 <tr class="separator:a2a36dd6303f6cf4433d4c2603c1003c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fd19d44a819bec8c71967d5d938f73b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a4fd19d44a819bec8c71967d5d938f73b">show_solve</a> ()</td></tr>
+<tr class="memdesc:a4fd19d44a819bec8c71967d5d938f73b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja wyświetlająca podpowiedź do ułożenia kostki.  <br /></td></tr>
+<tr class="separator:a4fd19d44a819bec8c71967d5d938f73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08ec44e860dbdb504ff1bd80e3b1687b"><td class="memItemLeft" align="right" valign="top">Camera&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a08ec44e860dbdb504ff1bd80e3b1687b">camera</a> (glm::vec3(0.0f, 1.0f, 8.0f))</td></tr>
 <tr class="memdesc:a08ec44e860dbdb504ff1bd80e3b1687b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ustawienia kamery.  <br /></td></tr>
 <tr class="separator:a08ec44e860dbdb504ff1bd80e3b1687b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,35 +193,47 @@ Variables</h2></td></tr>
 <tr class="separator:a9d5b8dfd025caf1c0ed043132515f587"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac21731ba101e28334c34543121caa841"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ac21731ba101e28334c34543121caa841">firstMouse</a> = true</td></tr>
 <tr class="separator:ac21731ba101e28334c34543121caa841"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd713b5e3f3d5b609eba75284e703e25"><td class="memItemLeft" align="right" valign="top">chrono::time_point&lt; chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#abd713b5e3f3d5b609eba75284e703e25">start_timer</a></td></tr>
-<tr class="memdesc:abd713b5e3f3d5b609eba75284e703e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ustawienia zliczania czasu.  <br /></td></tr>
-<tr class="separator:abd713b5e3f3d5b609eba75284e703e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a533632dd4af826e6376f4707ee5244f7"><td class="memItemLeft" align="right" valign="top">chrono::time_point&lt; chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a533632dd4af826e6376f4707ee5244f7">end_timer</a></td></tr>
-<tr class="separator:a533632dd4af826e6376f4707ee5244f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad266f112919aafae4a9a4bc807ad9bc2"><td class="memItemLeft" align="right" valign="top">chrono::duration&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad266f112919aafae4a9a4bc807ad9bc2">duration</a></td></tr>
-<tr class="separator:ad266f112919aafae4a9a4bc807ad9bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a61318ed6aa02b4ff346e7eb8f68891"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a1a61318ed6aa02b4ff346e7eb8f68891">deltaTime</a> = 0.0f</td></tr>
+<tr class="memdesc:a1a61318ed6aa02b4ff346e7eb8f68891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienna ustawiająca wartość pomiędzy klatkami.  <br /></td></tr>
 <tr class="separator:a1a61318ed6aa02b4ff346e7eb8f68891"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a518a497d888d805d5f368bbb91b54a6c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a518a497d888d805d5f368bbb91b54a6c">lastFrame</a> = 0.0f</td></tr>
+<tr class="memdesc:a518a497d888d805d5f368bbb91b54a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienna ustawiająca wartość ostaniej klatki.  <br /></td></tr>
 <tr class="separator:a518a497d888d805d5f368bbb91b54a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd713b5e3f3d5b609eba75284e703e25"><td class="memItemLeft" align="right" valign="top">chrono::time_point&lt; chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#abd713b5e3f3d5b609eba75284e703e25">start_timer</a></td></tr>
+<tr class="memdesc:abd713b5e3f3d5b609eba75284e703e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienna przyjmująca wartość startu timera.  <br /></td></tr>
+<tr class="separator:abd713b5e3f3d5b609eba75284e703e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a533632dd4af826e6376f4707ee5244f7"><td class="memItemLeft" align="right" valign="top">chrono::time_point&lt; chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a533632dd4af826e6376f4707ee5244f7">end_timer</a></td></tr>
+<tr class="memdesc:a533632dd4af826e6376f4707ee5244f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienna przyjmująca wartość zatrzymania timera.  <br /></td></tr>
+<tr class="separator:a533632dd4af826e6376f4707ee5244f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad266f112919aafae4a9a4bc807ad9bc2"><td class="memItemLeft" align="right" valign="top">chrono::duration&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad266f112919aafae4a9a4bc807ad9bc2">duration</a></td></tr>
+<tr class="memdesc:ad266f112919aafae4a9a4bc807ad9bc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienna przechowywująca czas ułożenia kostki.  <br /></td></tr>
+<tr class="separator:ad266f112919aafae4a9a4bc807ad9bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c87a2fa1adc232ff65b3af51e537c6a"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a5c87a2fa1adc232ff65b3af51e537c6a">TOP_SCORES_COUNT</a> = 5</td></tr>
-<tr class="memdesc:a5c87a2fa1adc232ff65b3af51e537c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ranking czasów ułożenia.  <br /></td></tr>
+<tr class="memdesc:a5c87a2fa1adc232ff65b3af51e537c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienna przechowująca ilość rekordów.  <br /></td></tr>
 <tr class="separator:a5c87a2fa1adc232ff65b3af51e537c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27e7ae47acbb0a9d21af8522c41487e1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a27e7ae47acbb0a9d21af8522c41487e1">top_scores</a> [<a class="el" href="main_8cpp.html#a5c87a2fa1adc232ff65b3af51e537c6a">TOP_SCORES_COUNT</a>] = { 0.0 }</td></tr>
+<tr class="memdesc:a27e7ae47acbb0a9d21af8522c41487e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ranking czasów ułożenia.  <br /></td></tr>
 <tr class="separator:a27e7ae47acbb0a9d21af8522c41487e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fd02fb9277ffcb35a75066ffe95e8c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0fd02fb9277ffcb35a75066ffe95e8c7">color</a> = 1</td></tr>
 <tr class="memdesc:a0fd02fb9277ffcb35a75066ffe95e8c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wybór koloru odpowiedniego dla danego użytkownika.  <br /></td></tr>
 <tr class="separator:a0fd02fb9277ffcb35a75066ffe95e8c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f3a571ac48602f58b12f941b84c6d3a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a1f3a571ac48602f58b12f941b84c6d3a">arranging</a> = false</td></tr>
-<tr class="memdesc:a1f3a571ac48602f58b12f941b84c6d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Organizowanie ruchów kostki.  <br /></td></tr>
+<tr class="memdesc:a1f3a571ac48602f58b12f941b84c6d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmiena przechowująca stan układania kostki.  <br /></td></tr>
 <tr class="separator:a1f3a571ac48602f58b12f941b84c6d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c6d7369e6f61d12f8fd55fe30b6b551"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a1c6d7369e6f61d12f8fd55fe30b6b551">count_moves</a> = 0</td></tr>
-<tr class="memdesc:a1c6d7369e6f61d12f8fd55fe30b6b551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienne przechowujące oraz zliczające ruchy kostki.  <br /></td></tr>
+<tr class="memdesc:a1c6d7369e6f61d12f8fd55fe30b6b551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienne przechowujące wykonane ruchy.  <br /></td></tr>
 <tr class="separator:a1c6d7369e6f61d12f8fd55fe30b6b551"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98e5b68afb6fd58c61f6fe01888ea64c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a98e5b68afb6fd58c61f6fe01888ea64c">random_moves</a> = 0</td></tr>
+<tr class="memdesc:a98e5b68afb6fd58c61f6fe01888ea64c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienne przechowujące wykonane ruchy poprzez mieszanie.  <br /></td></tr>
 <tr class="separator:a98e5b68afb6fd58c61f6fe01888ea64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3fd66ae01f5fe9e5723f8311d7deadf"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ac3fd66ae01f5fe9e5723f8311d7deadf">solve</a> = &quot;&quot;</td></tr>
+<tr class="memdesc:ac3fd66ae01f5fe9e5723f8311d7deadf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienne przechowującą podpowiedź.  <br /></td></tr>
+<tr class="separator:ac3fd66ae01f5fe9e5723f8311d7deadf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac39a27f0e4ad0cde977459bc21fa36fd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ac39a27f0e4ad0cde977459bc21fa36fd">isSolved</a> = true</td></tr>
+<tr class="memdesc:ac39a27f0e4ad0cde977459bc21fa36fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienne przechowującą stan użycia podpowiedzi.  <br /></td></tr>
+<tr class="separator:ac39a27f0e4ad0cde977459bc21fa36fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a831b8ce5acab5b3ae2ee62d63dbb9e61"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a831b8ce5acab5b3ae2ee62d63dbb9e61">textureClassic1</a></td></tr>
-<tr class="memdesc:a831b8ce5acab5b3ae2ee62d63dbb9e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienne przechowujące tekstury.  <br /></td></tr>
+<tr class="memdesc:a831b8ce5acab5b3ae2ee62d63dbb9e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienne przechowujące domyślne tekstury.  <br /></td></tr>
 <tr class="separator:a831b8ce5acab5b3ae2ee62d63dbb9e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49b4d0402e41e121374335769f3a07a3"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a49b4d0402e41e121374335769f3a07a3">textureClassic2</a></td></tr>
 <tr class="separator:a49b4d0402e41e121374335769f3a07a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -231,6 +246,7 @@ Variables</h2></td></tr>
 <tr class="memitem:a3c4bd956d3e2e910c12c0ddc2f6757d7"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a3c4bd956d3e2e910c12c0ddc2f6757d7">textureClassic6</a></td></tr>
 <tr class="separator:a3c4bd956d3e2e910c12c0ddc2f6757d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0501547ab6c969a8a77c55fd9f3441d0"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0501547ab6c969a8a77c55fd9f3441d0">textureDeuteranopia1</a></td></tr>
+<tr class="memdesc:a0501547ab6c969a8a77c55fd9f3441d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienne przechowujące tekstury z deuteranopii.  <br /></td></tr>
 <tr class="separator:a0501547ab6c969a8a77c55fd9f3441d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03fad9c3f33bf24a42c79430ab22905c"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a03fad9c3f33bf24a42c79430ab22905c">textureDeuteranopia2</a></td></tr>
 <tr class="separator:a03fad9c3f33bf24a42c79430ab22905c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -243,6 +259,7 @@ Variables</h2></td></tr>
 <tr class="memitem:aa50576b81635286d910b568111de3ec2"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa50576b81635286d910b568111de3ec2">textureDeuteranopia6</a></td></tr>
 <tr class="separator:aa50576b81635286d910b568111de3ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af38c36ec5bf6720582fb4cce37032bbb"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af38c36ec5bf6720582fb4cce37032bbb">textureTritanopia1</a></td></tr>
+<tr class="memdesc:af38c36ec5bf6720582fb4cce37032bbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zmienne przechowujące tekstury z tritanopii.  <br /></td></tr>
 <tr class="separator:af38c36ec5bf6720582fb4cce37032bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbf4b7a0a4fdbd87d3a35304e76e3a25"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#afbf4b7a0a4fdbd87d3a35304e76e3a25">textureTritanopia2</a></td></tr>
 <tr class="separator:afbf4b7a0a4fdbd87d3a35304e76e3a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -548,7 +565,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Funkcja miesza ułożenie kostki którą następnie można układać Są dwa tryby: easy mode oraz medium mode czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu. </p>
+<p>Funkcja miesza ułożenie kostki którą następnie można układać Są trzy tryby: easy, medium oraz hard czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu. </p>
 
 </div>
 </div>
@@ -720,6 +737,25 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a4fd19d44a819bec8c71967d5d938f73b" name="a4fd19d44a819bec8c71967d5d938f73b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fd19d44a819bec8c71967d5d938f73b">&#9670;&#160;</a></span>show_solve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void show_solve </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funkcja wyświetlająca podpowiedź do ułożenia kostki. </p>
+
+</div>
+</div>
 <a id="af543e2edc12e8ead355d94005cacea57" name="af543e2edc12e8ead355d94005cacea57"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af543e2edc12e8ead355d94005cacea57">&#9670;&#160;</a></span>turn_cube_down_to_up()</h2>
 
@@ -843,7 +879,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ułożenie kostki po wciśnięciu przycisku. </p>
+<p>Ułożenie kostki do wersji domyślnej. </p>
 
 </div>
 </div>
@@ -896,7 +932,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Organizowanie ruchów kostki. </p>
+<p>Zmiena przechowująca stan układania kostki. </p>
 
 </div>
 </div>
@@ -928,7 +964,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Zmienne przechowujące oraz zliczające ruchy kostki. </p>
+<p>Zmienne przechowujące wykonane ruchy. </p>
 
 </div>
 </div>
@@ -960,6 +996,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Zmienna ustawiająca wartość pomiędzy klatkami. </p>
+
 </div>
 </div>
 <a id="ad266f112919aafae4a9a4bc807ad9bc2" name="ad266f112919aafae4a9a4bc807ad9bc2"></a>
@@ -974,6 +1012,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Zmienna przechowywująca czas ułożenia kostki. </p>
+
 </div>
 </div>
 <a id="a533632dd4af826e6376f4707ee5244f7" name="a533632dd4af826e6376f4707ee5244f7"></a>
@@ -987,6 +1027,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Zmienna przyjmująca wartość zatrzymania timera. </p>
 
 </div>
 </div>
@@ -1004,6 +1046,22 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ac39a27f0e4ad0cde977459bc21fa36fd" name="ac39a27f0e4ad0cde977459bc21fa36fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac39a27f0e4ad0cde977459bc21fa36fd">&#9670;&#160;</a></span>isSolved</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isSolved = true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Zmienne przechowującą stan użycia podpowiedzi. </p>
+
+</div>
+</div>
 <a id="a518a497d888d805d5f368bbb91b54a6c" name="a518a497d888d805d5f368bbb91b54a6c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a518a497d888d805d5f368bbb91b54a6c">&#9670;&#160;</a></span>lastFrame</h2>
 
@@ -1015,6 +1073,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Zmienna ustawiająca wartość ostaniej klatki. </p>
 
 </div>
 </div>
@@ -1057,6 +1117,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Zmienne przechowujące wykonane ruchy poprzez mieszanie. </p>
 
 </div>
 </div>
@@ -1137,6 +1199,22 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ac3fd66ae01f5fe9e5723f8311d7deadf" name="ac3fd66ae01f5fe9e5723f8311d7deadf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3fd66ae01f5fe9e5723f8311d7deadf">&#9670;&#160;</a></span>solve</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string solve = &quot;&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Zmienne przechowującą podpowiedź. </p>
+
+</div>
+</div>
 <a id="abd713b5e3f3d5b609eba75284e703e25" name="abd713b5e3f3d5b609eba75284e703e25"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abd713b5e3f3d5b609eba75284e703e25">&#9670;&#160;</a></span>start_timer</h2>
 
@@ -1149,7 +1227,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ustawienia zliczania czasu. </p>
+<p>Zmienna przyjmująca wartość startu timera. </p>
 
 </div>
 </div>
@@ -1165,7 +1243,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Zmienne przechowujące tekstury. </p>
+<p>Zmienne przechowujące domyślne tekstury. </p>
 
 </div>
 </div>
@@ -1251,6 +1329,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Zmienne przechowujące tekstury z deuteranopii. </p>
+
 </div>
 </div>
 <a id="a03fad9c3f33bf24a42c79430ab22905c" name="a03fad9c3f33bf24a42c79430ab22905c"></a>
@@ -1334,6 +1414,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Zmienne przechowujące tekstury z tritanopii. </p>
 
 </div>
 </div>
@@ -1419,6 +1501,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Ranking czasów ułożenia. </p>
+
 </div>
 </div>
 <a id="a5c87a2fa1adc232ff65b3af51e537c6a" name="a5c87a2fa1adc232ff65b3af51e537c6a"></a>
@@ -1433,7 +1517,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ranking czasów ułożenia. </p>
+<p>Zmienna przechowująca ilość rekordów. </p>
 
 </div>
 </div>

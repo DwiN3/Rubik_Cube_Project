@@ -47,9 +47,9 @@ void \mbox{\hyperlink{main_8cpp_acfbdaef2f75d1f8b120716c251bf84a5}{turn\+\_\+cub
 void \mbox{\hyperlink{main_8cpp_a11193bd495bdd0ecd2537f17f0724286}{turn\+\_\+cube\+\_\+right\+\_\+to\+\_\+left}} (int which, int each, bool game)
 \begin{DoxyCompactList}\small\item\em Obracanie kostki na przycisk od strony prawej do strony lewej. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{main_8cpp_aa21e7f4677f52c70f21c9242b9b40fb8}{mix\+\_\+the\+\_\+cube}} (int mode)
-\begin{DoxyCompactList}\small\item\em Funkcja miesza ułożenie kostki którą następnie można układać Są dwa tryby\+: easy mode oraz medium mode czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Funkcja miesza ułożenie kostki którą następnie można układać Są trzy tryby\+: easy, medium oraz hard czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{main_8cpp_a7b8109a47240fba6e810e79c2022e2c7}{turn\+\_\+cube\+\_\+to\+\_\+full}} ()
-\begin{DoxyCompactList}\small\item\em Ułożenie kostki po wciśnięciu przycisku. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Ułożenie kostki do wersji domyślnej. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{main_8cpp_a13f14c1ba4af90462652402369f2acf7}{print\+\_\+cube\+\_\+color}} ()
 \begin{DoxyCompactList}\small\item\em Wypisanie kostki do konsoli na podstawie cyfr. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{main_8cpp_a50513d99994d543b9aaeb1da5b0ee884}{cube\+\_\+arranged}} (bool skip)
@@ -62,6 +62,8 @@ void \mbox{\hyperlink{main_8cpp_a4fe80830fb1fb03fd59e950870de994b}{show\+\_\+opt
 \begin{DoxyCompactList}\small\item\em Wyświetlanie instrukcji obsługi programu w konsoli. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{main_8cpp_a2a36dd6303f6cf4433d4c2603c1003c0}{is\+\_\+cube\+\_\+solved}} ()
 \begin{DoxyCompactList}\small\item\em Funkcja sprawdza czy kostka rubika została ułożona. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a4fd19d44a819bec8c71967d5d938f73b}{show\+\_\+solve}} ()
+\begin{DoxyCompactList}\small\item\em Funkcja wyświetlająca podpowiedź do ułożenia kostki. \end{DoxyCompactList}\item 
 Camera \mbox{\hyperlink{main_8cpp_a08ec44e860dbdb504ff1bd80e3b1687b}{camera}} (glm\+::vec3(0.\+0f, 1.\+0f, 8.\+0f))
 \begin{DoxyCompactList}\small\item\em Ustawienia kamery. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{main_8cpp_aa9827b9b3add40f7b2fecee849deb8b1}{data\+Texture\+Load}} ()
@@ -85,30 +87,34 @@ float \mbox{\hyperlink{main_8cpp_a9d5b8dfd025caf1c0ed043132515f587}{lastY}} = \m
 \item 
 bool \mbox{\hyperlink{main_8cpp_ac21731ba101e28334c34543121caa841}{first\+Mouse}} = true
 \item 
-chrono\+::time\+\_\+point$<$ chrono\+::high\+\_\+resolution\+\_\+clock $>$ \mbox{\hyperlink{main_8cpp_abd713b5e3f3d5b609eba75284e703e25}{start\+\_\+timer}}
-\begin{DoxyCompactList}\small\item\em Ustawienia zliczania czasu. \end{DoxyCompactList}\item 
-chrono\+::time\+\_\+point$<$ chrono\+::high\+\_\+resolution\+\_\+clock $>$ \mbox{\hyperlink{main_8cpp_a533632dd4af826e6376f4707ee5244f7}{end\+\_\+timer}}
-\item 
-chrono\+::duration$<$ double $>$ \mbox{\hyperlink{main_8cpp_ad266f112919aafae4a9a4bc807ad9bc2}{duration}}
-\item 
 float \mbox{\hyperlink{main_8cpp_a1a61318ed6aa02b4ff346e7eb8f68891}{delta\+Time}} = 0.\+0f
-\item 
+\begin{DoxyCompactList}\small\item\em Zmienna ustawiająca wartość pomiędzy klatkami. \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{main_8cpp_a518a497d888d805d5f368bbb91b54a6c}{last\+Frame}} = 0.\+0f
-\item 
+\begin{DoxyCompactList}\small\item\em Zmienna ustawiająca wartość ostaniej klatki. \end{DoxyCompactList}\item 
+chrono\+::time\+\_\+point$<$ chrono\+::high\+\_\+resolution\+\_\+clock $>$ \mbox{\hyperlink{main_8cpp_abd713b5e3f3d5b609eba75284e703e25}{start\+\_\+timer}}
+\begin{DoxyCompactList}\small\item\em Zmienna przyjmująca wartość startu timera. \end{DoxyCompactList}\item 
+chrono\+::time\+\_\+point$<$ chrono\+::high\+\_\+resolution\+\_\+clock $>$ \mbox{\hyperlink{main_8cpp_a533632dd4af826e6376f4707ee5244f7}{end\+\_\+timer}}
+\begin{DoxyCompactList}\small\item\em Zmienna przyjmująca wartość zatrzymania timera. \end{DoxyCompactList}\item 
+chrono\+::duration$<$ double $>$ \mbox{\hyperlink{main_8cpp_ad266f112919aafae4a9a4bc807ad9bc2}{duration}}
+\begin{DoxyCompactList}\small\item\em Zmienna przechowywująca czas ułożenia kostki. \end{DoxyCompactList}\item 
 const int \mbox{\hyperlink{main_8cpp_a5c87a2fa1adc232ff65b3af51e537c6a}{TOP\+\_\+\+SCORES\+\_\+\+COUNT}} = 5
-\begin{DoxyCompactList}\small\item\em Ranking czasów ułożenia. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Zmienna przechowująca ilość rekordów. \end{DoxyCompactList}\item 
 double \mbox{\hyperlink{main_8cpp_a27e7ae47acbb0a9d21af8522c41487e1}{top\+\_\+scores}} \mbox{[}\mbox{\hyperlink{main_8cpp_a5c87a2fa1adc232ff65b3af51e537c6a}{TOP\+\_\+\+SCORES\+\_\+\+COUNT}}\mbox{]} = \{ 0.\+0 \}
-\item 
+\begin{DoxyCompactList}\small\item\em Ranking czasów ułożenia. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{main_8cpp_a0fd02fb9277ffcb35a75066ffe95e8c7}{color}} = 1
 \begin{DoxyCompactList}\small\item\em Wybór koloru odpowiedniego dla danego użytkownika. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{main_8cpp_a1f3a571ac48602f58b12f941b84c6d3a}{arranging}} = false
-\begin{DoxyCompactList}\small\item\em Organizowanie ruchów kostki. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Zmiena przechowująca stan układania kostki. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{main_8cpp_a1c6d7369e6f61d12f8fd55fe30b6b551}{count\+\_\+moves}} = 0
-\begin{DoxyCompactList}\small\item\em Zmienne przechowujące oraz zliczające ruchy kostki. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Zmienne przechowujące wykonane ruchy. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{main_8cpp_a98e5b68afb6fd58c61f6fe01888ea64c}{random\+\_\+moves}} = 0
-\item 
+\begin{DoxyCompactList}\small\item\em Zmienne przechowujące wykonane ruchy poprzez mieszanie. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{main_8cpp_ac3fd66ae01f5fe9e5723f8311d7deadf}{solve}} = \"{}\"{}
+\begin{DoxyCompactList}\small\item\em Zmienne przechowującą podpowiedź. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{main_8cpp_ac39a27f0e4ad0cde977459bc21fa36fd}{is\+Solved}} = true
+\begin{DoxyCompactList}\small\item\em Zmienne przechowującą stan użycia podpowiedzi. \end{DoxyCompactList}\item 
 unsigned int \mbox{\hyperlink{main_8cpp_a831b8ce5acab5b3ae2ee62d63dbb9e61}{texture\+Classic1}}
-\begin{DoxyCompactList}\small\item\em Zmienne przechowujące tekstury. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Zmienne przechowujące domyślne tekstury. \end{DoxyCompactList}\item 
 unsigned int \mbox{\hyperlink{main_8cpp_a49b4d0402e41e121374335769f3a07a3}{texture\+Classic2}}
 \item 
 unsigned int \mbox{\hyperlink{main_8cpp_a95e04ebb649e47c72eda7aef92177ffc}{texture\+Classic3}}
@@ -120,7 +126,7 @@ unsigned int \mbox{\hyperlink{main_8cpp_ae18b22cea583db517fe193f78fc88fad}{textu
 unsigned int \mbox{\hyperlink{main_8cpp_a3c4bd956d3e2e910c12c0ddc2f6757d7}{texture\+Classic6}}
 \item 
 unsigned int \mbox{\hyperlink{main_8cpp_a0501547ab6c969a8a77c55fd9f3441d0}{texture\+Deuteranopia1}}
-\item 
+\begin{DoxyCompactList}\small\item\em Zmienne przechowujące tekstury z deuteranopii. \end{DoxyCompactList}\item 
 unsigned int \mbox{\hyperlink{main_8cpp_a03fad9c3f33bf24a42c79430ab22905c}{texture\+Deuteranopia2}}
 \item 
 unsigned int \mbox{\hyperlink{main_8cpp_a83f222562097b0765926809b1d3a5baa}{texture\+Deuteranopia3}}
@@ -132,7 +138,7 @@ unsigned int \mbox{\hyperlink{main_8cpp_a29d3ff166d835e03490a5b57780df444}{textu
 unsigned int \mbox{\hyperlink{main_8cpp_aa50576b81635286d910b568111de3ec2}{texture\+Deuteranopia6}}
 \item 
 unsigned int \mbox{\hyperlink{main_8cpp_af38c36ec5bf6720582fb4cce37032bbb}{texture\+Tritanopia1}}
-\item 
+\begin{DoxyCompactList}\small\item\em Zmienne przechowujące tekstury z tritanopii. \end{DoxyCompactList}\item 
 unsigned int \mbox{\hyperlink{main_8cpp_afbf4b7a0a4fdbd87d3a35304e76e3a25}{texture\+Tritanopia2}}
 \item 
 unsigned int \mbox{\hyperlink{main_8cpp_a3c051fc2659002a1c7bacf2835b87c6e}{texture\+Tritanopia3}}
@@ -267,7 +273,7 @@ Główna funkcja aplikacji. Zawiera ona inicjalizacje okna, VAO, VBO, przydziele
 
 
 
-Funkcja miesza ułożenie kostki którą następnie można układać Są dwa tryby\+: easy mode oraz medium mode czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu. 
+Funkcja miesza ułożenie kostki którą następnie można układać Są trzy tryby\+: easy, medium oraz hard czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu. 
 
 \Hypertarget{main_8cpp_abe5e592e8704afa9003593b539e436df}\label{main_8cpp_abe5e592e8704afa9003593b539e436df} 
 \index{main.cpp@{main.cpp}!mouse\_callback@{mouse\_callback}}
@@ -339,6 +345,16 @@ Wyświetlanie najlepszych czasów ułożenia kostki rubika.
 
 Wyświetlanie instrukcji obsługi programu w konsoli. 
 
+\Hypertarget{main_8cpp_a4fd19d44a819bec8c71967d5d938f73b}\label{main_8cpp_a4fd19d44a819bec8c71967d5d938f73b} 
+\index{main.cpp@{main.cpp}!show\_solve@{show\_solve}}
+\index{show\_solve@{show\_solve}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{show\_solve()}{show\_solve()}}
+{\footnotesize\ttfamily void show\+\_\+solve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Funkcja wyświetlająca podpowiedź do ułożenia kostki. 
+
 \Hypertarget{main_8cpp_af543e2edc12e8ead355d94005cacea57}\label{main_8cpp_af543e2edc12e8ead355d94005cacea57} 
 \index{main.cpp@{main.cpp}!turn\_cube\_down\_to\_up@{turn\_cube\_down\_to\_up}}
 \index{turn\_cube\_down\_to\_up@{turn\_cube\_down\_to\_up}!main.cpp@{main.cpp}}
@@ -377,7 +393,7 @@ Obracanie kostki na przycisk od strony prawej do strony lewej.
 
 
 
-Ułożenie kostki po wciśnięciu przycisku. 
+Ułożenie kostki do wersji domyślnej. 
 
 \Hypertarget{main_8cpp_a3ac1ba4d1cbc975ea13f57957ede7c6d}\label{main_8cpp_a3ac1ba4d1cbc975ea13f57957ede7c6d} 
 \index{main.cpp@{main.cpp}!turn\_cube\_up\_to\_down@{turn\_cube\_up\_to\_down}}
@@ -400,7 +416,7 @@ Obracanie kostki na przycisk od strony górnej do strony dolnej.
 
 
 
-Organizowanie ruchów kostki. 
+Zmiena przechowująca stan układania kostki. 
 
 \Hypertarget{main_8cpp_a0fd02fb9277ffcb35a75066ffe95e8c7}\label{main_8cpp_a0fd02fb9277ffcb35a75066ffe95e8c7} 
 \index{main.cpp@{main.cpp}!color@{color}}
@@ -420,7 +436,7 @@ Wybór koloru odpowiedniego dla danego użytkownika.
 
 
 
-Zmienne przechowujące oraz zliczające ruchy kostki. 
+Zmienne przechowujące wykonane ruchy. 
 
 \Hypertarget{main_8cpp_a4581c201c28560ab64b902a7e42f4df2}\label{main_8cpp_a4581c201c28560ab64b902a7e42f4df2} 
 \index{main.cpp@{main.cpp}!cubePositions@{cubePositions}}
@@ -438,11 +454,19 @@ Pozycje kostek czyli rozmieszczenie kostek aby uformowały się w jedną kostkę
 \doxysubsubsection{\texorpdfstring{deltaTime}{deltaTime}}
 {\footnotesize\ttfamily float delta\+Time = 0.\+0f}
 
+
+
+Zmienna ustawiająca wartość pomiędzy klatkami. 
+
 \Hypertarget{main_8cpp_ad266f112919aafae4a9a4bc807ad9bc2}\label{main_8cpp_ad266f112919aafae4a9a4bc807ad9bc2} 
 \index{main.cpp@{main.cpp}!duration@{duration}}
 \index{duration@{duration}!main.cpp@{main.cpp}}
 \doxysubsubsection{\texorpdfstring{duration}{duration}}
 {\footnotesize\ttfamily chrono\+::duration$<$double$>$ duration}
+
+
+
+Zmienna przechowywująca czas ułożenia kostki. 
 
 \Hypertarget{main_8cpp_a533632dd4af826e6376f4707ee5244f7}\label{main_8cpp_a533632dd4af826e6376f4707ee5244f7} 
 \index{main.cpp@{main.cpp}!end\_timer@{end\_timer}}
@@ -450,17 +474,35 @@ Pozycje kostek czyli rozmieszczenie kostek aby uformowały się w jedną kostkę
 \doxysubsubsection{\texorpdfstring{end\_timer}{end\_timer}}
 {\footnotesize\ttfamily chrono\+::time\+\_\+point$<$chrono\+::high\+\_\+resolution\+\_\+clock$>$ end\+\_\+timer}
 
+
+
+Zmienna przyjmująca wartość zatrzymania timera. 
+
 \Hypertarget{main_8cpp_ac21731ba101e28334c34543121caa841}\label{main_8cpp_ac21731ba101e28334c34543121caa841} 
 \index{main.cpp@{main.cpp}!firstMouse@{firstMouse}}
 \index{firstMouse@{firstMouse}!main.cpp@{main.cpp}}
 \doxysubsubsection{\texorpdfstring{firstMouse}{firstMouse}}
 {\footnotesize\ttfamily bool first\+Mouse = true}
 
+\Hypertarget{main_8cpp_ac39a27f0e4ad0cde977459bc21fa36fd}\label{main_8cpp_ac39a27f0e4ad0cde977459bc21fa36fd} 
+\index{main.cpp@{main.cpp}!isSolved@{isSolved}}
+\index{isSolved@{isSolved}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{isSolved}{isSolved}}
+{\footnotesize\ttfamily bool is\+Solved = true}
+
+
+
+Zmienne przechowującą stan użycia podpowiedzi. 
+
 \Hypertarget{main_8cpp_a518a497d888d805d5f368bbb91b54a6c}\label{main_8cpp_a518a497d888d805d5f368bbb91b54a6c} 
 \index{main.cpp@{main.cpp}!lastFrame@{lastFrame}}
 \index{lastFrame@{lastFrame}!main.cpp@{main.cpp}}
 \doxysubsubsection{\texorpdfstring{lastFrame}{lastFrame}}
 {\footnotesize\ttfamily float last\+Frame = 0.\+0f}
+
+
+
+Zmienna ustawiająca wartość ostaniej klatki. 
 
 \Hypertarget{main_8cpp_a4664c5d930c290e6f82141a070cbea46}\label{main_8cpp_a4664c5d930c290e6f82141a070cbea46} 
 \index{main.cpp@{main.cpp}!lastX@{lastX}}
@@ -479,6 +521,10 @@ Pozycje kostek czyli rozmieszczenie kostek aby uformowały się w jedną kostkę
 \index{random\_moves@{random\_moves}!main.cpp@{main.cpp}}
 \doxysubsubsection{\texorpdfstring{random\_moves}{random\_moves}}
 {\footnotesize\ttfamily int random\+\_\+moves = 0}
+
+
+
+Zmienne przechowujące wykonane ruchy poprzez mieszanie. 
 
 \Hypertarget{main_8cpp_aca03a77ac5a7f2e26d08cd6de43f9a17}\label{main_8cpp_aca03a77ac5a7f2e26d08cd6de43f9a17} 
 \index{main.cpp@{main.cpp}!SCR\_HEIGHT@{SCR\_HEIGHT}}
@@ -543,6 +589,16 @@ Szerokość okna.
 
 Tablice wyświetlają serce kostki rubika która zapamiętuje swój stan. 
 
+\Hypertarget{main_8cpp_ac3fd66ae01f5fe9e5723f8311d7deadf}\label{main_8cpp_ac3fd66ae01f5fe9e5723f8311d7deadf} 
+\index{main.cpp@{main.cpp}!solve@{solve}}
+\index{solve@{solve}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{solve}{solve}}
+{\footnotesize\ttfamily string solve = \"{}\"{}}
+
+
+
+Zmienne przechowującą podpowiedź. 
+
 \Hypertarget{main_8cpp_abd713b5e3f3d5b609eba75284e703e25}\label{main_8cpp_abd713b5e3f3d5b609eba75284e703e25} 
 \index{main.cpp@{main.cpp}!start\_timer@{start\_timer}}
 \index{start\_timer@{start\_timer}!main.cpp@{main.cpp}}
@@ -551,7 +607,7 @@ Tablice wyświetlają serce kostki rubika która zapamiętuje swój stan.
 
 
 
-Ustawienia zliczania czasu. 
+Zmienna przyjmująca wartość startu timera. 
 
 \Hypertarget{main_8cpp_a831b8ce5acab5b3ae2ee62d63dbb9e61}\label{main_8cpp_a831b8ce5acab5b3ae2ee62d63dbb9e61} 
 \index{main.cpp@{main.cpp}!textureClassic1@{textureClassic1}}
@@ -561,7 +617,7 @@ Ustawienia zliczania czasu.
 
 
 
-Zmienne przechowujące tekstury. 
+Zmienne przechowujące domyślne tekstury. 
 
 \Hypertarget{main_8cpp_a49b4d0402e41e121374335769f3a07a3}\label{main_8cpp_a49b4d0402e41e121374335769f3a07a3} 
 \index{main.cpp@{main.cpp}!textureClassic2@{textureClassic2}}
@@ -599,6 +655,10 @@ Zmienne przechowujące tekstury.
 \doxysubsubsection{\texorpdfstring{textureDeuteranopia1}{textureDeuteranopia1}}
 {\footnotesize\ttfamily unsigned int texture\+Deuteranopia1}
 
+
+
+Zmienne przechowujące tekstury z deuteranopii. 
+
 \Hypertarget{main_8cpp_a03fad9c3f33bf24a42c79430ab22905c}\label{main_8cpp_a03fad9c3f33bf24a42c79430ab22905c} 
 \index{main.cpp@{main.cpp}!textureDeuteranopia2@{textureDeuteranopia2}}
 \index{textureDeuteranopia2@{textureDeuteranopia2}!main.cpp@{main.cpp}}
@@ -634,6 +694,10 @@ Zmienne przechowujące tekstury.
 \index{textureTritanopia1@{textureTritanopia1}!main.cpp@{main.cpp}}
 \doxysubsubsection{\texorpdfstring{textureTritanopia1}{textureTritanopia1}}
 {\footnotesize\ttfamily unsigned int texture\+Tritanopia1}
+
+
+
+Zmienne przechowujące tekstury z tritanopii. 
 
 \Hypertarget{main_8cpp_afbf4b7a0a4fdbd87d3a35304e76e3a25}\label{main_8cpp_afbf4b7a0a4fdbd87d3a35304e76e3a25} 
 \index{main.cpp@{main.cpp}!textureTritanopia2@{textureTritanopia2}}
@@ -671,6 +735,10 @@ Zmienne przechowujące tekstury.
 \doxysubsubsection{\texorpdfstring{top\_scores}{top\_scores}}
 {\footnotesize\ttfamily double top\+\_\+scores\mbox{[}\mbox{\hyperlink{main_8cpp_a5c87a2fa1adc232ff65b3af51e537c6a}{TOP\+\_\+\+SCORES\+\_\+\+COUNT}}\mbox{]} = \{ 0.\+0 \}}
 
+
+
+Ranking czasów ułożenia. 
+
 \Hypertarget{main_8cpp_a5c87a2fa1adc232ff65b3af51e537c6a}\label{main_8cpp_a5c87a2fa1adc232ff65b3af51e537c6a} 
 \index{main.cpp@{main.cpp}!TOP\_SCORES\_COUNT@{TOP\_SCORES\_COUNT}}
 \index{TOP\_SCORES\_COUNT@{TOP\_SCORES\_COUNT}!main.cpp@{main.cpp}}
@@ -679,5 +747,5 @@ Zmienne przechowujące tekstury.
 
 
 
-Ranking czasów ułożenia. 
+Zmienna przechowująca ilość rekordów. 
 

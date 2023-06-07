@@ -25,7 +25,7 @@
 
 using namespace std;
 
-//#include <experimental/filesystem> // Header file for pre-standard implementation
+
 using namespace std::experimental::filesystem;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -68,20 +68,34 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 /// <summary>
-/// Ustawienia zliczania czasu.
+/// Zmienna ustawiająca wartość pomiędzy klatkami.
 /// </summary>
-chrono::time_point<chrono::high_resolution_clock> start_timer;
-chrono::time_point<chrono::high_resolution_clock> end_timer;
-chrono::duration<double> duration;
-
-// timing
-float deltaTime = 0.0f;	// time between current frame and last frame
+float deltaTime = 0.0f;
+/// <summary>
+/// Zmienna ustawiająca wartość ostaniej klatki.
+/// </summary>
 float lastFrame = 0.0f;
 
 /// <summary>
-/// Ranking czasów ułożenia.
+/// Zmienna przyjmująca wartość startu timera.
+/// </summary>
+chrono::time_point<chrono::high_resolution_clock> start_timer;
+/// <summary>
+/// Zmienna przyjmująca wartość zatrzymania timera.
+/// </summary>
+chrono::time_point<chrono::high_resolution_clock> end_timer;
+/// <summary>
+/// Zmienna przechowywująca czas ułożenia kostki.
+/// </summary>
+chrono::duration<double> duration;
+
+/// <summary>
+/// Zmienna przechowująca ilość rekordów.
 /// </summary>
 const int TOP_SCORES_COUNT = 5;
+/// <summary>
+/// Ranking czasów ułożenia.
+/// </summary>
 double top_scores[TOP_SCORES_COUNT] = { 0.0 };
 
 /// <summary>
@@ -90,27 +104,39 @@ double top_scores[TOP_SCORES_COUNT] = { 0.0 };
 int color = 1;
 
 /// <summary>
-/// Organizowanie ruchów kostki.
+/// Zmiena przechowująca stan układania kostki.
 /// </summary>
 bool arranging = false;
 
 /// <summary>
-/// Zmienne przechowujące oraz zliczające ruchy kostki.
+/// Zmienne przechowujące wykonane ruchy.
 /// </summary>
 int count_moves = 0;
+/// <summary>
+/// Zmienne przechowujące wykonane ruchy poprzez mieszanie.
+/// </summary>
 int random_moves = 0;
 
 /// <summary>
-/// Zmienne przechowującą podpowiedź oraz jej stan.
+/// Zmienne przechowującą podpowiedź.
 /// </summary>
 string solve = "";
+/// <summary>
+/// Zmienne przechowującą stan użycia podpowiedzi.
+/// </summary>
 bool isSolved = true;
 
 /// <summary>
-/// Zmienne przechowujące tekstury.
+/// Zmienne przechowujące domyślne tekstury.
 /// </summary>
 unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
+/// <summary>
+/// Zmienne przechowujące tekstury z deuteranopii.
+/// </summary>
 unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
+/// <summary>
+/// Zmienne przechowujące tekstury z tritanopii.
+/// </summary>
 unsigned int textureTritanopia1, textureTritanopia2, textureTritanopia3, textureTritanopia4, textureTritanopia5, textureTritanopia6;
 
 
@@ -118,14 +144,13 @@ unsigned int textureTritanopia1, textureTritanopia2, textureTritanopia3, texture
 /// Ustawienie parametrów dla tekstur.
 /// </summary>
 void dataTextureLoad() {
-    // set the texture wrapping parameters
+    // ustawianie parametrów wrap oraz repeat
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
+    // ustawienie filtrowania oraz liniowej tekstury.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    stbi_set_flip_vertically_on_load(true); // odwrócenie tekstury 
 }
 
 /// <summary>
@@ -381,9 +406,9 @@ glm::vec3 cubePositions[] = {
 /// </summary>
 int main()
 {
-    // show options
+    // pokazuje opcje
     show_options();
-    // set best time score
+    // ustawia najlepsze czasy
     set_best_scores();
 
     // glfw
@@ -409,24 +434,24 @@ int main()
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
-    // glfw capture mouse
+    // glfw przechwytywanie myszki
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    // glad load function
+    // glad ładowanie funkcji
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
 
-    // configure global opengl state
+    // konfiguracja globalnego stanu opengl
     glEnable(GL_DEPTH_TEST);
 
-    // build shader
+    // ładowanie shaderów
     Shader ourShader("assets/camera.vs", "assets/camera.fs");
     Shader skyboxShader("assets/skybox.vs", "assets/skybox.fs");
 
-    // set up vertex
+    // ustawianie pozycji
     float vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -473,9 +498,7 @@ int main()
 
 
     // skybox
-
-    float skyboxVertices[] = {
-        // positions          
+    float skyboxVertices[] = {         
         -1.0f,  1.0f, -1.0f,
         -1.0f, -1.0f, -1.0f,
          1.0f, -1.0f, -1.0f,
@@ -518,7 +541,6 @@ int main()
         -1.0f, -1.0f,  1.0f,
          1.0f, -1.0f,  1.0f
     };
-    /*cubetest = cubePositions[0];*/
     // skybox VAO
     unsigned int skyboxVAO, skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -542,46 +564,45 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // position attribute
+    // pozycja atrybutów
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    // texture coord attribute
+    // kordy atrybutów tekstur
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1); //0?
+    glEnableVertexAttribArray(1); 
 
 
     loadTextures();
 
 
-    // render loop
+    // główna pętla renderowania
     while (!glfwWindowShouldClose(window))
     {
-        // per-frame time logic
+        // czas na klatkę
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        // input
+        // podpięcie inputów
         processInput(window);
 
-        // render
-        // activate shader
+        // aktywacja shaderów
         ourShader.use();
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        //// pass projection matrix to shader
+        // przekazywanie macierzy do shadera
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         ourShader.setMat4("projection", projection);
 
-        // camera/view transformation
+        // kamera
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("view", view);
 
         int count = 6;
-        // render boxes (27 boxes)
+        // renderowanie 27 boxów
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 27; i++)
         {
@@ -594,7 +615,7 @@ int main()
                 // 3 - blue
                 // 4 - yellow
                 // 5 - orange
-                // activited special texture for each side   
+                // aktywacja tekstur dla poszczególnych boków
                 if (sideCube[i][j] == 1) {
                     glActiveTexture(GL_TEXTURE1);
                     if (color == 1)
@@ -664,29 +685,24 @@ int main()
 
                 }
 
-                // calculate the model matrix for each object and pass it to shader before drawing
-                glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+                // obliczanie modelu macierzy dla każdego obiektu i przekazanie go do shadera przed wyrysowaniem
+                glm::mat4 model = glm::mat4(1.0f); 
                 model = glm::translate(model, cubePositions[i]);
                 model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-                //model = glm::rotate(model, 0, glm::vec3(1.0f, 0.0f, 0.0f));
                 ourShader.setMat4("model", model);
-
-                // count is the number of who manny triangles sholud to create with selected texture  (6 - one side, 36 - all cube)
+                // liczenie ilości wyrysowanych trójkątów i zmiana tekstury co każde 2 trójkąty
                 glDrawArrays(GL_TRIANGLES, 0, count);
                 count += 6;
             }
-            // reseting after one cube
+            // resetowanie liczenia trójkątów po wyrysowaniu całej małej kostki
             if (count >= 35)
                 count = 6;
-            //angle = 0.0f;
-
-
         }
 
-        // draw skybox as last
-        glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+        // rysowanie skyboxa
+        glDepthFunc(GL_LEQUAL); 
         skyboxShader.use();
-        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); 
         skyboxShader.setMat4("view", view);
         skyboxShader.setMat4("projection", projection);
         // skybox cube
@@ -695,21 +711,21 @@ int main()
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
-        glDepthFunc(GL_LESS); // set depth function back to default
+        glDepthFunc(GL_LESS); 
 
+        // podpięcie inputów
         glfwSetKeyCallback(window, key_callback);
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    // optional: de-allocate all resources once they've outlived their purpose:
+    // usunięcie zaalokowanych zasobów
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
     glDeleteVertexArrays(1, &skyboxVAO);
     glDeleteBuffers(1, &skyboxVBO);
 
-    // glfw: terminate, clearing all previously allocated GLFW resources.
+    // glfw: czyszczenie poprzednich zasobów
     glfwTerminate();
     return 0;
 }
@@ -737,8 +753,6 @@ void processInput(GLFWwindow* window)
 /// </summary>
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and 
-    // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
 
@@ -758,7 +772,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     }
 
     float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+    float yoffset = lastY - ypos;
 
     lastX = xpos;
     lastY = ypos;
@@ -1290,7 +1304,7 @@ void show_options() {
     cout << "  L     - wyswietlenie podpowiedzi" << endl;
     cout << "  SPACE - symulacja ulozenie kostki" << endl;
     cout << "  0     - domyslny wyglad kostki" << endl;
-    cout << "  9     - tryb dla daltonistow (duteranopia)" << endl;
+    cout << "  9     - tryb dla daltonistow (deuteranopia)" << endl;
     cout << "  8     - tryb dla daltonistow (tritanopia)" << endl << endl;
 }
 
@@ -1309,10 +1323,11 @@ bool is_cube_solved()
     return true;
 }
 
-/// <summary>
-/// Funkcja wyświetlająca podpowiedź do ułożenia kostki.
-/// </summary>
+ ///<summary>
+ ///Funkcja wyświetlająca podpowiedź do ułożenia kostki.
+ ///</summary>
+
 void show_solve() {
     isSolved = true;
-    cout << "Solve: " << solve << "  <-----\n";
+    cout << "Podpowiedź: " << solve << "  <-----\n";
 }
