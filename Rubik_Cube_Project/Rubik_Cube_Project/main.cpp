@@ -79,12 +79,13 @@ int color = 1;
 // arranging blocking
 bool arranging = false;
 
-// count 
+// count moves
 int count_moves = 0;
 int random_moves = 0;
 
-// solve
+//  show solve
 string solve = "";
+bool isSolved = true;
 
 // load and create a texture 
 unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
@@ -803,7 +804,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         turn_cube_right_to_left(6, 9, true);
 
     // Pokazywanie podpowiedzi
-    if (key == GLFW_KEY_L && action == GLFW_PRESS)
+    if ((key == GLFW_KEY_L && action == GLFW_PRESS) && isSolved == false)
         show_solve();
 
     // Mieszanie
@@ -1045,6 +1046,7 @@ void print_cube_color() {
 
 void mix_the_cube(int mode) {
     if (arranging == false) {
+        isSolved = false;
         int number_of_changes = 0;
 
         // easy mode
@@ -1157,6 +1159,7 @@ void cube_arranged(bool skip) {
                 cout << "Nie mozna zapisac do pliku" << endl;
             }
         }
+        isSolved = true;
         show_best_scores();
         cout << endl << endl;
         show_options();
@@ -1224,5 +1227,6 @@ bool is_cube_solved()
 }
 
 void show_solve() {
+    isSolved = true;
     cout << "Solve: " << solve << "  <-----\n";
 }

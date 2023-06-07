@@ -1,3 +1,1 @@
-﻿  main.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.35.32215\include\filesystem(13): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
-  Rubik_Cube_Project.vcxproj -> C:\Users\dwini\Desktop\Rubik_Cube_Project\Rubik_Cube_Project\x64\Debug\Rubik_Cube_Project.exe
+﻿  Rubik_Cube_Project.vcxproj -> C:\Users\dwini\Desktop\Rubik_Cube_Project\Rubik_Cube_Project\x64\Debug\Rubik_Cube_Project.exe
