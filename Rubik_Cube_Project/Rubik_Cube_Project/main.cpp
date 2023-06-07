@@ -772,8 +772,6 @@ unsigned int loadCubemap()
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
-        turn_cube_to_full();
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
         turn_cube_up_to_down(0, 3, true);
     if (key == GLFW_KEY_2 && action == GLFW_PRESS)
@@ -799,15 +797,16 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (key == GLFW_KEY_C && action == GLFW_PRESS)
         turn_cube_right_to_left(6, 9, true);
 
-    // Mieszanie kostki easy
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+    // Mieszanie
+    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
         mix_the_cube(1);
-    // Mieszanie kostki medium
-    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
         mix_the_cube(2);
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+        mix_the_cube(3);
 
     // Prezentacja ułożenia kostki
-    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         cube_arranged(true);
         turn_cube_to_full();
     }
@@ -819,7 +818,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         color = 2;
     if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
         color = 1;
-
 }
 void turn_cube_to_full()
 {
@@ -834,7 +832,7 @@ void turn_cube_to_full()
 
 
 void turn_cube_up_to_down(int which, int each, bool game) {
-    if (game == true) count_moves += 1;
+    if (game) count_moves += 1;
     int a, b, c;
     a = sideCube[which][5];
     b = sideCube[which + 9][5];
@@ -883,7 +881,7 @@ void turn_cube_up_to_down(int which, int each, bool game) {
 
 
 void turn_cube_down_to_up(int which, int each, bool game) {
-    if (game == true) count_moves += 1;
+    if (game) count_moves += 1;
     int a, b, c;
     a = sideCube[which][5];
     b = sideCube[which + 9][5];
@@ -915,13 +913,13 @@ void turn_cube_down_to_up(int which, int each, bool game) {
         sideCube[which + 9][i] = sideCube[which + each][i];
         sideCube[which + 2 * 9][i] = sideCube[which][i];
 
-        sideCube[which + 2 * each][i] = sideCube[which + 2 * each + 2 * 9][i];
-        sideCube[which + each][i] = sideCube[which + 2 * each + 9][i];
         sideCube[which][i] = sideCube[which + 2 * each][i];
-
-        sideCube[which + 2 * each + 2 * 9][i] = sideCube[which + 2 * 9][i];
-        sideCube[which + 2 * each + 9][i] = sideCube[which + each + 2 * 9][i];
+        sideCube[which + each][i] = sideCube[which + 2 * each + 9][i];
         sideCube[which + 2 * each][i] = sideCube[which + 2 * each + 2 * 9][i];
+
+        sideCube[which + 2 * each][i] = sideCube[which + 2 * 9 + 2 * each][i];
+        sideCube[which + 2 * each + 9][i] = sideCube[which + each + 2 * 9][i];
+        sideCube[which + 2 * each + 2 * 9][i] = sideCube[which + 2 * 9][i];
 
         sideCube[which + 2 * 9][i] = a;
         sideCube[which + each + 2 * 9][i] = b;
@@ -931,7 +929,7 @@ void turn_cube_down_to_up(int which, int each, bool game) {
 }
 
 void turn_cube_left_to_right(int which, int each, bool game) {
-    if (game == true) count_moves += 1;
+    if (game) count_moves += 1;
     int a, b, c;
 
     a = sideCube[which][2];
@@ -980,7 +978,7 @@ void turn_cube_left_to_right(int which, int each, bool game) {
 }
 
 void turn_cube_right_to_left(int which, int each, bool game) {
-    if (game == true) count_moves += 1;
+    if (game) count_moves += 1;
     int a, b, c;
 
     a = sideCube[which][2];
@@ -1041,16 +1039,22 @@ void mix_the_cube(int mode) {
 
         // easy mode
         if (mode == 1) {
+            number_of_changes = 5;
+            random_moves = number_of_changes;
+        }
+
+        // medium mode
+        if (mode == 2) {
             number_of_changes = 15;
             random_moves = number_of_changes;
         }
 
         // hard mode
-        else if (mode == 2) {
+        else if (mode == 3) {
             random_moves = (rand() % 36) + 15;
             number_of_changes = random_moves;
         }
-
+           
         int random;
         for (int i = 0; i < number_of_changes; i++)
         {
@@ -1059,39 +1063,51 @@ void mix_the_cube(int mode) {
             switch (random)
             {
             case 0:
+                cout << "F' ";
                 turn_cube_up_to_down(0, 3, false);
                 break;
             case 1:
+                cout << "S' ";
                 turn_cube_up_to_down(1, 3, false);
                 break;
             case 2:
+                cout << "B ";
                 turn_cube_up_to_down(2, 3, false);
                 break;
             case 3:
+                cout << "F ";
                 turn_cube_down_to_up(0, 3, false);
                 break;
             case 4:
+                cout << "S ";
                 turn_cube_down_to_up(1, 3, false);
                 break;
             case 5:
+                cout << "B' ";
                 turn_cube_down_to_up(2, 3, false);
                 break;
             case 6:
+                cout << "U ";
                 turn_cube_left_to_right(0, 9, false);
                 break;
             case 7:
+                cout << "E' ";
                 turn_cube_left_to_right(3, 9, false);
                 break;
             case 8:
+                cout << "D' ";
                 turn_cube_left_to_right(6, 9, false);
                 break;
             case 9:
+                cout << "U' ";
                 turn_cube_right_to_left(0, 9, false);
                 break;
             case 10:
+                cout << "E ";
                 turn_cube_right_to_left(3, 9, false);
                 break;
             case 11:
+                cout << "D ";
                 turn_cube_right_to_left(6, 9, false);
                 break;
             default:
@@ -1173,10 +1189,10 @@ void show_options() {
     cout << "  Z - U    X - E'   C - D'" << endl << endl;
 
     cout << "Opcje aplikacji:" << endl;
-    cout << "  O     - pomieszanie kostki easy (15  iteracji)" << endl;
+    cout << "  I     - pomieszanie kostki easy (5  iteracji)" << endl;
+    cout << "  O     - pomieszanie kostki medium (15  iteracji)" << endl;
     cout << "  P     - pomieszanie kostki hard (15+ iteracji)" << endl;
-    cout << "  SPACE - wizualne ulozenie kostki" << endl;
-    cout << "  L     - symulacja ulozenie kostki" << endl;
+    cout << "  SPACE - symulacja ulozenie kostki" << endl;
     cout << "  0     - domyslny wyglad kostki" << endl;
     cout << "  9     - tryb dla daltonistow (duteranopia)" << endl;
     cout << "  8     - tryb dla daltonistow (tritanopia)" << endl << endl;
