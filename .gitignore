@@ -37,3 +37,5 @@ Rubik_Cube_Project/.vs/Rubik_Cube_Project/FileContentIndex/c8c8ace9-be4b-4ef7-a1
 Rubik_Cube_Project/.vs/Rubik_Cube_Project/v17/.suo
 Rubik_Cube_Project/.vs/Rubik_Cube_Project/v17/Browse.VC.db
 *.db
+*.tlog
+*.pdb
