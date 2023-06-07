@@ -50,17 +50,26 @@ void show_options();
 bool is_cube_solved();
 void show_solve();
 
-// settings
+/// <summary>
+/// Szerokość okna.
+/// </summary>
 const unsigned int SCR_WIDTH = 800;
+/// <summary>
+/// Wysokość okna.
+/// </summary>
 const unsigned int SCR_HEIGHT = 600;
 
-// camera
+/// <summary>
+/// Ustawienia kamery.
+/// </summary>
 Camera camera(glm::vec3(0.0f, 1.0f, 8.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-// timer
+/// <summary>
+/// Ustawienia zliczania czasu.
+/// </summary>
 chrono::time_point<chrono::high_resolution_clock> start_timer;
 chrono::time_point<chrono::high_resolution_clock> end_timer;
 chrono::duration<double> duration;
@@ -69,29 +78,45 @@ chrono::duration<double> duration;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
-// best score
+/// <summary>
+/// Ranking czasów ułożenia.
+/// </summary>
 const int TOP_SCORES_COUNT = 5;
 double top_scores[TOP_SCORES_COUNT] = { 0.0 };
 
-// choose color
+/// <summary>
+/// Wybór koloru odpowiedniego dla danego użytkownika.
+/// </summary>
 int color = 1;
 
-// arranging blocking
+/// <summary>
+/// Organizowanie ruchów kostki.
+/// </summary>
 bool arranging = false;
 
-// count moves
+/// <summary>
+/// Zmienne przechowujące oraz zliczające ruchy kostki.
+/// </summary>
 int count_moves = 0;
 int random_moves = 0;
 
-//  show solve
+/// <summary>
+/// Zmienne przechowującą podpowiedź oraz jej stan.
+/// </summary>
 string solve = "";
 bool isSolved = true;
 
-// load and create a texture 
+/// <summary>
+/// Zmienne przechowujące tekstury.
+/// </summary>
 unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
 unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
 unsigned int textureTritanopia1, textureTritanopia2, textureTritanopia3, textureTritanopia4, textureTritanopia5, textureTritanopia6;
 
+
+/// <summary>
+/// Ustawienie parametrów dla tekstur.
+/// </summary>
 void dataTextureLoad() {
     // set the texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -103,6 +128,9 @@ void dataTextureLoad() {
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
 }
 
+/// <summary>
+/// LoadData generuje oraz zwraca teksture.
+/// </summary>
 void loadData(unsigned char* data, int width, int height) {
     if (data) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -114,6 +142,9 @@ void loadData(unsigned char* data, int width, int height) {
     stbi_image_free(data);
 }
 
+/// <summary>
+/// Funkcja ładująca textury które są nakładane na kostkę
+/// </summary>
 void loadTextures() {
     int width, height, nrChannels;
 
@@ -263,7 +294,9 @@ void loadTextures() {
 
 }
 
-
+/// <summary>
+/// Tablice wyświetlają serce kostki rubika która zapamiętuje swój stan.
+/// </summary>
 int sideCube[27][6] = {
     {1,2,3,4,5,6},
     {1,2,3,4,5,6},
@@ -294,7 +327,9 @@ int sideCube[27][6] = {
     {1,2,3,4,5,6}
 };
 
-
+/// <summary>
+/// Pozycje kostek czyli rozmieszczenie kostek aby uformowały się w jedną kostkę "Rubik's Cube.
+/// </summary>
 glm::vec3 cubePositions[] = {
     //x               y      z
 
@@ -339,7 +374,11 @@ glm::vec3 cubePositions[] = {
 
 };
 
-
+/// <summary>
+/// Główna funkcja aplikacji.
+/// Zawiera ona inicjalizacje okna, VAO, VBO, przydzielenie shaderów.
+/// Nakłada textury na poszczególne boki.
+/// </summary>
 int main()
 {
     // show options
@@ -675,12 +714,13 @@ int main()
     return 0;
 }
 
-// process all input
+/// <summary>
+/// Input process czyli wykonywanie się poszczególnych funkcji na wejściu różnych przycisków.
+/// </summary>
 void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
@@ -692,7 +732,9 @@ void processInput(GLFWwindow* window)
 }
 
 
-// glfw: whenever the window size changed 
+/// <summary>
+/// Buffer ustawiania rozmiaru.
+/// </summary>
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     // make sure the viewport matches the new window dimensions; note that width and 
@@ -700,7 +742,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-// glfw: whenever the mouse moves
+/// <summary>
+/// Poruszanie myszką, dzięki temu zmienia widok.
+/// </summary>
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
     float xpos = static_cast<float>(xposIn);
@@ -722,15 +766,17 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-// mouse scroll
+/// <summary>
+/// Poruszanie kamery na scrollu.
+/// </summary>
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
-/**
- @qwewqe
-*/
+/// <summary>
+/// Załadowanie skyboxa czyli wyglądu który jest na całym programie.
+/// </summary>
 unsigned int loadCubemap()
 {
     unsigned int textureID;
@@ -774,7 +820,11 @@ unsigned int loadCubemap()
 }
 
 
-
+/// <summary>
+/// Nasłuchiwanie jeśli przycisk został kliknięty to wykona się ta funkcja oraz zagnieżdzone funkcje w niej (tylko raz).
+/// Key - przycisk
+/// Action - akcja np. GLFW_PRESS
+/// </summary>
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     // Sterowanie kostką
@@ -830,6 +880,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         color = 1;
 }
 
+/// <summary>
+/// Ułożenie kostki do wersji domyślnej.
+/// </summary>
 void turn_cube_to_full()
 {
     for (int i = 0; i < 27; i++)
@@ -841,7 +894,9 @@ void turn_cube_to_full()
     }
 }
 
-
+/// <summary>
+/// Obracanie kostki na przycisk od strony górnej do strony dolnej.
+/// </summary>
 void turn_cube_up_to_down(int which, int each, bool game) {
     if (game) count_moves += 1;
     int a, b, c;
@@ -890,7 +945,9 @@ void turn_cube_up_to_down(int which, int each, bool game) {
     if (is_cube_solved() == true) cube_arranged(false);
 }
 
-
+/// <summary>
+/// Obracanie kostki na przycisk od strony dolnej do strony górnej.
+/// </summary>
 void turn_cube_down_to_up(int which, int each, bool game) {
     if (game) count_moves += 1;
     int a, b, c;
@@ -939,6 +996,9 @@ void turn_cube_down_to_up(int which, int each, bool game) {
     if (is_cube_solved() == true) cube_arranged(false);
 }
 
+/// <summary>
+/// Obracanie kostki na przycisk od strony lefej do strony prawej.
+/// </summary>
 void turn_cube_left_to_right(int which, int each, bool game) {
     if (game) count_moves += 1;
     int a, b, c;
@@ -988,6 +1048,9 @@ void turn_cube_left_to_right(int which, int each, bool game) {
     if (is_cube_solved() == true) cube_arranged(false);
 }
 
+/// <summary>
+/// Obracanie kostki na przycisk od strony prawej do strony lewej.
+/// </summary>
 void turn_cube_right_to_left(int which, int each, bool game) {
     if (game) count_moves += 1;
     int a, b, c;
@@ -1037,6 +1100,9 @@ void turn_cube_right_to_left(int which, int each, bool game) {
     if (is_cube_solved() == true) cube_arranged(false);
 }
 
+/// <summary>
+/// Wypisanie kostki do konsoli  na podstawie cyfr.
+/// </summary>
 void print_cube_color() {
     for (int i = 0; i < 27; i++)
     {
@@ -1044,6 +1110,10 @@ void print_cube_color() {
     }
 }
 
+/// <summary>
+/// Funkcja miesza ułożenie kostki którą następnie można układać
+/// Są trzy tryby: easy, medium oraz hard czyli w zależności od wybrania preferencji, kostka będzie bardziej lub mnie trudna w ułożeniu.
+/// </summary>
 void mix_the_cube(int mode) {
     if (arranging == false) {
         isSolved = false;
@@ -1066,7 +1136,7 @@ void mix_the_cube(int mode) {
             random_moves = (rand() % 36) + 15;
             number_of_changes = random_moves;
         }
-          
+
         int random;
         for (int i = 0; i < number_of_changes; i++)
         {
@@ -1132,12 +1202,14 @@ void mix_the_cube(int mode) {
     }
 }
 
-
+/// <summary>
+/// Sprawdzanie ułożenia kostki w przypdku ułożenia w lepszym czasie, wynik zapisywany zostaje w rankingu najlepszych czasów.
+/// </summary>
 void cube_arranged(bool skip) {
     if (arranging == true) {
         chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
         chrono::duration<double> duration = end_timer - start_timer;
-        if(skip == false) cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
+        if (skip == false) cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
         else count_moves += random_moves;
         cout << "Ilosc ruchow: " << count_moves << endl << endl;
 
@@ -1169,6 +1241,9 @@ void cube_arranged(bool skip) {
     }
 }
 
+/// <summary>
+/// Wpisanie ustanowionego rekordu ułożenia kostki do rankingu najlepszych czasów.
+/// </summary>
 void set_best_scores() {
     ifstream file("best_score.txt");
     if (!file.good()) {
@@ -1184,6 +1259,9 @@ void set_best_scores() {
     }
 }
 
+/// <summary>
+/// Wyświetlanie najlepszych czasów ułożenia kostki rubika.
+/// </summary>
 void show_best_scores() {
     std::cout << "Najlepsze wyniki:" << std::endl;
     for (int i = 0; i < TOP_SCORES_COUNT; i++) {
@@ -1195,6 +1273,9 @@ void show_best_scores() {
     }
 }
 
+/// <summary>
+/// Wyświetlanie instrukcji obsługi programu w konsoli.
+/// </summary>
 void show_options() {
     cout << "Ruchy na kosce:" << endl;
     cout << "  1 - F    2 - S    3 - B'" << endl;
@@ -1213,6 +1294,9 @@ void show_options() {
     cout << "  8     - tryb dla daltonistow (tritanopia)" << endl << endl;
 }
 
+/// <summary>
+/// Funkcja sprawdza czy kostka rubika została ułożona.
+/// </summary>
 bool is_cube_solved()
 {
     for (int i = 0; i < 27; i++)
@@ -1220,12 +1304,14 @@ bool is_cube_solved()
         for (int j = 0; j < 6; j++)
         {
             if (sideCube[i][j] != j + 1) return false;
-
         }
     }
     return true;
 }
 
+/// <summary>
+/// Funkcja wyświetlająca podpowiedź do ułożenia kostki.
+/// </summary>
 void show_solve() {
     isSolved = true;
     cout << "Solve: " << solve << "  <-----\n";
