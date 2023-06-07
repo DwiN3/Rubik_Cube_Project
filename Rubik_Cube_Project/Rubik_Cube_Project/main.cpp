@@ -60,11 +60,23 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 /// <summary>
-/// Ustawienia kamery.
+/// Ustawienia pozycji początkowej kamery.
 /// </summary>
 Camera camera(glm::vec3(0.0f, 1.0f, 8.0f));
+
+/// <summary>
+/// Poprzednia pozycja X, używana do śledzenia ruchu myszy.
+/// </summary>
 float lastX = SCR_WIDTH / 2.0f;
+
+/// <summary>
+/// Poprzednia pozycja Y, używana do śledzenia ruchu myszy.
+/// </summary>
 float lastY = SCR_HEIGHT / 2.0f;
+
+/// <summary>
+/// Dodaj obsługę myszki
+/// </summary>
 bool firstMouse = true;
 
 /// <summary>
