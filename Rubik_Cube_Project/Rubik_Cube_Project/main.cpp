@@ -34,19 +34,20 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 unsigned int loadCubemap();
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-void turn_cube_up_to_down(int which, int each);
-void turn_cube_down_to_up(int which, int each);
+void turn_cube_up_to_down(int which, int each, bool game);
+void turn_cube_down_to_up(int which, int each, bool game);
 
-void turn_cube_left_to_right(int which, int each);
-void turn_cube_right_to_left(int which, int each);
+void turn_cube_left_to_right(int which, int each, bool game);
+void turn_cube_right_to_left(int which, int each, bool game);
 
 void mix_the_cube(int mode);
 void turn_cube_to_full();
 void print_cube_color();
-void cube_arranged();
+void cube_arranged(bool skip);
 void set_best_scores();
 void show_best_scores();
 void show_options();
+bool is_cube_solved();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -76,6 +77,10 @@ int color = 1;
 
 // arranging blocking
 bool arranging = false;
+
+// count 
+int count_moves = 0;
+int random_moves = 0;
 
 // load and create a texture 
 unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
@@ -204,7 +209,6 @@ void loadTextures() {
     loadData(dataDeuteranopia, width, height);
 
 
-
     // textureTritanopia1
     glGenTextures(1, &textureTritanopia1);
     glBindTexture(GL_TEXTURE_2D, textureTritanopia1);
@@ -251,7 +255,7 @@ void loadTextures() {
     dataTextureLoad();
     dataTritanopia = stbi_load("colors/tritanopia/white.png", &width, &height, &nrChannels, 0);
     loadData(dataTritanopia, width, height);
-   
+
 }
 
 
@@ -333,7 +337,7 @@ glm::vec3 cubePositions[] = {
 
 int main()
 {
-	// show options
+    // show options
     show_options();
     // set best time score
     set_best_scores();
@@ -389,40 +393,40 @@ int main()
 
         -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
          0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
         -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
         -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
         -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
         -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
         -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
          0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
          0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
          0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
          0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
          0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
         -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-       
+
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
          0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
          0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
          0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
         -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
     };
-    
+
 
     // skybox
 
@@ -481,11 +485,9 @@ int main()
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-   
     unsigned int cubemapTexture = loadCubemap();
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
-
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -505,17 +507,16 @@ int main()
 
 
     loadTextures();
-  
+
 
     // render loop
     while (!glfwWindowShouldClose(window))
     {
-   
         // per-frame time logic
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        
+
         // input
         processInput(window);
 
@@ -550,7 +551,7 @@ int main()
                 // 4 - yellow
                 // 5 - orange
                 // activited special texture for each side   
-                if (sideCube[i][j] == 1) { 
+                if (sideCube[i][j] == 1) {
                     glActiveTexture(GL_TEXTURE1);
                     if (color == 1)
                         glBindTexture(GL_TEXTURE_2D, textureClassic1);
@@ -559,9 +560,9 @@ int main()
                     else if (color == 3)
                         glBindTexture(GL_TEXTURE_2D, textureTritanopia1);
                     ourShader.setInt("texture1", 5);
-                    
+
                 }
-                else if (sideCube[i][j] == 2) { 
+                else if (sideCube[i][j] == 2) {
                     glActiveTexture(GL_TEXTURE2);
                     if (color == 1)
                         glBindTexture(GL_TEXTURE_2D, textureClassic2);
@@ -573,7 +574,7 @@ int main()
                     ourShader.setInt("texture1", 1);
 
                 }
-                else if (sideCube[i][j] == 3) { 
+                else if (sideCube[i][j] == 3) {
                     glActiveTexture(GL_TEXTURE3);
                     if (color == 1)
                         glBindTexture(GL_TEXTURE_2D, textureClassic3);
@@ -584,19 +585,19 @@ int main()
                     ourShader.setInt("texture1", 2);
 
                 }
-                else if (sideCube[i][j] == 4) { 
+                else if (sideCube[i][j] == 4) {
                     glActiveTexture(GL_TEXTURE4);
-                    if (color == 1) 
+                    if (color == 1)
                         glBindTexture(GL_TEXTURE_2D, textureClassic4);
-                    else if (color == 2) 
+                    else if (color == 2)
                         glBindTexture(GL_TEXTURE_2D, textureDeuteranopia4);
                     else if (color == 3)
                         glBindTexture(GL_TEXTURE_2D, textureTritanopia4);
                     ourShader.setInt("texture1", 3);
 
                 }
-                
-                else if (sideCube[i][j] == 5) { 
+
+                else if (sideCube[i][j] == 5) {
                     glActiveTexture(GL_TEXTURE5);
                     if (color == 1)
                         glBindTexture(GL_TEXTURE_2D, textureClassic5);
@@ -618,7 +619,7 @@ int main()
                     ourShader.setInt("texture1", 0);
 
                 }
-                
+
                 // calculate the model matrix for each object and pass it to shader before drawing
                 glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
                 model = glm::translate(model, cubePositions[i]);
@@ -635,9 +636,9 @@ int main()
                 count = 6;
             //angle = 0.0f;
 
-            
+
         }
-        
+
         // draw skybox as last
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
         skyboxShader.use();
@@ -736,7 +737,7 @@ unsigned int loadCubemap()
         unsigned char* data = stbi_load("skybox/right.jpg", &width, &height, &nrChannels, 0);
         if (i == 0)
             data = stbi_load("skybox/right.jpg", &width, &height, &nrChannels, 0);
-        else if ( i == 1)
+        else if (i == 1)
             data = stbi_load("skybox/left.jpg", &width, &height, &nrChannels, 0);
         else if (i == 2)
             data = stbi_load("skybox/top.jpg", &width, &height, &nrChannels, 0);
@@ -746,7 +747,7 @@ unsigned int loadCubemap()
             data = stbi_load("skybox/front.jpg", &width, &height, &nrChannels, 0);
         else if (i == 5)
             data = stbi_load("skybox/back.jpg", &width, &height, &nrChannels, 0);
-       
+
         if (data)
         {
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -769,44 +770,45 @@ unsigned int loadCubemap()
 
 
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
         turn_cube_to_full();
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
-        turn_cube_up_to_down(0, 3);
+        turn_cube_up_to_down(0, 3, true);
     if (key == GLFW_KEY_2 && action == GLFW_PRESS)
-        turn_cube_up_to_down(1, 3);
+        turn_cube_up_to_down(1, 3, true);
     if (key == GLFW_KEY_3 && action == GLFW_PRESS)
-        turn_cube_up_to_down(2, 3);
+        turn_cube_up_to_down(2, 3, true);
     if (key == GLFW_KEY_Q && action == GLFW_PRESS)
-        turn_cube_down_to_up(0, 3);
+        turn_cube_down_to_up(0, 3, true);
     if (key == GLFW_KEY_W && action == GLFW_PRESS)
-        turn_cube_down_to_up(1, 3);
+        turn_cube_down_to_up(1, 3, true);
     if (key == GLFW_KEY_E && action == GLFW_PRESS)
-        turn_cube_down_to_up(2, 3);
+        turn_cube_down_to_up(2, 3, true);
     if (key == GLFW_KEY_A && action == GLFW_PRESS)
-        turn_cube_left_to_right(0, 9);
+        turn_cube_left_to_right(0, 9, true);
     if (key == GLFW_KEY_S && action == GLFW_PRESS)
-        turn_cube_left_to_right(3, 9);
+        turn_cube_left_to_right(3, 9, true);
     if (key == GLFW_KEY_D && action == GLFW_PRESS)
-        turn_cube_left_to_right(6, 9);
+        turn_cube_left_to_right(6, 9, true);
     if (key == GLFW_KEY_Z && action == GLFW_PRESS)
-        turn_cube_right_to_left(0, 9);
+        turn_cube_right_to_left(0, 9, true);
     if (key == GLFW_KEY_X && action == GLFW_PRESS)
-        turn_cube_right_to_left(3, 9);
+        turn_cube_right_to_left(3, 9, true);
     if (key == GLFW_KEY_C && action == GLFW_PRESS)
-        turn_cube_right_to_left(6, 9);
-    // checking here for stop timing if all is complete
+        turn_cube_right_to_left(6, 9, true);
+
+    // Mieszanie kostki easy
     if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
         mix_the_cube(1);
+    // Mieszanie kostki medium
     if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
         mix_the_cube(2);
 
-
     // Prezentacja ułożenia kostki
-    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS){
-        cube_arranged();
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
+        cube_arranged(true);
         turn_cube_to_full();
     }
 
@@ -817,9 +819,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         color = 2;
     if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
         color = 1;
-        
+
 }
-void turn_cube_to_full() 
+void turn_cube_to_full()
 {
     for (int i = 0; i < 27; i++)
     {
@@ -831,56 +833,57 @@ void turn_cube_to_full()
 }
 
 
-void turn_cube_up_to_down(int which, int each)
-{
-     int a, b, c;
-     a = sideCube[which][5];
-     b = sideCube[which + 9][5];
-     c = sideCube[which + 2 * 9][5];
-     sideCube[which][5] = sideCube[which + 2 * 9][0];
-     sideCube[which + 9][5] = sideCube[which + 2 * 9 + each][0];
-     sideCube[which + 2 * 9][5] = sideCube[which + 2 * 9 + 2 * each][0];
- 
-     sideCube[which + 2 * 9][0] = sideCube[which + 2 * each + 2 * 9][4];
-     sideCube[which + 2 * 9 + each][0] = sideCube[which + 2 * each + 9][4];
-     sideCube[which + 2 * 9 + 2 * each][0] = sideCube[which + 2 * each][4];
- 
-     sideCube[which + 2 * each][4] = sideCube[which][1];
-     sideCube[which + 2 * each + 9][4] = sideCube[which + each][1];
-     sideCube[which + 2 * each + 2 * 9][4] = sideCube[which + 2 * each][1];
- 
-     sideCube[which][1] = c;
-     sideCube[which + each][1] = b;
-     sideCube[which + 2 * each][1] = a;
- 
-     for (int i = 2; i < 4; i++)
-     {
-         a = sideCube[which][i];
-         b = sideCube[which + 9][i];
-         c = sideCube[which + 2 * 9][i];
+void turn_cube_up_to_down(int which, int each, bool game) {
+    if (game == true) count_moves += 1;
+    int a, b, c;
+    a = sideCube[which][5];
+    b = sideCube[which + 9][5];
+    c = sideCube[which + 2 * 9][5];
+    sideCube[which][5] = sideCube[which + 2 * 9][0];
+    sideCube[which + 9][5] = sideCube[which + 2 * 9 + each][0];
+    sideCube[which + 2 * 9][5] = sideCube[which + 2 * 9 + 2 * each][0];
 
-         sideCube[which][i] = sideCube[which + 2 * 9][i];
-         sideCube[which + 9][i] = sideCube[which + 2 * 9 + each][i];
-         sideCube[which + 2 * 9][i] = sideCube[which + 2 * 9 + 2 * each][i];
+    sideCube[which + 2 * 9][0] = sideCube[which + 2 * each + 2 * 9][4];
+    sideCube[which + 2 * 9 + each][0] = sideCube[which + 2 * each + 9][4];
+    sideCube[which + 2 * 9 + 2 * each][0] = sideCube[which + 2 * each][4];
 
-         sideCube[which + 2 * 9][i] = sideCube[which + 2 * each + 2 * 9][i];
-         sideCube[which + 2 * 9 + each][i] = sideCube[which + 2 * each + 9][i];
-         sideCube[which + 2 * 9 + 2 * each][i] = sideCube[which + 2 * each][i];
+    sideCube[which + 2 * each][4] = sideCube[which][1];
+    sideCube[which + 2 * each + 9][4] = sideCube[which + each][1];
+    sideCube[which + 2 * each + 2 * 9][4] = sideCube[which + 2 * each][1];
 
-         
-         sideCube[which + 2 * each + 2 * 9][i] = sideCube[which + 2 * each][i];
-         sideCube[which + 2 * each + 9][i] = sideCube[which + each][i];
-         sideCube[which + 2 * each][i] = sideCube[which][i];
+    sideCube[which][1] = c;
+    sideCube[which + each][1] = b;
+    sideCube[which + 2 * each][1] = a;
 
-         sideCube[which][i] = c;
-         sideCube[which + each][i] = b;
-         sideCube[which + 2 * each][i] = a;
-     }
+    for (int i = 2; i < 4; i++)
+    {
+        a = sideCube[which][i];
+        b = sideCube[which + 9][i];
+        c = sideCube[which + 2 * 9][i];
+
+        sideCube[which][i] = sideCube[which + 2 * 9][i];
+        sideCube[which + 9][i] = sideCube[which + 2 * 9 + each][i];
+        sideCube[which + 2 * 9][i] = sideCube[which + 2 * 9 + 2 * each][i];
+
+        sideCube[which + 2 * 9][i] = sideCube[which + 2 * each + 2 * 9][i];
+        sideCube[which + 2 * 9 + each][i] = sideCube[which + 2 * each + 9][i];
+        sideCube[which + 2 * 9 + 2 * each][i] = sideCube[which + 2 * each][i];
+
+
+        sideCube[which + 2 * each + 2 * 9][i] = sideCube[which + 2 * each][i];
+        sideCube[which + 2 * each + 9][i] = sideCube[which + each][i];
+        sideCube[which + 2 * each][i] = sideCube[which][i];
+
+        sideCube[which][i] = c;
+        sideCube[which + each][i] = b;
+        sideCube[which + 2 * each][i] = a;
+    }
+    if (is_cube_solved() == true) cube_arranged(false);
 }
 
 
-void turn_cube_down_to_up(int which, int each)
-{
+void turn_cube_down_to_up(int which, int each, bool game) {
+    if (game == true) count_moves += 1;
     int a, b, c;
     a = sideCube[which][5];
     b = sideCube[which + 9][5];
@@ -912,7 +915,7 @@ void turn_cube_down_to_up(int which, int each)
         sideCube[which + 9][i] = sideCube[which + each][i];
         sideCube[which + 2 * 9][i] = sideCube[which][i];
 
-        sideCube[which + 2 * each][i] = sideCube[which + 2 * each + 2 *9][i];
+        sideCube[which + 2 * each][i] = sideCube[which + 2 * each + 2 * 9][i];
         sideCube[which + each][i] = sideCube[which + 2 * each + 9][i];
         sideCube[which][i] = sideCube[which + 2 * each][i];
 
@@ -924,14 +927,16 @@ void turn_cube_down_to_up(int which, int each)
         sideCube[which + each + 2 * 9][i] = b;
         sideCube[which + 2 * each + 2 * 9][i] = c;
     }
+    if (is_cube_solved() == true) cube_arranged(false);
 }
-void turn_cube_left_to_right(int which, int each)
-{
+
+void turn_cube_left_to_right(int which, int each, bool game) {
+    if (game == true) count_moves += 1;
     int a, b, c;
 
     a = sideCube[which][2];
     b = sideCube[which + each][2];
-    c = sideCube[which + 2* each][2];
+    c = sideCube[which + 2 * each][2];
 
     sideCube[which][2] = sideCube[which + 2 * each][0];
     sideCube[which + each][2] = sideCube[which + 1 + 2 * each][0];
@@ -948,7 +953,7 @@ void turn_cube_left_to_right(int which, int each)
     sideCube[which + 2][1] = a;
     sideCube[which + 1][1] = b;
     sideCube[which][1] = c;
-    
+
     for (int i = 4; i < 6; i++)
     {
         a = sideCube[which][i];
@@ -971,9 +976,11 @@ void turn_cube_left_to_right(int which, int each)
         sideCube[which + 1][i] = b;
         sideCube[which][i] = c;
     }
+    if (is_cube_solved() == true) cube_arranged(false);
 }
 
-void turn_cube_right_to_left(int which, int each) {
+void turn_cube_right_to_left(int which, int each, bool game) {
+    if (game == true) count_moves += 1;
     int a, b, c;
 
     a = sideCube[which][2];
@@ -983,7 +990,7 @@ void turn_cube_right_to_left(int which, int each) {
     sideCube[which + 2 * each][2] = sideCube[which][1];
     sideCube[which + each][2] = sideCube[which + 1][1];
     sideCube[which][2] = sideCube[which + 2][1];
-  
+
     sideCube[which][1] = sideCube[which + 2][3];
     sideCube[which + 1][1] = sideCube[which + 2 + each][3];
     sideCube[which + 2][1] = sideCube[which + 2 + 2 * each][3];
@@ -1005,7 +1012,7 @@ void turn_cube_right_to_left(int which, int each) {
         sideCube[which + 2 * each][i] = sideCube[which][i];
         sideCube[which + each][i] = sideCube[which + 1][i];
         sideCube[which][i] = sideCube[which + 2][i];
-        
+
         sideCube[which][i] = sideCube[which + 2][i];
         sideCube[which + 1][i] = sideCube[which + 2 + each][i];
         sideCube[which + 2][i] = sideCube[which + 2 + 2 * each][i];
@@ -1018,8 +1025,9 @@ void turn_cube_right_to_left(int which, int each) {
         sideCube[which + 1 + 2 * each][i] = b;
         sideCube[which + 2 * each][i] = a;
     }
+    if (is_cube_solved() == true) cube_arranged(false);
 }
- 
+
 void print_cube_color() {
     for (int i = 0; i < 27; i++)
     {
@@ -1032,10 +1040,16 @@ void mix_the_cube(int mode) {
         int number_of_changes = 0;
 
         // easy mode
-        if (mode == 1) number_of_changes = 15;
+        if (mode == 1) {
+            number_of_changes = 15;
+            random_moves = number_of_changes;
+        }
 
         // hard mode
-        else if (mode == 2) number_of_changes = (rand() % 36) + 15;
+        else if (mode == 2) {
+            random_moves = (rand() % 36) + 15;
+            number_of_changes = random_moves;
+        }
 
         int random;
         for (int i = 0; i < number_of_changes; i++)
@@ -1045,40 +1059,40 @@ void mix_the_cube(int mode) {
             switch (random)
             {
             case 0:
-                turn_cube_up_to_down(0, 3);
+                turn_cube_up_to_down(0, 3, false);
                 break;
             case 1:
-                turn_cube_up_to_down(1, 3);
+                turn_cube_up_to_down(1, 3, false);
                 break;
             case 2:
-                turn_cube_up_to_down(2, 3);
+                turn_cube_up_to_down(2, 3, false);
                 break;
             case 3:
-                turn_cube_down_to_up(0, 3);
+                turn_cube_down_to_up(0, 3, false);
                 break;
             case 4:
-                turn_cube_down_to_up(1, 3);
+                turn_cube_down_to_up(1, 3, false);
                 break;
             case 5:
-                turn_cube_down_to_up(2, 3);
+                turn_cube_down_to_up(2, 3, false);
                 break;
             case 6:
-                turn_cube_left_to_right(0, 9);
+                turn_cube_left_to_right(0, 9, false);
                 break;
             case 7:
-                turn_cube_left_to_right(3, 9);
+                turn_cube_left_to_right(3, 9, false);
                 break;
             case 8:
-                turn_cube_left_to_right(6, 9);
+                turn_cube_left_to_right(6, 9, false);
                 break;
             case 9:
-                turn_cube_right_to_left(0, 9);
+                turn_cube_right_to_left(0, 9, false);
                 break;
             case 10:
-                turn_cube_right_to_left(3, 9);
+                turn_cube_right_to_left(3, 9, false);
                 break;
             case 11:
-                turn_cube_right_to_left(6, 9);
+                turn_cube_right_to_left(6, 9, false);
                 break;
             default:
                 break;
@@ -1091,11 +1105,14 @@ void mix_the_cube(int mode) {
 }
 
 
-void cube_arranged(){
+void cube_arranged(bool skip) {
     if (arranging == true) {
         chrono::high_resolution_clock::time_point end_timer = std::chrono::high_resolution_clock::now();
         chrono::duration<double> duration = end_timer - start_timer;
-        cout << "Czas trwania: " << duration.count() << " sekundy" << endl << endl;
+        cout << "Czas trwania: " << duration.count() << " sekundy" << endl;
+        if (skip == true) count_moves += random_moves;
+        cout << "Ilosc ruchow: " << count_moves << endl << endl;
+
         arranging = false;
         if (duration.count() < top_scores[TOP_SCORES_COUNT - 1]) {
             cout << "Gratulacje, udalo ci sie pobic rekord!!!\n" << endl;
@@ -1117,6 +1134,8 @@ void cube_arranged(){
         show_best_scores();
         cout << endl << endl;
         show_options();
+        random_moves = 0;
+        count_moves = 0;
     }
 }
 
@@ -1135,7 +1154,7 @@ void set_best_scores() {
     }
 }
 
-void show_best_scores(){
+void show_best_scores() {
     std::cout << "Najlepsze wyniki:" << std::endl;
     for (int i = 0; i < TOP_SCORES_COUNT; i++) {
         int total_seconds = static_cast<int>(top_scores[i]);
@@ -1161,4 +1180,17 @@ void show_options() {
     cout << "  0     - domyslny wyglad kostki" << endl;
     cout << "  9     - tryb dla daltonistow (duteranopia)" << endl;
     cout << "  8     - tryb dla daltonistow (tritanopia)" << endl << endl;
+}
+
+bool is_cube_solved()
+{
+    for (int i = 0; i < 27; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            if (sideCube[i][j] != j + 1) return false;
+
+        }
+    }
+    return true;
 }
