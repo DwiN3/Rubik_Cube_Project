@@ -1,5 +1,6 @@
 ﻿#include "cube.h"
 
+<<<<<<< HEAD
 using namespace std;
 using namespace std::experimental::filesystem;
 
@@ -363,6 +364,8 @@ glm::vec3 cubePositions[] = {
         glm::vec3(1.0f,  -2.0f,  -3.0f),
 
 };
+=======
+>>>>>>> feature-distribution
 
 /// <summary>
 /// Główna funkcja aplikacji.
@@ -695,23 +698,8 @@ int main()
     return 0;
 }
 
-/// <summary>
-/// Input process czyli wykonywanie się poszczególnych funkcji na wejściu różnych przycisków.
-/// </summary>
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        camera.ProcessKeyboard(RIGHT, deltaTime);
-}
 
+<<<<<<< HEAD
 
 /// <summary>
 /// Buffer ustawiania rozmiaru.
@@ -1296,3 +1284,5 @@ void show_solve() {
     isSolved = true;
     cout << "Podpowiedz: " << solve << "  <-----\n";
 }
+=======
+>>>>>>> feature-distribution
