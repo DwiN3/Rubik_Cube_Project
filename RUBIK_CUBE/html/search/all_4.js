@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['firstmouse_0',['firstMouse',['../main_8cpp.html#ac21731ba101e28334c34543121caa841',1,'main.cpp']]],
-  ['framebuffer_5fsize_5fcallback_1',['framebuffer_size_callback',['../cube_8h.html#a5180f7bf2b71421af837035824a8c8ac',1,'framebuffer_size_callback(GLFWwindow *window, int width, int height):&#160;main.cpp'],['../main_8cpp.html#a5180f7bf2b71421af837035824a8c8ac',1,'framebuffer_size_callback(GLFWwindow *window, int width, int height):&#160;main.cpp']]]
+  ['end_5ftimer_0',['end_timer',['../cube_8cpp.html#a533632dd4af826e6376f4707ee5244f7',1,'end_timer:&#160;cube.cpp'],['../cube_8h.html#a533632dd4af826e6376f4707ee5244f7',1,'end_timer:&#160;cube.cpp']]],
+  ['eof_1',['eof',['../structstbi__io__callbacks.html#a319639db2f76e715eed7a7a974136832',1,'stbi_io_callbacks']]]
 ];

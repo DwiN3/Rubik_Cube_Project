@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['scroll_5fcallback_0',['scroll_callback',['../cube_8h.html#a06ad2502008f16fbcf01dfaa7f7bc9ea',1,'scroll_callback(GLFWwindow *window, double xoffset, double yoffset):&#160;main.cpp'],['../main_8cpp.html#a06ad2502008f16fbcf01dfaa7f7bc9ea',1,'scroll_callback(GLFWwindow *window, double xoffset, double yoffset):&#160;main.cpp']]],
-  ['set_5fbest_5fscores_1',['set_best_scores',['../cube_8h.html#a865f003686e185dc657468d90f047d8f',1,'set_best_scores():&#160;main.cpp'],['../main_8cpp.html#a865f003686e185dc657468d90f047d8f',1,'set_best_scores():&#160;main.cpp']]],
-  ['show_5fbest_5fscores_2',['show_best_scores',['../cube_8h.html#a8a0a2914f578873a8e05172ab013eb3c',1,'show_best_scores():&#160;main.cpp'],['../main_8cpp.html#a8a0a2914f578873a8e05172ab013eb3c',1,'show_best_scores():&#160;main.cpp']]],
-  ['show_5foptions_3',['show_options',['../cube_8h.html#a4fe80830fb1fb03fd59e950870de994b',1,'show_options():&#160;main.cpp'],['../main_8cpp.html#a4fe80830fb1fb03fd59e950870de994b',1,'show_options():&#160;main.cpp']]],
-  ['show_5fsolve_4',['show_solve',['../cube_8h.html#a4fd19d44a819bec8c71967d5d938f73b',1,'show_solve():&#160;main.cpp'],['../main_8cpp.html#a4fd19d44a819bec8c71967d5d938f73b',1,'show_solve():&#160;main.cpp']]]
+  ['print_5fcube_5fcolor_0',['print_cube_color',['../cube_8cpp.html#a13f14c1ba4af90462652402369f2acf7',1,'print_cube_color():&#160;cube.cpp'],['../cube_8h.html#a13f14c1ba4af90462652402369f2acf7',1,'print_cube_color():&#160;cube.cpp']]],
+  ['processinput_1',['processInput',['../cube_8cpp.html#a2d03c6f2666863543429a06ef642fe6a',1,'processInput(GLFWwindow *window):&#160;cube.cpp'],['../cube_8h.html#a2d03c6f2666863543429a06ef642fe6a',1,'processInput(GLFWwindow *window):&#160;cube.cpp']]],
+  ['processkeyboard_2',['ProcessKeyboard',['../class_camera.html#aebba33a8b281fe2598bcafc54a55d296',1,'Camera']]],
+  ['processmousemovement_3',['ProcessMouseMovement',['../class_camera.html#a656c2a8dc40150874f15bce47b789751',1,'Camera']]],
+  ['processmousescroll_4',['ProcessMouseScroll',['../class_camera.html#a05d150f7dc98940d2dd62f686cc2efe3',1,'Camera']]]
 ];

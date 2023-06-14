@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['key_5fcallback_0',['key_callback',['../cube_8h.html#a286930f4e8ede059b83ff6eafa2ff718',1,'key_callback(GLFWwindow *window, int key, int scancode, int action, int mods):&#160;main.cpp'],['../main_8cpp.html#a286930f4e8ede059b83ff6eafa2ff718',1,'key_callback(GLFWwindow *window, int key, int scancode, int action, int mods):&#160;main.cpp']]]
+  ['is_5fcube_5fsolved_0',['is_cube_solved',['../cube_8cpp.html#a2a36dd6303f6cf4433d4c2603c1003c0',1,'is_cube_solved():&#160;cube.cpp'],['../cube_8h.html#a2a36dd6303f6cf4433d4c2603c1003c0',1,'is_cube_solved():&#160;cube.cpp']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['stb_5fimage_5fimplementation_0',['STB_IMAGE_IMPLEMENTATION',['../cube_8h.html#a18372412ad2fc3ce1e3240b3cf0efe78',1,'cube.h']]]
+  ['cube_5fh_0',['CUBE_H',['../cube_8h.html#aa3a7ba61719ec5c1aa01c299b6762e6e',1,'cube.h']]]
 ];

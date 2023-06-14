@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['random_5fmoves_0',['random_moves',['../main_8cpp.html#a98e5b68afb6fd58c61f6fe01888ea64c',1,'main.cpp']]]
+  ['mousesensitivity_0',['MouseSensitivity',['../class_camera.html#a73e88844b31d5111eeb76327dfbb2d68',1,'Camera']]],
+  ['movementspeed_1',['MovementSpeed',['../class_camera.html#a63221392d762df6a74f45bc9d43a2f61',1,'Camera']]]
 ];
