@@ -1,105 +1,105 @@
-#include "cube.h"
+ï»¿#include "cube.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <C:/LIB/stb/stb_image.h>
 
 /// <summary>
-/// Szerokoœæ okna.
+/// SzerokoÅ“Ã¦ okna.
 /// </summary>
 const unsigned int SCR_WIDTH = 800;
 /// <summary>
-/// Wysokoœæ okna.
+/// WysokoÅ“Ã¦ okna.
 /// </summary>
 const unsigned int SCR_HEIGHT = 600;
 
 /// <summary>
-/// Ustawienia pozycji pocz¹tkowej kamery.
+/// Ustawienia pozycji poczÂ¹tkowej kamery.
 /// </summary>
 Camera camera = Camera(glm::vec3(0.0f, 1.0f, 8.0f));
 
 /// <summary>
-/// Poprzednia pozycja X, u¿ywana do œledzenia ruchu myszy.
+/// Poprzednia pozycja X, uÂ¿ywana do Å“ledzenia ruchu myszy.
 /// </summary>
 float lastX = SCR_WIDTH / 2.0f;
 
 /// <summary>
-/// Poprzednia pozycja Y, u¿ywana do œledzenia ruchu myszy.
+/// Poprzednia pozycja Y, uÂ¿ywana do Å“ledzenia ruchu myszy.
 /// </summary>
 float lastY = SCR_HEIGHT / 2.0f;
 
 /// <summary>
-/// Dodaj obs³ugê myszki
+/// Dodaj obsÂ³ugÃª myszki
 /// </summary>
 bool firstMouse = true;
 
 /// <summary>
-/// Zmienna ustawiaj¹ca wartoœæ pomiêdzy klatkami.
+/// Zmienna ustawiajÂ¹ca wartoÅ“Ã¦ pomiÃªdzy klatkami.
 /// </summary>
 float deltaTime = 0.0f;
 /// <summary>
-/// Zmienna ustawiaj¹ca wartoœæ ostaniej klatki.
+/// Zmienna ustawiajÂ¹ca wartoÅ“Ã¦ ostaniej klatki.
 /// </summary>
 float lastFrame = 0.0f;
 
 /// <summary>
-/// Zmienna przyjmuj¹ca wartoœæ startu timera.
+/// Zmienna przyjmujÂ¹ca wartoÅ“Ã¦ startu timera.
 /// </summary>
 chrono::time_point<chrono::high_resolution_clock> start_timer;
 /// <summary>
-/// Zmienna przyjmuj¹ca wartoœæ zatrzymania timera.
+/// Zmienna przyjmujÂ¹ca wartoÅ“Ã¦ zatrzymania timera.
 /// </summary>
 chrono::time_point<chrono::high_resolution_clock> end_timer;
 /// <summary>
-/// Zmienna przechowywuj¹ca czas u³o¿enia kostki.
+/// Zmienna przechowywujÂ¹ca czas uÂ³oÂ¿enia kostki.
 /// </summary>
 chrono::duration<double> duration;
 
 /// <summary>
-/// Zmienna przechowuj¹ca iloœæ rekordów.
+/// Zmienna przechowujÂ¹ca iloÅ“Ã¦ rekordÃ³w.
 /// </summary>
 const int TOP_SCORES_COUNT = 5;
 /// <summary>
-/// Ranking czasów u³o¿enia.
+/// Ranking czasÃ³w uÂ³oÂ¿enia.
 /// </summary>
 double top_scores[TOP_SCORES_COUNT] = { 0.0 };
 
 /// <summary>
-/// Wybór koloru odpowiedniego dla danego u¿ytkownika.
+/// WybÃ³r koloru odpowiedniego dla danego uÂ¿ytkownika.
 /// </summary>
 int color = 1;
 
 /// <summary>
-/// Zmiena przechowuj¹ca stan uk³adania kostki.
+/// Zmiena przechowujÂ¹ca stan ukÂ³adania kostki.
 /// </summary>
 bool arranging = false;
 
 /// <summary>
-/// Zmienne przechowuj¹ce wykonane ruchy.
+/// Zmienne przechowujÂ¹ce wykonane ruchy.
 /// </summary>
 int count_moves = 0;
 /// <summary>
-/// Zmienne przechowuj¹ce wykonane ruchy poprzez mieszanie.
+/// Zmienne przechowujÂ¹ce wykonane ruchy poprzez mieszanie.
 /// </summary>
 int random_moves = 0;
 
 /// <summary>
-/// Zmienne przechowuj¹c¹ podpowiedŸ.
+/// Zmienne przechowujÄ…ce podpowiedzi.
 /// </summary>
 string solve = "";
 /// <summary>
-/// Zmienne przechowuj¹c¹ stan u¿ycia podpowiedzi.
+/// Zmienne przechowujÄ…ce stan uÅ¼ycia podpowiedzi.
 /// </summary>
 bool isSolved = true;
 
 /// <summary>
-/// Zmienne przechowuj¹ce domyœlne tekstury.
+/// Zmienne przechowujÄ…ce domyÅ›lne tekstury.
 /// </summary>
 unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
 /// <summary>
-/// Zmienne przechowuj¹ce tekstury z deuteranopii.
+/// Zmienne przechowujÄ…ce tekstury z deuteranopii.
 /// </summary>
 unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
 /// <summary>
-/// Zmienne przechowuj¹ce tekstury z tritanopii.
+/// Zmienne przechowujace tekstury z tritanopii.
 /// </summary>
 unsigned int textureTritanopia1, textureTritanopia2, textureTritanopia3, textureTritanopia4, textureTritanopia5, textureTritanopia6;
 
@@ -180,7 +180,7 @@ glm::vec3 cubePositions[] = {
 
 
 /// <summary>
-/// Input process czyli wykonywanie siê poszczególnych funkcji na wejœciu ró¿nych przycisków.
+/// Input process czyli wykonywanie siÄ™ poszczegÃ³lnych funkcji na wejÅ“ciu rÃ³Å¼nych przyciskÃ³w.
 /// </summary>
 void processInput(GLFWwindow* window)
 {
@@ -206,7 +206,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 }
 
 /// <summary>
-/// Poruszanie myszk¹, dziêki temu zmienia widok.
+/// Poruszanie myszkÄ…, dziÄ™ki temu zmienia widok.
 /// </summary>
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
@@ -238,7 +238,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 }
 
 /// <summary>
-/// Za³adowanie skyboxa czyli wygl¹du który jest na ca³ym programie.
+/// ZaÅ‚adowanie skyboxa czyli wyglÄ…du ktÃ³ry jest na caÅ‚ym programie.
 /// </summary>
 unsigned int loadCubemap()
 {
@@ -284,13 +284,13 @@ unsigned int loadCubemap()
 
 
 /// <summary>
-/// Nas³uchiwanie jeœli przycisk zosta³ klikniêty to wykona siê ta funkcja oraz zagnie¿dzone funkcje w niej (tylko raz).
+/// NasÅ‚uchiwanie jeÅ¼eli przycisk zostaÅ‚ klikniÄ™ty to wykona siÄ™ ta funkcja oraz zagnieÅ¼dzone funkcje w niej (tylko raz).
 /// Key - przycisk
 /// Action - akcja np. GLFW_PRESS
 /// </summary>
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    // Sterowanie kostk¹
+    // Sterowanie kostkÄ…
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
         turn_cube_up_to_down(0, 3, true);
     if (key == GLFW_KEY_2 && action == GLFW_PRESS)
@@ -328,7 +328,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
         mix_the_cube(3);
 
-    // Prezentacja u³o¿enia kostki
+    // Prezentacja uÅ‚oÅ¼enia kostki
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         cube_arranged(true);
         turn_cube_to_full();
@@ -344,7 +344,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 /// <summary>
-/// U³o¿enie kostki do wersji domyœlnej.
+/// UÅ‚oÅ¼enie kostki do wersji domyÅ›lnej.
 /// </summary>
 void turn_cube_to_full()
 {
@@ -358,7 +358,7 @@ void turn_cube_to_full()
 }
 
 /// <summary>
-/// Obracanie kostki na przycisk od strony górnej do strony dolnej.
+/// Obracanie kostki na przycisk od strony gÃ³rnej do strony dolnej.
 /// </summary>
 void turn_cube_up_to_down(int which, int each, bool game) {
     if (game) count_moves += 1;
@@ -409,7 +409,7 @@ void turn_cube_up_to_down(int which, int each, bool game) {
 }
 
 /// <summary>
-/// Obracanie kostki na przycisk od strony dolnej do strony górnej.
+/// Obracanie kostki na przycisk od strony dolnej do strony gÃ³rnej.
 /// </summary>
 void turn_cube_down_to_up(int which, int each, bool game) {
     if (game) count_moves += 1;
@@ -574,8 +574,8 @@ void print_cube_color() {
 }
 
 /// <summary>
-/// Funkcja miesza u³o¿enie kostki któr¹ nastêpnie mo¿na uk³adaæ
-/// S¹ trzy tryby: easy, medium oraz hard czyli w zale¿noœci od wybrania preferencji, kostka bêdzie bardziej lub mnie trudna w u³o¿eniu.
+/// Funkcja miesza uÅ‚oÅ¼enie kostki ktÃ³rÄ… nastÄ™pnie moÅ¼na ukÅ‚adaÄ‡
+/// SÄ… trzy tryby: easy, medium oraz hard czyli w zaleÅ¼noÅ›ci od wybrania preferencji, kostka bÃªdzie bardziej lub mnie trudna w uÅ‚oÅ¼eniu.
 /// </summary>
 void mix_the_cube(int mode) {
     if (arranging == false) {
@@ -666,7 +666,7 @@ void mix_the_cube(int mode) {
 }
 
 /// <summary>
-/// Sprawdzanie u³o¿enia kostki w przypdku u³o¿enia w lepszym czasie, wynik zapisywany zostaje w rankingu najlepszych czasów.
+/// Sprawdzanie uÅ‚oÅ¼enia kostki w przypdku uÅ‚oÅ¼enia w lepszym czasie, wynik zapisywany zostaje w rankingu najlepszych czasÃ³w.
 /// </summary>
 void cube_arranged(bool skip) {
     if (arranging == true) {
@@ -705,7 +705,7 @@ void cube_arranged(bool skip) {
 }
 
 /// <summary>
-/// Wpisanie ustanowionego rekordu u³o¿enia kostki do rankingu najlepszych czasów.
+/// Wpisanie ustanowionego rekordu uÅ‚oÅ¼enia kostki do rankingu najlepszych czasÃ³w.
 /// </summary>
 void set_best_scores() {
     ifstream file("best_score.txt");
@@ -723,7 +723,7 @@ void set_best_scores() {
 }
 
 /// <summary>
-/// Wyœwietlanie najlepszych czasów u³o¿enia kostki rubika.
+/// WyÅ›wietlanie najlepszych czasÃ³w uÅ‚oÅ¼enia kostki rubika.
 /// </summary>
 void show_best_scores() {
     std::cout << "Najlepsze wyniki:" << std::endl;
@@ -737,7 +737,7 @@ void show_best_scores() {
 }
 
 /// <summary>
-/// Wyœwietlanie instrukcji obs³ugi programu w konsoli.
+/// WyÅ›wietlanie instrukcji obsÅ‚ugi programu w konsoli.
 /// </summary>
 void show_options() {
     cout << "Ruchy na kosce:" << endl;
@@ -758,7 +758,7 @@ void show_options() {
 }
 
 /// <summary>
-/// Funkcja sprawdza czy kostka rubika zosta³a u³o¿ona.
+/// Funkcja sprawdza czy kostka rubika zostaÅ‚a uÅ‚oÅ¼ona.
 /// </summary>
 bool is_cube_solved()
 {
@@ -773,7 +773,7 @@ bool is_cube_solved()
 }
 
 ///<summary>
-///Funkcja wyœwietlaj¹ca podpowiedŸ do u³o¿enia kostki.
+///Funkcja wyÅ›wietlajÄ…ca podpowiedÅº do uÅ‚oÅ¼enia kostki.
 ///</summary>
 
 void show_solve() {
@@ -782,16 +782,16 @@ void show_solve() {
 }
 
 /// <summary>
-/// Ustawienie parametrów dla tekstur.
+/// Ustawienie parametrÃ³w dla tekstur.
 /// </summary>
 void dataTextureLoad() {
-    // ustawianie parametrów wrap oraz repeat
+    // ustawianie parametrÃ³w wrap oraz repeat
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     // ustawienie filtrowania oraz liniowej tekstury.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    stbi_set_flip_vertically_on_load(true); // odwrócenie tekstury 
+    stbi_set_flip_vertically_on_load(true); // odwrÃ³cenie tekstury 
 }
 
 /// <summary>
@@ -809,7 +809,7 @@ void loadData(unsigned char* data, int width, int height) {
 }
 
 /// <summary>
-/// Funkcja ³aduj¹ca textury które s¹ nak³adane na kostkê
+/// Funkcja Å‚adujÄ…ca textury ktÃ³re sÄ… nakÅ‚adane na kostkÄ™
 /// </summary>
 void loadTextures() {
     int width, height, nrChannels;

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef CUBE_H
 #define CUBE_H
 
@@ -31,115 +31,115 @@ using namespace std::experimental::filesystem;
 
 
 /// <summary>
-/// Szerokoœæ okna.
+/// SzerokoÅ“Ã¦ okna.
 /// </summary>
 extern const unsigned int SCR_WIDTH;
 /// <summary>
-/// Wysokoœæ okna.
+/// WysokoÅ“Ã¦ okna.
 /// </summary>
 extern const unsigned int SCR_HEIGHT;
 
 /// <summary>
-/// Ustawienia pozycji pocz¹tkowej kamery.
+/// Ustawienia pozycji poczÄ…tkowej kamery.
 /// </summary>
 extern Camera camera;
 
 /// <summary>
-/// Poprzednia pozycja X, u¿ywana do œledzenia ruchu myszy.
+/// Poprzednia pozycja X, uÅ¼ywana do Å›ledzenia ruchu myszy.
 /// </summary>
 extern float lastX;
 
 /// <summary>
-/// Poprzednia pozycja Y, u¿ywana do œledzenia ruchu myszy.
+/// Poprzednia pozycja Y, uÅ¼ywana do Å›ledzenia ruchu myszy.
 /// </summary>
 extern float lastY;
 
 /// <summary>
-/// Dodaj obs³ugê myszki
+/// Dodaj obsÅ‚ugÄ™ myszki
 /// </summary>
 extern bool firstMouse;
 
 /// <summary>
-/// Zmienna ustawiaj¹ca wartoœæ pomiêdzy klatkami.
+/// Zmienna ustawiajÄ…ca wartoÅ›Ä‡ pomiÄ™dzy klatkami.
 /// </summary>
 extern float deltaTime;
 /// <summary>
-/// Zmienna ustawiaj¹ca wartoœæ ostaniej klatki.
+/// Zmienna ustawiajÄ…ca wartoÅ›Ä‡ ostaniej klatki.
 /// </summary>
 extern float lastFrame;
 
 /// <summary>
-/// Zmienna przyjmuj¹ca wartoœæ startu timera.
+/// Zmienna przyjmujÄ…ca wartoÅ›Ä‡ startu timera.
 /// </summary>
 extern chrono::time_point<chrono::high_resolution_clock> start_timer;
 /// <summary>
-/// Zmienna przyjmuj¹ca wartoœæ zatrzymania timera.
+/// Zmienna przyjmujÄ…ca wartoÅ›Ä‡ zatrzymania timera.
 /// </summary>
 extern chrono::time_point<chrono::high_resolution_clock> end_timer;
 /// <summary>
-/// Zmienna przechowywuj¹ca czas u³o¿enia kostki.
+/// Zmienna przechowywujÄ…ca czas uÅ‚oÅ¼enia kostki.
 /// </summary>
 extern chrono::duration<double> duration;
 
 /// <summary>
-/// Zmienna przechowuj¹ca iloœæ rekordów.
+/// Zmienna przechowujÄ…ca iloÅ›Ä‡ rekordÃ³w.
 /// </summary>
 extern const int TOP_SCORES_COUNT;
 /// <summary>
-/// Ranking czasów u³o¿enia.
+/// Ranking czasÃ³w uÅ‚oÅ¼enia.
 /// </summary>
 extern double top_scores[5];
 
 /// <summary>
-/// Wybór koloru odpowiedniego dla danego u¿ytkownika.
+/// WybÃ³r koloru odpowiedniego dla danego uÅ¼ytkownika.
 /// </summary>
 extern int color;
 
 /// <summary>
-/// Zmiena przechowuj¹ca stan uk³adania kostki.
+/// Zmiena przechowujÄ…ca stan ukÅ‚adania kostki.
 /// </summary>
 extern bool arranging;
 
 /// <summary>
-/// Zmienne przechowuj¹ce wykonane ruchy.
+/// Zmienne przechowujÄ…ce wykonane ruchy.
 /// </summary>
 extern int count_moves;
 /// <summary>
-/// Zmienne przechowuj¹ce wykonane ruchy poprzez mieszanie.
+/// Zmienne przechowujÄ…ce wykonane ruchy poprzez mieszanie.
 /// </summary>
 extern int random_moves;
 
 /// <summary>
-/// Zmienne przechowuj¹c¹ podpowiedŸ.
+/// Zmienne przechowujÄ…ce podpowiedÅº.
 /// </summary>
 extern string solve;
 /// <summary>
-/// Zmienne przechowuj¹c¹ stan u¿ycia podpowiedzi.
+/// Zmienne przechowujÄ…ce stan uÅ¼ycia podpowiedzi.
 /// </summary>
 extern bool isSolved;
 
 /// <summary>
-/// Zmienne przechowuj¹ce domyœlne tekstury.
+/// Zmienne przechowujÄ…ce domyÅ›lne tekstury.
 /// </summary>
 extern unsigned int textureClassic1, textureClassic2, textureClassic3, textureClassic4, textureClassic5, textureClassic6;
 /// <summary>
-/// Zmienne przechowuj¹ce tekstury z deuteranopii.
+/// Zmienne przechowujÄ…ce tekstury z deuteranopii.
 /// </summary>
 extern unsigned int textureDeuteranopia1, textureDeuteranopia2, textureDeuteranopia3, textureDeuteranopia4, textureDeuteranopia5, textureDeuteranopia6;
 /// <summary>
-/// Zmienne przechowuj¹ce tekstury z tritanopii.
+/// Zmienne przechowujÄ…ce tekstury z tritanopii.
 /// </summary>
 extern unsigned int textureTritanopia1, textureTritanopia2, textureTritanopia3, textureTritanopia4, textureTritanopia5, textureTritanopia6;
 
 
 
 /// <summary>
-/// Tablice wyœwietlaj¹ serce kostki rubika która zapamiêtuje swój stan.
+/// Tablice wyÅ“wietlajÄ… serce kostki rubika ktÃ³ra zapamiÄ™tuje swÃ³j stan.
 /// </summary>
 extern int sideCube[27][6];
 
 /// <summary>
-/// Pozycje kostek czyli rozmieszczenie kostek aby uformowa³y siê w jedn¹ kostkê "Rubik's Cube.
+/// Pozycje kostek czyli rozmieszczenie kostek aby uformowaÅ‚y siÄ™ w jednÄ… kostkÄ™ "Rubik's Cube.
 /// </summary>
 extern glm::vec3 cubePositions[27];
 
