@@ -321,11 +321,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         show_solve();
 
     // Mieszanie
-    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+    if ((glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) && is_cube_solved() == true)
         mix_the_cube(1);
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+    if ((glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) && is_cube_solved() == true)
         mix_the_cube(2);
-    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+    if ((glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) && is_cube_solved() == true)
         mix_the_cube(3);
 
     // Prezentacja ułożenia kostki
@@ -694,14 +694,14 @@ void cube_arranged(bool skip) {
                 cout << "Nie mozna zapisac do pliku" << endl;
             }
         }
-        isSolved = true;
         show_best_scores();
         cout << endl << endl;
         show_options();
-        random_moves = 0;
-        count_moves = 0;
-        solve = "";
     }
+    isSolved = true;
+    random_moves = 0;
+    count_moves = 0;
+    solve = "";
 }
 
 /// <summary>
